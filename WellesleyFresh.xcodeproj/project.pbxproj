@@ -15,6 +15,8 @@
 		76A331511D8263230079A6CE /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 76A3314F1D8263230079A6CE /* LaunchScreen.storyboard */; };
 		76A3315C1D8263230079A6CE /* WellesleyFreshTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76A3315B1D8263230079A6CE /* WellesleyFreshTests.swift */; };
 		76A331671D8263230079A6CE /* WellesleyFreshUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76A331661D8263230079A6CE /* WellesleyFreshUITests.swift */; };
+		76A331751D8267820079A6CE /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76A331741D8267820079A6CE /* MapKit.framework */; };
+		76A331B31D845CCA0079A6CE /* default.gpx in Resources */ = {isa = PBXBuildFile; fileRef = 76A331B21D845CCA0079A6CE /* default.gpx */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,6 +51,8 @@
 		76A331621D8263230079A6CE /* WellesleyFreshUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WellesleyFreshUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		76A331661D8263230079A6CE /* WellesleyFreshUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WellesleyFreshUITests.swift; sourceTree = "<group>"; };
 		76A331681D8263230079A6CE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		76A331741D8267820079A6CE /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		76A331B21D845CCA0079A6CE /* default.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = default.gpx; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,6 +60,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				76A331751D8267820079A6CE /* MapKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -79,6 +84,8 @@
 		76A331381D8263230079A6CE = {
 			isa = PBXGroup;
 			children = (
+				76A331B21D845CCA0079A6CE /* default.gpx */,
+				76A331741D8267820079A6CE /* MapKit.framework */,
 				76A331431D8263230079A6CE /* WellesleyFresh */,
 				76A3315A1D8263230079A6CE /* WellesleyFreshTests */,
 				76A331651D8263230079A6CE /* WellesleyFreshUITests */,
@@ -233,6 +240,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				76A331511D8263230079A6CE /* LaunchScreen.storyboard in Resources */,
+				76A331B31D845CCA0079A6CE /* default.gpx in Resources */,
 				76A3314E1D8263230079A6CE /* Assets.xcassets in Resources */,
 				76A3314C1D8263230079A6CE /* Main.storyboard in Resources */,
 			);
@@ -402,6 +410,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = WellesleyFresh/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = AudreySeo.WellesleyFresh;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -413,6 +422,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = WellesleyFresh/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = AudreySeo.WellesleyFresh;
 				PRODUCT_NAME = "$(TARGET_NAME)";
