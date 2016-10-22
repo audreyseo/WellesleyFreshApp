@@ -12,12 +12,13 @@ These are all of the features the app is currently capable of:
   - Shows how much time is left until the next meal
 
 
-##Features in Development
+###Features in Development
+These are features planned for future releases:
  - Showing the menus of the 3 closest dining halls
  - Provide feedback to the dining hall
 
 ###Possible Android Version
-If you would like to work with Audrey Seo on creating an Android-friendly version of this app, please send them an 
+If you're a student at Wellesley who would like to work with Audrey Seo on creating an Android-friendly version of this app, please send them an email through your Wellesley google account.
 
 
 
