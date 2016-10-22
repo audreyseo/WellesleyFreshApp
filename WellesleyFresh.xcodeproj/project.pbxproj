@@ -18,6 +18,7 @@
 		76A331671D8263230079A6CE /* WellesleyFreshUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76A331661D8263230079A6CE /* WellesleyFreshUITests.swift */; };
 		76A331751D8267820079A6CE /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76A331741D8267820079A6CE /* MapKit.framework */; };
 		76A331B31D845CCA0079A6CE /* default.gpx in Resources */ = {isa = PBXBuildFile; fileRef = 76A331B21D845CCA0079A6CE /* default.gpx */; };
+		76B2B9A61DBBBAA50084A43B /* README.md in Sources */ = {isa = PBXBuildFile; fileRef = 76B2B9A51DBBBAA50084A43B /* README.md */; };
 		76D71AC51DBBA24A005B7211 /* HourRange.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76D71AC41DBBA24A005B7211 /* HourRange.swift */; };
 		76D71AC71DBBA523005B7211 /* DiningHall.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76D71AC61DBBA523005B7211 /* DiningHall.swift */; };
 		76D71AC91DBBA562005B7211 /* DayOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76D71AC81DBBA562005B7211 /* DayOptions.swift */; };
@@ -64,6 +65,7 @@
 		76A331681D8263230079A6CE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		76A331741D8267820079A6CE /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		76A331B21D845CCA0079A6CE /* default.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = default.gpx; sourceTree = "<group>"; };
+		76B2B9A51DBBBAA50084A43B /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		76D71AC41DBBA24A005B7211 /* HourRange.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HourRange.swift; sourceTree = "<group>"; };
 		76D71AC61DBBA523005B7211 /* DiningHall.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiningHall.swift; sourceTree = "<group>"; };
 		76D71AC81DBBA562005B7211 /* DayOptions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DayOptions.swift; sourceTree = "<group>"; };
@@ -104,6 +106,7 @@
 		76A331381D8263230079A6CE = {
 			isa = PBXGroup;
 			children = (
+				76B2B9A51DBBBAA50084A43B /* README.md */,
 				76A331B21D845CCA0079A6CE /* default.gpx */,
 				76A331741D8267820079A6CE /* MapKit.framework */,
 				76A331431D8263230079A6CE /* WellesleyFresh */,
@@ -308,6 +311,7 @@
 				76A331451D8263230079A6CE /* AppDelegate.swift in Sources */,
 				76E302EF1DAD65FE00E958BB /* Header.swift in Sources */,
 				76E302F31DB4332000E958BB /* DiningHours.swift in Sources */,
+				76B2B9A61DBBBAA50084A43B /* README.md in Sources */,
 				76A331471D8263230079A6CE /* FirstViewController.swift in Sources */,
 				76D71AC71DBBA523005B7211 /* DiningHall.swift in Sources */,
 				76D71AC51DBBA24A005B7211 /* HourRange.swift in Sources */,
