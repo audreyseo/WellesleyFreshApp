@@ -25,13 +25,13 @@ class SecondViewController: UITableViewController, UIPickerViewDataSource, UIPic
 	let diningHallDictionaryKey = "diningHallDictionaryKey"
 	let todaysDateKey = "todaysDateKey"
 	var barButtonDone:UIBarButtonItem {
-		return UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.Done, target: self, action: "madeSelection")
+		return UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.Done, target: self, action: #selector(SecondViewController.madeSelection))
 	}
 	var barButtonSpace:UIBarButtonItem {
 		return UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FlexibleSpace, target: nil, action: nil)
 	}
 	var barButtonCancel:UIBarButtonItem {
-		return UIBarButtonItem(title: "Cancel", style: UIBarButtonItemStyle.Plain, target: self, action: "madeSelection")
+		return UIBarButtonItem(title: "Cancel", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(SecondViewController.madeSelection))
 	}
 	var hallInputView:UIInputView = UIInputView()
 	
@@ -76,7 +76,7 @@ class SecondViewController: UITableViewController, UIPickerViewDataSource, UIPic
 		
 		tableView.sectionHeaderHeight = 40
 		
-		navigationItem.title = "My TableView"
+		navigationItem.title = "Menu"
 		
 		// Assigns the class MyCell to the type of cell that we use in the table view
 		tableView.registerClass(MyCell.self, forCellReuseIdentifier: "cellId")
@@ -86,7 +86,7 @@ class SecondViewController: UITableViewController, UIPickerViewDataSource, UIPic
 		
 		//		navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Insert", style: .Plain, target: self, action: "newCellsInsertion")
 		//		navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Batch Insert", style: .Plain, target: self, action: "insertBatch")
-		navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Choose Hall", style: .Plain, target: self, action: "showPickerView")
+		navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Choose Hall", style: .Plain, target: self, action: #selector(SecondViewController.showPickerView))
 		
 		tableView.sizeToFit()
 		
@@ -96,7 +96,7 @@ class SecondViewController: UITableViewController, UIPickerViewDataSource, UIPic
 		
 		refreshControl = UIRefreshControl()
 		refreshControl!.attributedTitle = NSAttributedString(string: "Pull for a Random Dining Hall")
-		refreshControl!.addTarget(self, action: "refresh", forControlEvents: UIControlEvents.ValueChanged)
+		refreshControl!.addTarget(self, action: #selector(SecondViewController.refresh), forControlEvents: UIControlEvents.ValueChanged)
 		tableView.addSubview(refreshControl!)
 		
 		// Adding picker view/controlling what it looks like
@@ -129,6 +129,7 @@ class SecondViewController: UITableViewController, UIPickerViewDataSource, UIPic
 		hallPicker.frame = CGRectMake(0, 40, tableView.contentSize.width, 400)
 		hallInputView.frame = CGRectMake(0, height - (height * 0.6), tableView.contentSize.width, height * 0.6)
 		hallToolBar.frame = CGRectMake(0, 0, tableView.contentSize.width, 40)
+		self.view.bringSubviewToFront(hallInputView)
 	}
 	
 	func madeSelection() {
@@ -211,6 +212,11 @@ class SecondViewController: UITableViewController, UIPickerViewDataSource, UIPic
 					}
 					newCellsInsertion()
 				}
+			} else {
+				if (diningHallArrays[diningHall] != nil) {
+					normalArray = diningHallArrays[diningHall]!
+				}
+				newCellsInsertion()
 			}
 		}
 	}

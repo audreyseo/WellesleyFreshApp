@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9532" systemVersion="16A323" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="49e-Tb-3d3">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="16A323" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="49e-Tb-3d3">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
@@ -130,7 +130,7 @@
             </objects>
             <point key="canvasLocation" x="400" y="390"/>
         </scene>
-        <!--More-->
+        <!--Third View Controller-->
         <scene sceneID="UWB-c1-SlP">
             <objects>
                 <viewController id="muJ-OP-aTb" customClass="ThirdViewController" customModule="WellesleyFresh" customModuleProvider="target" sceneMemberID="viewController">
@@ -200,7 +200,7 @@
                             <constraint firstItem="ePU-SF-VL6" firstAttribute="centerX" secondItem="Dif-Y6-Awj" secondAttribute="centerX" id="rxh-9k-60A"/>
                         </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" title="More" image="second" id="fWx-E8-Nsg"/>
+                    <tabBarItem key="tabBarItem" systemItem="more" id="fWx-E8-Nsg"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="yqb-F3-or1" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -219,8 +219,8 @@
                     <connections>
                         <segue destination="9pv-A4-QxB" kind="relationship" relationship="viewControllers" id="u7Y-xg-7CH"/>
                         <segue destination="xju-O5-TRH" kind="relationship" relationship="viewControllers" id="sEV-CH-Ka3"/>
-                        <segue destination="muJ-OP-aTb" kind="relationship" relationship="viewControllers" id="OU4-Yf-36v"/>
                         <segue destination="0Wg-dp-s6O" kind="relationship" relationship="viewControllers" id="kep-M9-eOb"/>
+                        <segue destination="muJ-OP-aTb" kind="relationship" relationship="viewControllers" id="OU4-Yf-36v"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="HuB-VB-40B" sceneMemberID="firstResponder"/>
@@ -256,11 +256,11 @@
             </objects>
             <point key="canvasLocation" x="-722" y="-475"/>
         </scene>
-        <!--Item-->
+        <!--Hours-->
         <scene sceneID="Ytb-AO-12f">
             <objects>
                 <navigationController id="0Wg-dp-s6O" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Item" id="ITW-Ni-Vrm"/>
+                    <tabBarItem key="tabBarItem" title="Hours" image="second" id="ITW-Ni-Vrm"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="bHL-qo-VA3">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>

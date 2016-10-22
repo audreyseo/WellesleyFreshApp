@@ -11,6 +11,7 @@ import UIKit
 class DiningHall {
 	var hours:[[HourRange]]
 	var days:DayOptions
+	var in_between:HourRange
 	init(newDays: [String], newHours: [[[Double]]], meals: [[String]]) {
 		hours = [[HourRange]]()
 		for i in 0...newHours.count - 1 {
@@ -20,6 +21,7 @@ class DiningHall {
 			}
 		}
 		days = DayOptions(initialDays: newDays)
+		in_between = HourRange(low: 0, high: 0, name: "Closed")
 	}
 	
 	func openToday() -> Bool {
@@ -31,27 +33,54 @@ class DiningHall {
 	}
 	
 	func currentMeal() -> String {
+		return currentHours().name()
+	}
+	
+	func inBetween(a:HourRange, b:HourRange) {
+		let currentTime = a.currentHour()
+//		print("In-Between?: \(currentTime), (\(a.lowHour), \(a.highHour)), (\(b.lowHour), \(b.highHour))")
+		if currentTime >= a.highHour && currentTime <= b.lowHour {
+			in_between = HourRange(low: a.highHour, high: b.lowHour, name: "Closed, Next: \(b.name())")
+		}
+	}
+	
+	func currentHours() -> HourRange {
 		if (self.openToday()) {
 			let option = self.days.getOption()
-			
-			for i in 0...hours.count - 1 {
-				if hours[option][i].withinRange() {
-					return hours[option][i].name()
+			if (!in_between.withinRange()) {
+				for i in 0...hours[option].count - 1 {
+					if hours[option][i].withinRange() {
+						return hours[option][i]
+					}
+					if i < hours[option].count - 1 {
+						inBetween(hours[option][i], b: hours[option][i + 1])
+						if in_between.withinRange() {
+							return in_between
+						}
+					}
 				}
+			} else {
+				return in_between
 			}
+			
 		}
-		return "Closed"
+		return HourRange(low: 0, high: 0, name: "Closed")
 	}
 	
 	func percentLeft() -> Double {
 		if (self.openToday()) {
 			let option = self.days.getOption()
 			
-			for i in 0...hours.count - 1 {
-				if hours[option][i].withinRange() {
-					return hours[option][i].percentTimeElapsed()
+			if !in_between.withinRange() {
+				for i in 0...hours.count - 1 {
+					if hours[option][i].withinRange() {
+						return hours[option][i].percentTimeElapsed()
+					}
 				}
+			} else {
+				return in_between.percentTimeElapsed()
 			}
+			
 		}
 		return 0
 	}
