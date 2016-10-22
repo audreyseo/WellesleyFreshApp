@@ -14,22 +14,55 @@
 import UIKit
 import MapKit
 
-class FirstViewController: UIViewController, CLLocationManagerDelegate {
+class FirstViewController: UIViewController, CLLocationManagerDelegate, UIPickerViewDataSource, UIPickerViewDelegate, UITableViewDelegate, UITableViewDataSource {
 	var coreLocationManager = CLLocationManager()
+	var chosenDiningHall = ""
+	var chosenShort = ""
 	var first = true
-	var latitudes = [42.291104,42.291953,42.293866,42.294580,42.295818,42.292747]
-	var longitudes = [-71.302814,-71.300282,-71.302857,-71.308941,-71.307396,-71.308737]
-	var names = ["Stone-Davis Dining", "Bates Dining","The Leaky Beaker", "The Lulu", "Pomeroy", "Tower"]
+	var latitudes = [42.294580,42.291953,42.292747,42.291104,42.295818]
+	var longitudes = [-71.308941,-71.300282,-71.308737,-71.302814,-71.307396]
+	// Leaky beaker: 42.293866, -71.302857,
+	let diningHalls:[String] = ["bplc", "bates", "tower", "stonedavis", "pomeroy"]
+	var names = ["Bao Pao Lu Chow", "Bates", "Tower", "Stone Davis", "Pomeroy"]
+//	var names = ["Stone-Davis Dining", "Bates Dining","The Leaky Beaker", "The Lulu", "Pomeroy", "Tower"]
+	var menus = [String:[String]]()
+	let diningHallDictionaryKey = "diningHallDictionaryKey"
+	let todaysDateKey = "todaysDateKey"
+	
 	var diningHallAnnotations:[MKPointAnnotation] = [MKPointAnnotation]();
 	
+	var hallPicker:UIPickerView = UIPickerView()
+	let hallToolBar:UIToolbar = UIToolbar()
+	let hallInputView:UIInputView = UIInputView()
+	
+	let storedData:NSUserDefaults = NSUserDefaults()
+	var diningHallNames:[String] = ["", "", ""]
+	var barButtonDone:UIBarButtonItem {
+		return UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.Done, target: self, action: "madeSelection")
+	}
+	var barButtonSpace:UIBarButtonItem {
+		return UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FlexibleSpace, target: nil, action: nil)
+	}
+	var barButtonCancel:UIBarButtonItem {
+		return UIBarButtonItem(title: "Cancel", style: UIBarButtonItemStyle.Plain, target: self, action: "madeSelection")
+	}
+	
+	var tableview:UITableView = UITableView()
 	
 	@IBOutlet weak var mapViewer: MKMapView!
+	@IBOutlet weak var tableViewer1: UITableView!
+	@IBOutlet weak var tableViewer2: UITableView!
+	@IBOutlet weak var tableViewer3: UITableView!
 	
 	@IBOutlet weak var locationInfo: UILabel!
 	
 	@IBOutlet weak var closest1: UILabel!
+	@IBOutlet weak var showDiningHallName: UILabel!
 	@IBOutlet weak var closest2: UILabel!
 	@IBOutlet weak var closest3: UILabel!
+	@IBAction func showSelector() {
+		hallInputView.hidden = false;
+	}
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
@@ -48,11 +81,103 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate {
 		} else {
 			self.getInitialLocation()
 		}
-		getWellesleyFreshData()
+//		getWellesleyFreshData()
+		
+		tableview.delegate = self
+		tableview.dataSource = self
+		self.view.addSubview(tableview)
+		
+		
+		hallPicker.hidden = false
+		hallPicker.dataSource = self
+		hallPicker.delegate = self
+		hallPicker.backgroundColor = UIColor.whiteColor()
+		hallPicker.showsSelectionIndicator = true
+		
+		hallToolBar.barStyle = UIBarStyle.Default
+		hallToolBar.translucent = true
+		
+		//		barButtonDone.tintColor = UIColor.blackColor()
+		hallToolBar.setItems([barButtonCancel, barButtonSpace, barButtonDone], animated: false)
+		//		hallToolBar.userInteractionEnabled = true
+		hallPicker.tag = 40
+		//		hallPicker.addSubview(hallToolBar)
+		hallInputView.addSubview(hallToolBar)
+		hallInputView.addSubview(hallPicker)
+		hallInputView.hidden = true
+		hallInputView.backgroundColor = UIColor.whiteColor()
+		self.view.addSubview(hallInputView)
+		
+	}
+	
+	override func viewWillAppear(animated: Bool) {
+		let height = self.view.frame.origin.y + self.view.frame.size.height
+		hallPicker.frame = CGRectMake(0, 40, self.view.frame.size.width, 400)
+		hallInputView.frame = CGRectMake(0, self.view.frame.origin.y + self.view.frame.size.height - 440, self.view.frame.size.width, 440)
+		hallToolBar.frame = CGRectMake(0, 0, self.view.frame.size.width, 40)
+		tableview.frame = CGRectMake(0, height - (height * 0.4), self.view.frame.size.width, height * 0.4)
+	}
+	
+	// ------------UITableView Delegate and Datasource Methods-------------
+	
+	func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+		let myCell = tableView.dequeueReusableCellWithIdentifier("cellId", forIndexPath: indexPath) as! MyCell
+		if (menus[chosenShort] != nil) {
+			myCell.nameLabel.text = menus[chosenShort]![indexPath.row]
+		} else {
+			myCell.nameLabel.text = ""
+		}
+		return myCell
+	}
+	
+	func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+		if (chosenShort != "") {
+			if menus[chosenShort] != nil {
+				return menus[chosenShort]!.count
+			} else {
+				return 0
+			}
+		} else {
+			return 0
+		}
+	}
+	
+	
+	// ----------UIPickerView Datasource and Delegate Functions-----------
+	func numberOfComponentsInPickerView(pickerView: UIPickerView) -> Int {
+		return 1
+	}
+	
+	func pickerView(pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+		return 3
+	}
+	
+	func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+		return diningHallNames[row]
+	}
+	
+	func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+		chosenDiningHall = diningHallNames[row]
+		chosenShort = diningHalls[row]
+		print("Selected: ", diningHallNames[row])
+	}
+	
+	func pickerView(pickerView: UIPickerView, widthForComponent component: Int) -> CGFloat {
+		return self.view.frame.size.width * 0.8
+	}
+	
+	func pickerView(pickerView: UIPickerView, rowHeightForComponent component: Int) -> CGFloat {
+		return 40
 	}
 	
 	
 	// ------------------------------HELPERS---------------------------------
+	
+	// Tells the hallInputView to go away
+	func madeSelection() {
+		showDiningHallName.text = chosenDiningHall
+		hallInputView.hidden = true
+	}
 	
 	// Helper function that calculates distance over a sphere.
 	func distance(first:CLLocation, second:CLLocationCoordinate2D) -> Float {
@@ -91,6 +216,7 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate {
 		print("Updated location")
 		let last = locations.count - 1
 		displayLocation(locations[last])
+		manager.stopUpdatingLocation()
 	}
 	
 	// Fires when the authorization status updates.
@@ -117,7 +243,9 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate {
 	// Asks for a starting point for our location.
 	func getInitialLocation() {
 		print("Setting the initial location")
-		coreLocationManager.requestLocation()
+		// Only available in iOS 9.0 or greater
+		coreLocationManager.startUpdatingLocation()
+		
 	}
 	
 	// -------------------------Get Web Data----------------------------
@@ -187,6 +315,9 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate {
 		closest1.text = "1. \(names[i1]), \(num1) meters"
 		closest2.text = "2. \(names[i2]), \(num2) meters"
 		closest3.text = "3. \(names[i3]), \(num3) meters"
+		diningHallNames[0] = names[i1]
+		diningHallNames[1] = names[i2]
+		diningHallNames[2] = names[i3]
 	}
 	
 	

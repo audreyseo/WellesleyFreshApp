@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		760B43C71DBAEF61003D8CE0 /* TimeProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 760B43C61DBAEF61003D8CE0 /* TimeProgressView.swift */; };
 		76A331451D8263230079A6CE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76A331441D8263230079A6CE /* AppDelegate.swift */; };
 		76A331471D8263230079A6CE /* FirstViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76A331461D8263230079A6CE /* FirstViewController.swift */; };
 		76A331491D8263230079A6CE /* SecondViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76A331481D8263230079A6CE /* SecondViewController.swift */; };
@@ -17,6 +18,15 @@
 		76A331671D8263230079A6CE /* WellesleyFreshUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76A331661D8263230079A6CE /* WellesleyFreshUITests.swift */; };
 		76A331751D8267820079A6CE /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76A331741D8267820079A6CE /* MapKit.framework */; };
 		76A331B31D845CCA0079A6CE /* default.gpx in Resources */ = {isa = PBXBuildFile; fileRef = 76A331B21D845CCA0079A6CE /* default.gpx */; };
+		76D71AC51DBBA24A005B7211 /* HourRange.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76D71AC41DBBA24A005B7211 /* HourRange.swift */; };
+		76D71AC71DBBA523005B7211 /* DiningHall.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76D71AC61DBBA523005B7211 /* DiningHall.swift */; };
+		76D71AC91DBBA562005B7211 /* DayOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76D71AC81DBBA562005B7211 /* DayOptions.swift */; };
+		76D71ACB1DBBAFC8005B7211 /* HoursViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76D71ACA1DBBAFC8005B7211 /* HoursViewController.swift */; };
+		76E302EB1DAD65F100E958BB /* WellesleyFreshRegex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76E302EA1DAD65F100E958BB /* WellesleyFreshRegex.swift */; };
+		76E302ED1DAD65F700E958BB /* MyCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76E302EC1DAD65F700E958BB /* MyCell.swift */; };
+		76E302EF1DAD65FE00E958BB /* Header.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76E302EE1DAD65FE00E958BB /* Header.swift */; };
+		76E302F11DB3031800E958BB /* ThirdViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76E302F01DB3031800E958BB /* ThirdViewController.swift */; };
+		76E302F31DB4332000E958BB /* DiningHours.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76E302F21DB4332000E958BB /* DiningHours.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -37,6 +47,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		760B43C61DBAEF61003D8CE0 /* TimeProgressView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimeProgressView.swift; sourceTree = "<group>"; };
 		76A331411D8263230079A6CE /* WellesleyFresh.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WellesleyFresh.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		76A331441D8263230079A6CE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		76A331461D8263230079A6CE /* FirstViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstViewController.swift; sourceTree = "<group>"; };
@@ -53,6 +64,15 @@
 		76A331681D8263230079A6CE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		76A331741D8267820079A6CE /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		76A331B21D845CCA0079A6CE /* default.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = default.gpx; sourceTree = "<group>"; };
+		76D71AC41DBBA24A005B7211 /* HourRange.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HourRange.swift; sourceTree = "<group>"; };
+		76D71AC61DBBA523005B7211 /* DiningHall.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiningHall.swift; sourceTree = "<group>"; };
+		76D71AC81DBBA562005B7211 /* DayOptions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DayOptions.swift; sourceTree = "<group>"; };
+		76D71ACA1DBBAFC8005B7211 /* HoursViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HoursViewController.swift; sourceTree = "<group>"; };
+		76E302EA1DAD65F100E958BB /* WellesleyFreshRegex.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WellesleyFreshRegex.swift; sourceTree = "<group>"; };
+		76E302EC1DAD65F700E958BB /* MyCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyCell.swift; sourceTree = "<group>"; };
+		76E302EE1DAD65FE00E958BB /* Header.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Header.swift; sourceTree = "<group>"; };
+		76E302F01DB3031800E958BB /* ThirdViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ThirdViewController.swift; sourceTree = "<group>"; };
+		76E302F21DB4332000E958BB /* DiningHours.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiningHours.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -107,8 +127,18 @@
 			isa = PBXGroup;
 			children = (
 				76A331441D8263230079A6CE /* AppDelegate.swift */,
+				76E302EE1DAD65FE00E958BB /* Header.swift */,
+				76D71ACA1DBBAFC8005B7211 /* HoursViewController.swift */,
 				76A331461D8263230079A6CE /* FirstViewController.swift */,
 				76A331481D8263230079A6CE /* SecondViewController.swift */,
+				76E302F01DB3031800E958BB /* ThirdViewController.swift */,
+				76E302EC1DAD65F700E958BB /* MyCell.swift */,
+				76E302EA1DAD65F100E958BB /* WellesleyFreshRegex.swift */,
+				760B43C61DBAEF61003D8CE0 /* TimeProgressView.swift */,
+				76E302F21DB4332000E958BB /* DiningHours.swift */,
+				76D71AC41DBBA24A005B7211 /* HourRange.swift */,
+				76D71AC61DBBA523005B7211 /* DiningHall.swift */,
+				76D71AC81DBBA562005B7211 /* DayOptions.swift */,
 				76A3314A1D8263230079A6CE /* Main.storyboard */,
 				76A3314D1D8263230079A6CE /* Assets.xcassets */,
 				76A3314F1D8263230079A6CE /* LaunchScreen.storyboard */,
@@ -203,6 +233,7 @@
 				TargetAttributes = {
 					76A331401D8263230079A6CE = {
 						CreatedOnToolsVersion = 7.2.1;
+						DevelopmentTeam = D56G98T36D;
 					};
 					76A331561D8263230079A6CE = {
 						CreatedOnToolsVersion = 7.2.1;
@@ -268,8 +299,18 @@
 			buildActionMask = 2147483647;
 			files = (
 				76A331491D8263230079A6CE /* SecondViewController.swift in Sources */,
+				76D71ACB1DBBAFC8005B7211 /* HoursViewController.swift in Sources */,
+				76D71AC91DBBA562005B7211 /* DayOptions.swift in Sources */,
+				76E302ED1DAD65F700E958BB /* MyCell.swift in Sources */,
+				76E302EB1DAD65F100E958BB /* WellesleyFreshRegex.swift in Sources */,
+				760B43C71DBAEF61003D8CE0 /* TimeProgressView.swift in Sources */,
+				76E302F11DB3031800E958BB /* ThirdViewController.swift in Sources */,
 				76A331451D8263230079A6CE /* AppDelegate.swift in Sources */,
+				76E302EF1DAD65FE00E958BB /* Header.swift in Sources */,
+				76E302F31DB4332000E958BB /* DiningHours.swift in Sources */,
 				76A331471D8263230079A6CE /* FirstViewController.swift in Sources */,
+				76D71AC71DBBA523005B7211 /* DiningHall.swift in Sources */,
+				76D71AC51DBBA24A005B7211 /* HourRange.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -409,11 +450,14 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = WellesleyFresh/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = AudreySeo.WellesleyFresh;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Debug;
 		};
@@ -421,11 +465,14 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = WellesleyFresh/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = AudreySeo.WellesleyFresh;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Release;
 		};
@@ -496,6 +543,7 @@
 				76A3316D1D8263230079A6CE /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		76A3316E1D8263230079A6CE /* Build configuration list for PBXNativeTarget "WellesleyFreshTests" */ = {
 			isa = XCConfigurationList;
@@ -504,6 +552,7 @@
 				76A331701D8263230079A6CE /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		76A331711D8263230079A6CE /* Build configuration list for PBXNativeTarget "WellesleyFreshUITests" */ = {
 			isa = XCConfigurationList;
@@ -512,6 +561,7 @@
 				76A331731D8263230079A6CE /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
