@@ -19,9 +19,9 @@ class HoursViewController: UITableViewController {
 		
 		navigationItem.title = "Hours of Operation"
 		
-		let button = UIBarButtonItem(title: "Update", style: .Plain, target: self, action: #selector(HoursViewController.update))
+//		let button = UIBarButtonItem(title: "Update", style: .Plain, target: self, action: #selector(HoursViewController.update))
 		
-		navigationItem.rightBarButtonItem = button
+//		navigationItem.rightBarButtonItem = button
 		
 		// Assigns the class MyCell to the type of cell that we use in the table view
 		tableView.registerClass(ProgressCell.self, forCellReuseIdentifier: "cellId")

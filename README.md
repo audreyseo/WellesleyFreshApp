@@ -7,11 +7,13 @@ The Wellesley Fresh iPhone app that adapts the information found on the [Wellesl
 These are all of the features the app is currently capable of:
  - Showing the menu of a given dining hall (Tower, Bates, Pomeroy, Lulu, Stone-Davis)
  - Listing the 3 closest dining halls to your current location
+ - Showing the hours of all the dining halls
+  - Providing a progress bar that shows the last few hours left
+  - Shows how much time is left until the next meal
+
 
 ##Features in Development
  - Showing the menus of the 3 closest dining halls
- - Showing the hours of all the dining halls
-  - Providing a progress bar that shows the last few hours left
  - Provide feedback to the dining hall
 
 ###Possible Android Version
