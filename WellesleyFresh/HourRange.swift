@@ -111,7 +111,7 @@ class HourRange {
 			}
 		}
 		if (m != 0) {
-			return 60 - m
+			return 59 - m
 		}
 		else {
 			return m

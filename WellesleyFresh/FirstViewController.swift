@@ -37,6 +37,7 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UIPicker
 	
 	let storedData:NSUserDefaults = NSUserDefaults()
 	var diningHallNames:[String] = ["", "", ""]
+	var diningHallNamesShort:[String] = ["", "", ""]
 	var barButtonDone:UIBarButtonItem {
 		return UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.Done, target: self, action: "madeSelection")
 	}
@@ -158,7 +159,7 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UIPicker
 	
 	func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
 		chosenDiningHall = diningHallNames[row]
-		chosenShort = diningHalls[row]
+		chosenShort = diningHallNamesShort[row]
 		print("Selected: ", diningHallNames[row])
 	}
 	
@@ -177,6 +178,10 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UIPicker
 	func madeSelection() {
 		showDiningHallName.text = chosenDiningHall
 		hallInputView.hidden = true
+		let menu = storedData.dictionaryForKey(diningHallDictionaryKey) as! [String:[String]]
+		for i in 0...menu[chosenShort]!.count - 1 {
+			print("#", i, " of \(chosenShort) ", menu[chosenShort]![i], separator: "")
+		}
 	}
 	
 	// Helper function that calculates distance over a sphere.
@@ -318,6 +323,9 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UIPicker
 		diningHallNames[0] = names[i1]
 		diningHallNames[1] = names[i2]
 		diningHallNames[2] = names[i3]
+		diningHallNamesShort[0] = diningHalls[i1]
+		diningHallNamesShort[1] = diningHalls[i2]
+		diningHallNamesShort[2] = diningHalls[i3]
 	}
 	
 	

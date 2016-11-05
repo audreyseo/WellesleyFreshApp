@@ -60,6 +60,10 @@ class WellesleyFreshRegex {
 		return try! NSRegularExpression(pattern: ampersand, options: [])
 	}
 	
+	var replaceDoubleCarriageReturns:NSRegularExpression? {
+		return try! NSRegularExpression(pattern: "[\n\r]{2,10000}", options: [])
+	}
+	
 	init() {
 		// hello there
 	}
@@ -86,6 +90,7 @@ class WellesleyFreshRegex {
 		bodyString = self.extractString(bodyString, regex: self.deleteEmptyRegex!, regexTemplate: "\n")
 		bodyString = self.extractString(bodyString, regex: self.elementDeleterRegex!, regexTemplate: "")
 		bodyString = self.extractString(bodyString, regex: self.replaceAmpersandsRegex!, regexTemplate: "&")
+		bodyString = self.extractString(bodyString, regex: self.replaceDoubleCarriageReturns!, regexTemplate: "\n")
 		bodyString = bodyString.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet())
 		return bodyString
 	}

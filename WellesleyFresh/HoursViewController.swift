@@ -10,6 +10,7 @@ import UIKit
 
 class HoursViewController: UITableViewController {
 	var hours = DiningHours()
+	var diningHallName = ["stonedavis":"Stone Davis", "bates":"Bates", "bplc":"Lulu", "tower":"Tower", "pomeroy":"Pomeroy"]
 	var timer: NSTimer = NSTimer()
 	
 	override func viewDidLoad() {
@@ -77,7 +78,7 @@ class HoursViewController: UITableViewController {
 	
 	override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
 		let myCell = tableView.dequeueReusableCellWithIdentifier("cellId", forIndexPath: indexPath) as! ProgressCell
-		myCell.nameLabel.text = hours.halls[indexPath.row]
+		myCell.nameLabel.text = diningHallName[hours.halls[indexPath.row]]
 		myCell.mealLabel.text = hours.meal(indexPath.row)
 		myCell.timeLabel.text = formattedTime(indexPath.row)
 		myCell.timeLeft.text = formattedTimeLeft(indexPath.row)

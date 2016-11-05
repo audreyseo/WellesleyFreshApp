@@ -449,6 +449,9 @@ class SecondViewController: UITableViewController, UIPickerViewDataSource, UIPic
 			self.normalArray = bodyString.componentsSeparatedByString("\n")
 			self.diningHallArrays[hall] = self.normalArray
 			self.storedData.setObject(self.diningHallArrays, forKey: self.diningHallDictionaryKey)
+			for i in 0...(self.storedData.dictionaryForKey(self.diningHallDictionaryKey) as! [String: [String]])[hall]!.count - 1 {
+				print("The new string: ", (self.storedData.dictionaryForKey(self.diningHallDictionaryKey) as! [String: [String]])[hall]![i], separator: "")
+			}
 			self.loadingHall = false;
 		}
 		// Start the task
