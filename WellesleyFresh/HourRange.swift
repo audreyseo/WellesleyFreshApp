@@ -106,7 +106,7 @@ class HourRange {
 	func minutesLeft() -> Int {
 		var m:Int = minutes()
 		if highHour % 1 == 0.5 {
-			if m >= 30 {
+			if m < 30 {
 				m += 30
 			}
 		}

@@ -121,7 +121,8 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UIPicker
 		hallPicker.frame = CGRectMake(0, 40, self.view.frame.size.width, 400)
 		hallInputView.frame = CGRectMake(0, self.view.frame.origin.y + self.view.frame.size.height - 440, self.view.frame.size.width, 440)
 		hallToolBar.frame = CGRectMake(0, 0, self.view.frame.size.width, 40)
-		tableview.frame = CGRectMake(0, height - (height * 0.4), self.view.frame.size.width * 0.95, height * 0.3)
+		let hLimit = showDiningHallName.frame.origin.y + 30;
+		tableview.frame = CGRectMake(0, hLimit, self.view.frame.size.width * 0.95, (height - hLimit) * 0.8)
 	}
 	
 	// --------------------------------------------------------------------
@@ -155,12 +156,22 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UIPicker
 		return items.count
 	}
 	
-	func tableView(tableView: UITableView, didEndDisplayingCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
-		adjustHeightOfTableview()
-	}
+//	func tableView(tableView: UITableView, didEndDisplayingCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
+//		if (indexPath.row >= items.count - 1) {
+//			adjustHeightOfTableview()
+//		}
+//	}
 	
 	func adjustHeightOfTableview() {
-		let height:CGFloat = CGFloat(items.count * 50);
+//		let height:CGFloat = CGFloat(items.count * 50);
+		var height:CGFloat = 0;
+		
+		for i in 0...items.count - 1 {
+			if (tableview.cellForRowAtIndexPath(NSIndexPath(forRow: i, inSection: 0)) != nil) {
+				let cell:MyCell = tableview.cellForRowAtIndexPath(NSIndexPath(forRow: i, inSection: 0)) as! MyCell
+				height = height + cell.frame.height;
+			}
+		}
 		//		let maxHeight:CGFloat = self.tableView.superview!.frame.size.height - self.tableView.frame.origin.y;
 		
 		if tableview.contentSize.height != height {
@@ -288,6 +299,7 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UIPicker
 					tableview.insertRowsAtIndexPaths(indexPaths, withRowAnimation: .Right)
 				}
 				tableview.endUpdates()
+				adjustHeightOfTableview()
 			} else if (newSize < originalSize) {
 				for i in 0...originalSize - 1 {
 					
@@ -314,11 +326,13 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UIPicker
 					tableview.deleteRowsAtIndexPaths(indexPaths, withRowAnimation: .Right)
 					tableview.deleteRowsAtIndexPaths(bottomHalfIndexPaths, withRowAnimation: .Left)
 					tableview.endUpdates()
+					adjustHeightOfTableview()
 				} else {
 					tableview.beginUpdates()
 					tableview.reloadRowsAtIndexPaths(originalPaths, withRowAnimation: .Fade)
 					tableview.deleteRowsAtIndexPaths(indexPaths, withRowAnimation: .Right)
 					tableview.endUpdates()
+					adjustHeightOfTableview()
 				}
 			}
 		}
