@@ -84,20 +84,13 @@ class SecondViewController: UITableViewController, UIPickerViewDataSource, UIPic
 		// Assigns the class Header to the type of header cell that we use
 		tableView.registerClass(Header.self, forHeaderFooterViewReuseIdentifier: "headerId")
 		
-		//		navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Insert", style: .Plain, target: self, action: "newCellsInsertion")
-		//		navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Batch Insert", style: .Plain, target: self, action: "insertBatch")
 		navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Choose Hall", style: .Plain, target: self, action: #selector(SecondViewController.showPickerView))
 		
 		tableView.sizeToFit()
 		
 		// ty to this tutorial for the following code for auto-height for cells: https://www.raywenderlich.com/129059/self-sizing-table-view-cells
-		//		tableView.rowHeight =
 		tableView.estimatedRowHeight = 140
 		
-//		refreshControl = UIRefreshControl()
-//		refreshControl!.attributedTitle = NSAttributedString(string: "Pull for a Random Dining Hall")
-//		refreshControl!.addTarget(self, action: #selector(SecondViewController.refresh), forControlEvents: UIControlEvents.ValueChanged)
-//		tableView.addSubview(refreshControl!)
 		
 		// Adding picker view/controlling what it looks like
 		
@@ -110,11 +103,8 @@ class SecondViewController: UITableViewController, UIPickerViewDataSource, UIPic
 		hallToolBar.barStyle = UIBarStyle.Default
 		hallToolBar.translucent = true
 		
-		//		barButtonDone.tintColor = UIColor.blackColor()
 		hallToolBar.setItems([barButtonCancel, barButtonSpace, barButtonDone], animated: false)
-		//		hallToolBar.userInteractionEnabled = true
 		hallPicker.tag = 40
-		//		hallPicker.addSubview(hallToolBar)
 		hallInputView.addSubview(hallToolBar)
 		hallInputView.addSubview(hallPicker)
 		hallInputView.hidden = false
@@ -132,20 +122,9 @@ class SecondViewController: UITableViewController, UIPickerViewDataSource, UIPic
 		self.view.bringSubviewToFront(hallInputView)
 	}
 	
-	func madeSelection() {
-		//		self.view.viewWithTag(40)!.hidden = true
-		self.hallInputView.hidden = true;
-		print("Made selection: \(diningHall).")
-		choose()
-		//		hallPicker.removeFromSuperview()
-		//		hallToolBar.superview?.hidden = true
-	}
-	
-	func showPickerView() {
-		previousDiningHall = diningHall;
-		self.hallInputView.hidden = false
-		self.view.bringSubviewToFront(hallInputView)
-	}
+	// --------------------------------------------------------------------
+	// ------------------------DELEGATE METHODS----------------------------
+	// --------------------------------------------------------------------
 	
 	// PICKER VIEW DELEGATE FUNCTIONS
 	
@@ -175,13 +154,70 @@ class SecondViewController: UITableViewController, UIPickerViewDataSource, UIPic
 		return 40
 	}
 	
+	// TABLEVIEW DELEGATE FUNCTIONS
+	
+	override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+		return items.count
+	}
+	
+	override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+		let myCell = tableView.dequeueReusableCellWithIdentifier("cellId", forIndexPath: indexPath) as! MyCell
+		myCell.nameLabel.text = items[indexPath.row]
+		//		myCell.myTableViewController = self
+		return myCell
+	}
+	
+	override func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+		let myHeader = tableView.dequeueReusableHeaderFooterViewWithIdentifier("headerId") as! Header
+		myHeader.nameLabel.text = self.diningHall
+		//		myHeader.myTableViewController = self
+		return myHeader
+	}
+	
+	func deleteCell(cell: UITableViewCell) {
+		if let deletionIndexPath = tableView.indexPathForCell(cell) {
+			items.removeAtIndex(deletionIndexPath.item)
+			tableView.deleteRowsAtIndexPaths([deletionIndexPath], withRowAnimation: .Automatic)
+		}
+	}
+	override func tableView(tableView: UITableView, didEndDisplayingCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
+		adjustHeightOfTableview()
+	}
+	
+	// TABLE VIEW DELEGATE HELPERS
+	
+	func adjustHeightOfTableview() {
+		let height:CGFloat = CGFloat(items.count * cellHeight);
+		
+		if tableView.contentSize.height != height {
+			tableView.contentSize = CGSize(width: tableView.contentSize.width, height: height)
+		}
+	}
+	
+	// -------------------------------------------------------------
+	// --------------------------HELPERS----------------------------
+	// -------------------------------------------------------------
+	
+	func madeSelection() {
+		self.hallInputView.hidden = true;
+		print("Made selection: \(diningHall).")
+		choose()
+	}
+	
+	func showPickerView() {
+		previousDiningHall = diningHall;
+		self.hallInputView.hidden = false
+		self.view.bringSubviewToFront(hallInputView)
+	}
+	
+	
+	
 	func preload() {
 		for i in 0...diningHalls.count - 1 {
 			load(diningHalls[i])
 		}
 	}
-	
-	// HELPERS
+
 	
 	func retitleHeader() {
 		if (tableView.headerViewForSection(0) != nil) {
@@ -230,12 +266,6 @@ class SecondViewController: UITableViewController, UIPickerViewDataSource, UIPic
 			
 			let chosenDiningHall = Int(arc4random_uniform(UInt32(diningHalls.count)))
 			retitleHeader()
-//			if (normalArray.count > 0) {
-//				let keyExists = diningHallArrays[diningHall] != nil
-//				if (!keyExists) {
-//					diningHallArrays[diningHall] = normalArray
-//				}
-//			}
 			if (diningHallArrays[diningHall] != nil) {
 				normalArray = diningHallArrays[diningHall]!
 			}
@@ -249,14 +279,11 @@ class SecondViewController: UITableViewController, UIPickerViewDataSource, UIPic
 				if (!keyExists) {
 					load(diningHall)
 				} else {
-//					self.refreshControl?.endRefreshing()
 					normalArray = diningHallArrays[diningHall]!
 				}
 			} else {
 				load(diningHall)
 			}
-		} else {
-//			self.refreshControl?.endRefreshing()
 		}
 	}
 	
@@ -351,14 +378,6 @@ class SecondViewController: UITableViewController, UIPickerViewDataSource, UIPic
 					tableView.endUpdates()
 				}
 			}
-			
-//			if self.refreshControl != nil {
-//				self.refreshControl!.endRefreshing()
-//			}
-		} else {
-//			if self.refreshControl != nil {
-//				self.refreshControl!.endRefreshing()
-//			}
 		}
 	}
 	
@@ -399,7 +418,6 @@ class SecondViewController: UITableViewController, UIPickerViewDataSource, UIPic
 						items[i] = newStrings[i]
 					} else {
 						items.removeLast()
-						//						items.append(newStrings[i])
 					}
 					if (i >= newSize) {
 						indexPaths.append(NSIndexPath(forRow: i, inSection: 0))
@@ -460,62 +478,5 @@ class SecondViewController: UITableViewController, UIPickerViewDataSource, UIPic
 		}
 		// Start the task
 		task.resume()
-	}
-	
-	//	override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-	//		return CGFloat(cellHeight)
-	//	}
-	
-	
-	// TABLEVIEW DELEGATE FUNCTIONS
-	
-	override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		return items.count
-	}
-	
-	override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-		let myCell = tableView.dequeueReusableCellWithIdentifier("cellId", forIndexPath: indexPath) as! MyCell
-		myCell.nameLabel.text = items[indexPath.row]
-//		myCell.myTableViewController = self
-		return myCell
-	}
-	
-	override func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-		let myHeader = tableView.dequeueReusableHeaderFooterViewWithIdentifier("headerId") as! Header
-		myHeader.nameLabel.text = self.diningHall
-//		myHeader.myTableViewController = self
-		return myHeader
-	}
-	
-	func deleteCell(cell: UITableViewCell) {
-		if let deletionIndexPath = tableView.indexPathForCell(cell) {
-			items.removeAtIndex(deletionIndexPath.item)
-			tableView.deleteRowsAtIndexPaths([deletionIndexPath], withRowAnimation: .Automatic)
-		}
-	}
-	override func tableView(tableView: UITableView, didEndDisplayingCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
-		adjustHeightOfTableview()
-	}
-	
-	// HELPERS
-	
-	func adjustHeightOfTableview() {
-		let height:CGFloat = CGFloat(items.count * cellHeight);
-		//		let maxHeight:CGFloat = self.tableView.superview!.frame.size.height - self.tableView.frame.origin.y;
-		
-		if tableView.contentSize.height != height {
-			tableView.contentSize = CGSize(width: tableView.contentSize.width, height: height)
-		}
-		// if the height of the content is greater than the maxHeight of
-		// total space on the screen, limit the height to the size of the
-		// superview.
-		
-		//		if (height > maxHeight) {
-		//			height = maxHeight;
-		//		}
-		//		print("Height: ", height);
-		
-		// now set the height constraint accordingly
-		
 	}
 }

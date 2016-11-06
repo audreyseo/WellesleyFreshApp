@@ -92,7 +92,6 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UIPicker
 		tableview.sizeToFit()
 		
 		// ty to this tutorial for the following code for auto-height for cells: https://www.raywenderlich.com/129059/self-sizing-table-view-cells
-		//		tableView.rowHeight =
 		tableview.estimatedRowHeight = 140
 		
 		self.view.addSubview(tableview)
@@ -107,11 +106,8 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UIPicker
 		hallToolBar.barStyle = UIBarStyle.Default
 		hallToolBar.translucent = true
 		
-		//		barButtonDone.tintColor = UIColor.blackColor()
 		hallToolBar.setItems([barButtonCancel, barButtonSpace, barButtonDone], animated: false)
-		//		hallToolBar.userInteractionEnabled = true
 		hallPicker.tag = 40
-		//		hallPicker.addSubview(hallToolBar)
 		hallInputView.addSubview(hallToolBar)
 		hallInputView.addSubview(hallPicker)
 		hallInputView.hidden = true
@@ -170,17 +166,6 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UIPicker
 		if tableview.contentSize.height != height {
 			tableview.contentSize = CGSize(width: tableview.contentSize.width, height: height)
 		}
-		// if the height of the content is greater than the maxHeight of
-		// total space on the screen, limit the height to the size of the
-		// superview.
-		
-		//		if (height > maxHeight) {
-		//			height = maxHeight;
-		//		}
-		//		print("Height: ", height);
-		
-		// now set the height constraint accordingly
-		
 	}
 	
 	
