@@ -38,22 +38,21 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UIPicker
 	let storedData:NSUserDefaults = NSUserDefaults()
 	var diningHallNames:[String] = ["", "", ""]
 	var diningHallNamesShort:[String] = ["", "", ""]
+	var items:[String] = []
 	var barButtonDone:UIBarButtonItem {
-		return UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.Done, target: self, action: "madeSelection")
+		return UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.Done, target: self, action: #selector(madeSelection))
 	}
 	var barButtonSpace:UIBarButtonItem {
 		return UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FlexibleSpace, target: nil, action: nil)
 	}
 	var barButtonCancel:UIBarButtonItem {
-		return UIBarButtonItem(title: "Cancel", style: UIBarButtonItemStyle.Plain, target: self, action: "madeSelection")
+		return UIBarButtonItem(title: "Cancel", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(madeSelection))
 	}
 	
 	var tableview:UITableView = UITableView()
 	
 	@IBOutlet weak var mapViewer: MKMapView!
-	@IBOutlet weak var tableViewer1: UITableView!
-	@IBOutlet weak var tableViewer2: UITableView!
-	@IBOutlet weak var tableViewer3: UITableView!
+	
 	
 	@IBOutlet weak var locationInfo: UILabel!
 	
@@ -72,7 +71,7 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UIPicker
 		
 		let authorizationCode = CLLocationManager.authorizationStatus()
 		
-		if authorizationCode == CLAuthorizationStatus.NotDetermined && coreLocationManager.respondsToSelector("requestWhenInUseAuthorization"){
+		if authorizationCode == CLAuthorizationStatus.NotDetermined && coreLocationManager.respondsToSelector(#selector(CLLocationManager.requestWhenInUseAuthorization)){
 			print("Authorization not determined...")
 			if NSBundle.mainBundle().objectForInfoDictionaryKey("NSLocationWhenInUseUsageDescription") != nil {
 				coreLocationManager.requestWhenInUseAuthorization()
@@ -82,10 +81,20 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UIPicker
 		} else {
 			self.getInitialLocation()
 		}
-//		getWellesleyFreshData()
 		
+		tableview.registerClass(MyCell.self, forCellReuseIdentifier: "cellId")
+		
+		// Assigns the class Header to the type of header cell that we use
+		tableview.registerClass(Header.self, forHeaderFooterViewReuseIdentifier: "headerId")
 		tableview.delegate = self
 		tableview.dataSource = self
+		
+		tableview.sizeToFit()
+		
+		// ty to this tutorial for the following code for auto-height for cells: https://www.raywenderlich.com/129059/self-sizing-table-view-cells
+		//		tableView.rowHeight =
+		tableview.estimatedRowHeight = 140
+		
 		self.view.addSubview(tableview)
 		
 		
@@ -116,31 +125,62 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UIPicker
 		hallPicker.frame = CGRectMake(0, 40, self.view.frame.size.width, 400)
 		hallInputView.frame = CGRectMake(0, self.view.frame.origin.y + self.view.frame.size.height - 440, self.view.frame.size.width, 440)
 		hallToolBar.frame = CGRectMake(0, 0, self.view.frame.size.width, 40)
-		tableview.frame = CGRectMake(0, height - (height * 0.4), self.view.frame.size.width, height * 0.4)
+		tableview.frame = CGRectMake(0, height - (height * 0.4), self.view.frame.size.width * 0.95, height * 0.3)
 	}
+	
+	// --------------------------------------------------------------------
+	// ------------------------DELEGATE METHODS----------------------------
+	// --------------------------------------------------------------------
 	
 	// ------------UITableView Delegate and Datasource Methods-------------
 	
 	func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
 		let myCell = tableView.dequeueReusableCellWithIdentifier("cellId", forIndexPath: indexPath) as! MyCell
-		if (menus[chosenShort] != nil) {
-			myCell.nameLabel.text = menus[chosenShort]![indexPath.row]
+		if (items.count > 0) {
+			myCell.nameLabel.text = items[indexPath.row]
 		} else {
 			myCell.nameLabel.text = ""
 		}
 		return myCell
 	}
 	
+	func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+		let myHeader = tableView.dequeueReusableHeaderFooterViewWithIdentifier("headerId") as! Header
+//		if (self.chosenDiningHall != "") {
+//			myHeader.nameLabel.text = self.chosenDiningHall
+//		} else {
+			myHeader.nameLabel.text = "Choose a dining hall by clicking the button above."
+//		}
+		//		myHeader.myTableViewController = self
+		return myHeader
+	}
+	
 	func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		if (chosenShort != "") {
-			if menus[chosenShort] != nil {
-				return menus[chosenShort]!.count
-			} else {
-				return 0
-			}
-		} else {
-			return 0
+		return items.count
+	}
+	
+	func tableView(tableView: UITableView, didEndDisplayingCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
+		adjustHeightOfTableview()
+	}
+	
+	func adjustHeightOfTableview() {
+		let height:CGFloat = CGFloat(items.count * 50);
+		//		let maxHeight:CGFloat = self.tableView.superview!.frame.size.height - self.tableView.frame.origin.y;
+		
+		if tableview.contentSize.height != height {
+			tableview.contentSize = CGSize(width: tableview.contentSize.width, height: height)
 		}
+		// if the height of the content is greater than the maxHeight of
+		// total space on the screen, limit the height to the size of the
+		// superview.
+		
+		//		if (height > maxHeight) {
+		//			height = maxHeight;
+		//		}
+		//		print("Height: ", height);
+		
+		// now set the height constraint accordingly
+		
 	}
 	
 	
@@ -171,43 +211,6 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UIPicker
 		return 40
 	}
 	
-	
-	// ------------------------------HELPERS---------------------------------
-	
-	// Tells the hallInputView to go away
-	func madeSelection() {
-		showDiningHallName.text = chosenDiningHall
-		hallInputView.hidden = true
-		let menu = storedData.dictionaryForKey(diningHallDictionaryKey) as! [String:[String]]
-		for i in 0...menu[chosenShort]!.count - 1 {
-			print("#", i, " of \(chosenShort) ", menu[chosenShort]![i], separator: "")
-		}
-	}
-	
-	// Helper function that calculates distance over a sphere.
-	func distance(first:CLLocation, second:CLLocationCoordinate2D) -> Float {
-		let lat1 = Float(first.coordinate.latitude)
-		let lon1 = Float(first.coordinate.longitude)
-		let lat2 = Float(second.latitude)
-		let lon2 = Float(second.longitude)
-		
-		let phi1 = radians(lat1)
-		let phi2 = radians(lat2)
-		
-		let deltaPhi = radians(lat2 - lat1)
-		let deltaLambda = radians(lon2 - lon1)
-		
-		let a = (sin(deltaPhi / 2.0) * sin(deltaPhi / 2.0)) + (cos(phi1) * cos(phi2) * sin(deltaLambda / 2.0) * sin(deltaLambda / 2.0));
-		let c = atan(sqrt(a) / sqrt(1 - a)) * 2.0; // Float(M_PI);
-		let d = 6371043 * c;
-		return d;
-	}
-	
-	// Helper function that converts degrees (latitude, longitude) to radians
-	func radians(degrees:Float)->Float {
-		return degrees * Float(M_PI / 180.0);
-	}
-	
 	// -----------------CLLocationManager Delegate Functions-----------------
 	// All of these functions react to a certain event.
 	
@@ -235,6 +238,130 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UIPicker
 				getLocation()
 			}
 		}
+	}
+	
+	
+	// ------------------------------HELPERS---------------------------------
+	
+	// Retitles the header of the tableview
+	func retitleHeader() {
+		if (tableview.headerViewForSection(0) != nil) {
+			(tableview.headerViewForSection(0) as! Header).nameLabel.text = self.chosenDiningHall
+		}
+	}
+	
+	// Tells the hallInputView to go away
+	func madeSelection() {
+		showDiningHallName.text = chosenDiningHall
+		hallInputView.hidden = true
+		menus = storedData.dictionaryForKey(diningHallDictionaryKey) as! [String:[String]]
+		newCellsInsertion()
+		retitleHeader()
+	}
+	
+	// ------------------Functions for Showing New Data-------------------
+	
+	func newCellsInsertion() {
+		var normalArray:[String] = menus[chosenShort]!
+		if (normalArray.count >= 1) {
+			let originalSize:Int = items.count
+			let newSize:Int = normalArray.count
+			
+			print("Old Size, New Size: ", originalSize, ", ", newSize, separator: "")
+			var indexPaths = [NSIndexPath]()
+			var originalPaths = [NSIndexPath]()
+			var bottomHalfIndexPaths = [NSIndexPath]()
+			if (newSize >= originalSize) {
+				let isAbsoluteDiffGreaterThanOne:Bool = newSize - originalSize > 1
+				for i in 0...normalArray.count - 1 {
+					if (i < normalArray.count) {
+						if (i < originalSize) {
+							items[i] = normalArray[i]
+						} else {
+							items.append(normalArray[i])
+						}
+					}
+					if (i >= originalSize) {
+						indexPaths.append(NSIndexPath(forRow: i, inSection: 0))
+					} else {
+						originalPaths.append(NSIndexPath(forRow: i, inSection: 0))
+					}
+				}
+				
+				if (isAbsoluteDiffGreaterThanOne) {
+					for _ in 0...indexPaths.count / 2 - 1 {
+						bottomHalfIndexPaths.append(indexPaths.removeLast())
+					}
+				}
+				
+				tableview.beginUpdates()
+				tableview.reloadRowsAtIndexPaths(originalPaths, withRowAnimation: .Fade)
+				if (isAbsoluteDiffGreaterThanOne) {
+					tableview.insertRowsAtIndexPaths(indexPaths, withRowAnimation: .Right)
+					tableview.insertRowsAtIndexPaths(bottomHalfIndexPaths, withRowAnimation: .Left)
+				} else if (newSize - originalSize == 1) {
+					tableview.insertRowsAtIndexPaths(indexPaths, withRowAnimation: .Right)
+				}
+				tableview.endUpdates()
+			} else if (newSize < originalSize) {
+				for i in 0...originalSize - 1 {
+					
+					if (i < newSize) {
+						items[i] = normalArray[i]
+					} else {
+						items.removeLast()
+					}
+					
+					if (i >= newSize) {
+						indexPaths.append(NSIndexPath(forRow: i, inSection: 0))
+					} else {
+						originalPaths.append(NSIndexPath(forRow: i, inSection: 0))
+					}
+				}
+				
+				if indexPaths.count > 2 {
+					for _ in 0...indexPaths.count / 2 - 1 {
+						bottomHalfIndexPaths.append(indexPaths.removeLast())
+					}
+					
+					tableview.beginUpdates()
+					tableview.reloadRowsAtIndexPaths(originalPaths, withRowAnimation: .Fade)
+					tableview.deleteRowsAtIndexPaths(indexPaths, withRowAnimation: .Right)
+					tableview.deleteRowsAtIndexPaths(bottomHalfIndexPaths, withRowAnimation: .Left)
+					tableview.endUpdates()
+				} else {
+					tableview.beginUpdates()
+					tableview.reloadRowsAtIndexPaths(originalPaths, withRowAnimation: .Fade)
+					tableview.deleteRowsAtIndexPaths(indexPaths, withRowAnimation: .Right)
+					tableview.endUpdates()
+				}
+			}
+		}
+	}
+
+	
+	// Helper function that calculates distance over a sphere.
+	func distance(first:CLLocation, second:CLLocationCoordinate2D) -> Float {
+		let lat1 = Float(first.coordinate.latitude)
+		let lon1 = Float(first.coordinate.longitude)
+		let lat2 = Float(second.latitude)
+		let lon2 = Float(second.longitude)
+		
+		let phi1 = radians(lat1)
+		let phi2 = radians(lat2)
+		
+		let deltaPhi = radians(lat2 - lat1)
+		let deltaLambda = radians(lon2 - lon1)
+		
+		let a = (sin(deltaPhi / 2.0) * sin(deltaPhi / 2.0)) + (cos(phi1) * cos(phi2) * sin(deltaLambda / 2.0) * sin(deltaLambda / 2.0));
+		let c = atan(sqrt(a) / sqrt(1 - a)) * 2.0; // Float(M_PI);
+		let d = 6371043 * c;
+		return d;
+	}
+	
+	// Helper function that converts degrees (latitude, longitude) to radians
+	func radians(degrees:Float)->Float {
+		return degrees * Float(M_PI / 180.0);
 	}
 	
 	// ---------------------------Get Location-------------------------------
@@ -270,7 +397,7 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UIPicker
 	
 	// Create all of the dining hall annotations.
 	func displayDiningHallCenters() {
-		for var i=0; i<latitudes.count; i++ {
+		for i in 0...latitudes.count - 1 {
 			displayDiningHall(i)
 		}
 		mapViewer.showAnnotations(diningHallAnnotations, animated: true)
@@ -280,7 +407,7 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UIPicker
 	// then assigns this information to the subtitles of the dining halls.
 	func findDistances(myLocation:CLLocation) {
 		var myDistances: [Float] = [Float]()
-		for var i = 0; i < diningHallAnnotations.count; i++ {
+		for i in 0...diningHallAnnotations.count - 1 {
 			let dist = distance(myLocation, second: diningHallAnnotations[i].coordinate)
 			myDistances += [dist]
 			diningHallAnnotations[i].subtitle = "\(dist) meters away"
@@ -299,19 +426,19 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UIPicker
 		var num3:Float = 10000.0
 		var i3 = -1
 		
-		for var i = 0; i < myDistances.count; i++ {
+		for i in 0...myDistances.count - 1 {
 			if (myDistances[i] < num1) {
 				i1 = i;
 				num1 = myDistances[i]
 			}
 		}
-		for var i = 0; i < myDistances.count; i++ {
+		for i in 0...myDistances.count - 1 {
 			if (myDistances[i] < num2 && myDistances[i] > num1) {
 				i2 = i;
 				num2 = myDistances[i]
 			}
 		}
-		for var i = 0; i < myDistances.count; i++ {
+		for i in 0...myDistances.count - 1 {
 			if (myDistances[i] < num3 && myDistances[i] > num2) {
 				i3 = i;
 				num3 = myDistances[i]

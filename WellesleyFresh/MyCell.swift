@@ -40,7 +40,7 @@ class MyCell: UITableViewCell {
 		addSubview(nameLabel)
 		//		addSubview(actionButton)
 		
-		actionButton.addTarget(self, action: "handleAction", forControlEvents: .TouchUpInside)
+//		actionButton.addTarget(self, action: "handleAction", forControlEvents: .TouchUpInside)
 		
 		
 		addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-16-[v0]-|", options: NSLayoutFormatOptions(), metrics: nil, views: ["v0": nameLabel]))

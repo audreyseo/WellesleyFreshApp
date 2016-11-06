@@ -94,10 +94,10 @@ class SecondViewController: UITableViewController, UIPickerViewDataSource, UIPic
 		//		tableView.rowHeight =
 		tableView.estimatedRowHeight = 140
 		
-		refreshControl = UIRefreshControl()
-		refreshControl!.attributedTitle = NSAttributedString(string: "Pull for a Random Dining Hall")
-		refreshControl!.addTarget(self, action: #selector(SecondViewController.refresh), forControlEvents: UIControlEvents.ValueChanged)
-		tableView.addSubview(refreshControl!)
+//		refreshControl = UIRefreshControl()
+//		refreshControl!.attributedTitle = NSAttributedString(string: "Pull for a Random Dining Hall")
+//		refreshControl!.addTarget(self, action: #selector(SecondViewController.refresh), forControlEvents: UIControlEvents.ValueChanged)
+//		tableView.addSubview(refreshControl!)
 		
 		// Adding picker view/controlling what it looks like
 		
@@ -147,6 +147,8 @@ class SecondViewController: UITableViewController, UIPickerViewDataSource, UIPic
 		self.view.bringSubviewToFront(hallInputView)
 	}
 	
+	// PICKER VIEW DELEGATE FUNCTIONS
+	
 	func numberOfComponentsInPickerView(pickerView: UIPickerView) -> Int {
 		return 1
 	}
@@ -178,6 +180,8 @@ class SecondViewController: UITableViewController, UIPickerViewDataSource, UIPic
 			load(diningHalls[i])
 		}
 	}
+	
+	// HELPERS
 	
 	func retitleHeader() {
 		if (tableView.headerViewForSection(0) != nil) {
@@ -245,14 +249,14 @@ class SecondViewController: UITableViewController, UIPickerViewDataSource, UIPic
 				if (!keyExists) {
 					load(diningHall)
 				} else {
-					self.refreshControl?.endRefreshing()
+//					self.refreshControl?.endRefreshing()
 					normalArray = diningHallArrays[diningHall]!
 				}
 			} else {
 				load(diningHall)
 			}
 		} else {
-			self.refreshControl?.endRefreshing()
+//			self.refreshControl?.endRefreshing()
 		}
 	}
 	
@@ -348,13 +352,13 @@ class SecondViewController: UITableViewController, UIPickerViewDataSource, UIPic
 				}
 			}
 			
-			if self.refreshControl != nil {
-				self.refreshControl!.endRefreshing()
-			}
+//			if self.refreshControl != nil {
+//				self.refreshControl!.endRefreshing()
+//			}
 		} else {
-			if self.refreshControl != nil {
-				self.refreshControl!.endRefreshing()
-			}
+//			if self.refreshControl != nil {
+//				self.refreshControl!.endRefreshing()
+//			}
 		}
 	}
 	
@@ -462,6 +466,9 @@ class SecondViewController: UITableViewController, UIPickerViewDataSource, UIPic
 	//		return CGFloat(cellHeight)
 	//	}
 	
+	
+	// TABLEVIEW DELEGATE FUNCTIONS
+	
 	override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 		return items.count
 	}
@@ -489,6 +496,8 @@ class SecondViewController: UITableViewController, UIPickerViewDataSource, UIPic
 	override func tableView(tableView: UITableView, didEndDisplayingCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
 		adjustHeightOfTableview()
 	}
+	
+	// HELPERS
 	
 	func adjustHeightOfTableview() {
 		let height:CGFloat = CGFloat(items.count * cellHeight);
