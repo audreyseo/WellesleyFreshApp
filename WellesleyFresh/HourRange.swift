@@ -38,16 +38,17 @@ class HourRange {
 	}
 	
 	func currentHour() -> Double {
-//		let today:Date = todaysDate()
-//		let h:Int = Int(hourFormatter.string(from: today))!
-//		let m:Int = Int(minuteFormatter.string(from: today))!
-		let hour:Double = Double(hours())
-		let minute:Double = Double(minutes())
+		let today:Date
+		today = Date.init()
+		let h:Int = Int(hourFormatter.string(from: today))!
+		let m:Int = Int(minuteFormatter.string(from: today))!
+		let hour:Double = Double(h)
+		let minute:Double = Double(m)
 		return (hour + (minute / 60.0))
 	}
 	
 	func currentMinutes() -> Double {
-		let today:Date = todaysDate()
+		let today:Date = Date.init()
 		let h:Int = Int(hourFormatter.string(from: today))!
 		let m:Int = Int(minuteFormatter.string(from: today))!
 		let hour:Double = Double(h)
@@ -57,22 +58,16 @@ class HourRange {
 	
 	func currentSeconds() -> Double {
 		let minutes = currentMinutes()
-		let today:Date = todaysDate()
+		let today:Date = Date.init()
 		let s:Int = Int(secondFormatter.string(from: today))!
 		let second:Double = Double(s)
-		
 		return second + (minutes * 60.0)
-	}
-	
-	func todaysDate() -> Date {
-		let today:Date
-		today = Date.init()
-		return today
 	}
 	
 	func lowMinutes() -> Double {
 		return lowHour * 60.0
 	}
+
 	
 	func highMinutes() -> Double {
 		return highHour * 60.0
@@ -86,17 +81,23 @@ class HourRange {
 		return highMinutes() * 60.0
 	}
 	
+	func onlyMinutes() -> Double {
+		return Double((hours() * 60) + minutes())
+	}
+
+	
+	
+	
 	
 	func hours() -> Int {
-		let today:Date = todaysDate()
+		let today:Date
+		today = Date.init()
 		return Int(hourFormatter.string(from: today))!
 	}
 	
 	func hoursLeft() -> Int {
-		let dif = highMinutes() - onlyMinutes()
-		return Int(floor(dif / 60))
-//		var h:Int = hours()
-		
+//		var h:Int = onlyMinutes()
+		return Int(floor((highMinutes() - onlyMinutes()) / 60))
 //		print("\(h), \(Int(highHour)), \(highHour)")
 //		if (highHour == 0) {
 //			if lowHour.truncatingRemainder(dividingBy: 1.0) == 0.5 {
@@ -127,16 +128,9 @@ class HourRange {
 //		return Int(highHour) - h
 	}
 	
-	func onlyMinutes() -> Double {
-		return Double((hours() * 60) + minutes())
-	}
-	
 	func hoursElapsed() -> Int {
-//		let loMin = lowMinutes()
 		let dif = onlyMinutes() - lowMinutes()
 		return Int(floor(dif / 60))
-//		let hiMin = highMinutes()
-		
 //		var h:Int = hours()
 //		let m:Int = minutes()
 //		if lowHour.truncatingRemainder(dividingBy: 1) == 0.5 {
@@ -149,37 +143,38 @@ class HourRange {
 	}
 	
 	func minutes() -> Int {
-//		let today:Date
-//		today = Date.init()
-		return Int((highMinutes() - onlyMinutes())) % 60
-//		return Int(minuteFormatter.string(from: today))!
+		let today:Date
+		today = Date.init()
+		return Int(minuteFormatter.string(from: today))!
 	}
 	
 	func minutesLeft() -> Int {
-		var m:Int = minutes()
-		if highHour.truncatingRemainder(dividingBy: 1) == 0.5 {
-			if m < 30 {
-				m += 30
-			}
-		}
-		if (m != 0) {
-			return 59 - m
-		}
-		else {
-			return m
-		}
+		return (Int(highMinutes() - onlyMinutes()) % 60) - 1
+//		var m:Int = minutes()
+//		if highHour.truncatingRemainder(dividingBy: 1) == 0.5 {
+//			if m < 30 {
+//				m += 30
+//			}
+//		}
+//		if (m != 0) {
+//			return 59 - m
+//		}
+//		else {
+//			return m
+//		}
 	}
 	
 	func minutesElapsed() -> Int {
-		var m:Int = minutes()
-		if lowHour.truncatingRemainder(dividingBy: 1) == 0.5 {
-			if m >= 30 {
-				m = m - 30
-			} else {
-				m = 60 + (m - 30)
-			}
-		}
-		return m
+		return Int(onlyMinutes() - lowMinutes()) % 60
+//		var m:Int = minutes()
+//		if lowHour.truncatingRemainder(dividingBy: 1) == 0.5 {
+//			if m >= 30 {
+//				m = m - 30
+//			} else {
+//				m = 60 + (m - 30)
+//			}
+//		}
+//		return m
 	}
 	
 	func seconds() -> Int {
@@ -189,7 +184,7 @@ class HourRange {
 	}
 	
 	func secondsLeft() -> Int {
-		return 59 - seconds()
+		return 60 - seconds()
 	}
 	
 	func secondsElapsed() -> Int {
