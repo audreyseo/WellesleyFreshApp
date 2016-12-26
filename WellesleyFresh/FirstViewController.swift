@@ -131,6 +131,7 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UIPicker
 	}
 	
 	override func viewWillAppear(_ animated: Bool) {
+		print("FirstViewController will appear.")
 		let height = self.view.frame.origin.y + self.view.frame.size.height
 		hallPicker.frame = CGRect(x: 0, y: 40, width: self.view.frame.size.width, height: 400)
 		hallInputView.frame = CGRect(x: 0, y: self.view.frame.origin.y + self.view.frame.size.height - 440, width: self.view.frame.size.width, height: 440)
@@ -147,6 +148,14 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UIPicker
 		
 		if CLLocationManager.authorizationStatus() == .authorizedWhenInUse {
 			mapViewer.showsUserLocation = true
+		}
+		let m = storedData.object(forKey: "Preferred Units") as! String
+		if (meters && m.contains("ft")) {
+			meters = false
+			findDistances(mapViewer.userLocation.location!)
+		} else if (!meters && !m.contains("ft")) {
+			meters = true;
+			findDistances(mapViewer.userLocation.location!)
 		}
 		
 //		print(mapViewer.frame)
@@ -471,7 +480,8 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UIPicker
 		for i in 0...diningHallAnnotations.count - 1 {
 			let dist = distance(myLocation, second: diningHallAnnotations[i].coordinate)
 			myDistances += [dist]
-			diningHallAnnotations[i].subtitle = "\(dist) meters away"
+			let myUnits = meters ? "m" : "ft"
+			diningHallAnnotations[i].subtitle = "\(dist) \(myUnits) away"
 		}
 		findThreeSmallest(myDistances)
 	}
