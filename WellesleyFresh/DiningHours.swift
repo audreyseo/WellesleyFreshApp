@@ -36,7 +36,7 @@ class DiningHours {
 		secondHoursA.append([11.5, 14.0])
 		secondHoursA.append([17.0, 20.0])
 		let stoneHours = [firstHoursA, secondHoursA]
-		diningHalls["stonedavis"] = DiningHall(newDays: ["MoTuWeTh", "Fr"], newHours: stoneHours, meals: [["Continental Breakfast", "Full Breakfast", "Lunch", "Dinner", "Late Night"], ["Continental Breakfast", "Full Breakfast", "Lunch", "Dinner"]])
+		diningHalls["stonedavis"] = DiningHall(newDays: ["MoTuWeTh", "Fr"], newHours: stoneHours as! [[[Double]]], meals: [["Continental Breakfast", "Full Breakfast", "Lunch", "Dinner", "Late Night"], ["Continental Breakfast", "Full Breakfast", "Lunch", "Dinner"]])
 		var firstHoursB = [[7.0, 10.5]]
 		firstHoursB.append([11.5, 14.0])
 		firstHoursB.append([17.0, 20.0])
@@ -49,46 +49,46 @@ class DiningHours {
 		diningHalls["bplc"] = DiningHall(newDays: ["MoTuWeThFr", "SaSu"], newHours: luluHours, meals: [["Continental Breakfast", "Lunch", "Dinner", "Late Night"], ["Continental Breakfast", "Hot Brunch", "Dinner", "Late Night"]])
 	}
 	
-	func isOpen(index:Int) -> Bool {
+	func isOpen(_ index:Int) -> Bool {
 		if (index < halls.count) {
 			return (diningHalls[halls[index]]?.openToday())!
 		}
 		return false
 	}
 	
-	func meal(index:Int) -> String {
+	func meal(_ index:Int) -> String {
 		if (index < halls.count) {
 			return (diningHalls[halls[index]]?.currentMeal())!
 		}
 		return ""
 	}
 	
-	func percentDone(index:Int) -> Double {
+	func percentDone(_ index:Int) -> Double {
 		print("Percent left: ", diningHalls[halls[index]]!.percentLeft())
 		return (diningHalls[halls[index]]!.percentLeft())
 	}
 	
-	func hoursElapsed(index:Int) -> Int {
+	func hoursElapsed(_ index:Int) -> Int {
 		return (diningHalls[halls[index]]?.currentHours().hoursElapsed())!
 	}
 	
-	func minsElapsed(index:Int) -> Int {
+	func minsElapsed(_ index:Int) -> Int {
 		return (diningHalls[halls[index]]?.currentHours().minutesElapsed())!
 	}
 	
-	func secsElapsed(index:Int) -> Int {
+	func secsElapsed(_ index:Int) -> Int {
 		return (diningHalls[halls[index]]?.currentHours().secondsElapsed())!
 	}
 	
-	func hoursLeft(index:Int) -> Int {
+	func hoursLeft(_ index:Int) -> Int {
 		return (diningHalls[halls[index]]?.currentHours().hoursLeft())!
 	}
 	
-	func minsLeft(index:Int) -> Int {
+	func minsLeft(_ index:Int) -> Int {
 		return (diningHalls[halls[index]]?.currentHours().minutesLeft())!
 	}
 	
-	func secsLeft(index:Int) -> Int {
+	func secsLeft(_ index:Int) -> Int {
 		return (diningHalls[halls[index]]?.currentHours().secondsLeft())!
 	}
 }

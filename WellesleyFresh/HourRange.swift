@@ -14,50 +14,50 @@ class HourRange {
 	var highHour:Double
 	var lowHour:Double
 	var rangeName:String
-	var hourFormatter:NSDateFormatter
-	var minuteFormatter:NSDateFormatter
-	var secondFormatter:NSDateFormatter
-	var timeFormatter:NSDateFormatter
+	var hourFormatter:DateFormatter
+	var minuteFormatter:DateFormatter
+	var secondFormatter:DateFormatter
+	var timeFormatter:DateFormatter
 	
 	init( low:Double, high:Double, name:String) {
 		self.highHour = high;
 		self.lowHour = low;
 		self.rangeName = name;
-		self.hourFormatter = NSDateFormatter()
-		hourFormatter.locale = NSLocale(localeIdentifier: "en_US_POSIX")
+		self.hourFormatter = DateFormatter()
+		hourFormatter.locale = Locale(identifier: "en_US_POSIX")
 		hourFormatter.dateFormat = "k"
-		minuteFormatter = NSDateFormatter()
-		minuteFormatter.locale = NSLocale(localeIdentifier: "en_US_POSIX")
+		minuteFormatter = DateFormatter()
+		minuteFormatter.locale = Locale(identifier: "en_US_POSIX")
 		minuteFormatter.dateFormat = "m"
-		secondFormatter = NSDateFormatter()
-		secondFormatter.locale = NSLocale(localeIdentifier: "en_US_POSIX")
+		secondFormatter = DateFormatter()
+		secondFormatter.locale = Locale(identifier: "en_US_POSIX")
 		secondFormatter.dateFormat = "s"
-		timeFormatter = NSDateFormatter()
-		timeFormatter.locale = NSLocale(localeIdentifier: "en_US_POSIX")
+		timeFormatter = DateFormatter()
+		timeFormatter.locale = Locale(identifier: "en_US_POSIX")
 		timeFormatter.dateFormat = "kk:mm:ss"
 	}
 	
 	func currentHour() -> Double {
-		let today:NSDate
-		today = NSDate.init()
-		let h:Int = Int(hourFormatter.stringFromDate(today))!
-		let m:Int = Int(minuteFormatter.stringFromDate(today))!
+		let today:Date
+		today = Date.init()
+		let h:Int = Int(hourFormatter.string(from: today))!
+		let m:Int = Int(minuteFormatter.string(from: today))!
 		let hour:Double = Double(h)
 		let minute:Double = Double(m)
 		return (hour + (minute / 60.0))
 	}
 	
 	func hours() -> Int {
-		let today:NSDate
-		today = NSDate.init()
-		return Int(hourFormatter.stringFromDate(today))!
+		let today:Date
+		today = Date.init()
+		return Int(hourFormatter.string(from: today))!
 	}
 	
 	func hoursLeft() -> Int {
 		var h:Int = hours()
 //		print("\(h), \(Int(highHour)), \(highHour)")
 		if (highHour == 0) {
-			if lowHour % 1.0 == 0.5 {
+			if lowHour.truncatingRemainder(dividingBy: 1.0) == 0.5 {
 				let m = minutes()
 				if (m > 30) {
 					return 24 - (h + 1)
@@ -68,14 +68,14 @@ class HourRange {
 				return 24 - h
 			}
 		}
-		if (highHour % 1 == 0) {
+		if (highHour.truncatingRemainder(dividingBy: 1) == 0) {
 			let m = minutes()
 			if (m > 30) {
 				return Int(highHour) - (h + 1)
 			} else {
 				return Int(highHour) - h
 			}
-		} else if highHour % 1 == 0.5 {
+		} else if highHour.truncatingRemainder(dividingBy: 1) == 0.5 {
 			let m = minutes()
 			if m <= 30 {
 				h += 1
@@ -88,7 +88,7 @@ class HourRange {
 	func hoursElapsed() -> Int {
 		var h:Int = hours()
 		let m:Int = minutes()
-		if lowHour % 1 == 0.5 {
+		if lowHour.truncatingRemainder(dividingBy: 1) == 0.5 {
 			if m > 30 {
 				h += 1;
 			}
@@ -98,14 +98,14 @@ class HourRange {
 	}
 	
 	func minutes() -> Int {
-		let today:NSDate
-		today = NSDate.init()
-		return Int(minuteFormatter.stringFromDate(today))!
+		let today:Date
+		today = Date.init()
+		return Int(minuteFormatter.string(from: today))!
 	}
 	
 	func minutesLeft() -> Int {
 		var m:Int = minutes()
-		if highHour % 1 == 0.5 {
+		if highHour.truncatingRemainder(dividingBy: 1) == 0.5 {
 			if m < 30 {
 				m += 30
 			}
@@ -120,7 +120,7 @@ class HourRange {
 	
 	func minutesElapsed() -> Int {
 		var m:Int = minutes()
-		if lowHour % 1 == 0.5 {
+		if lowHour.truncatingRemainder(dividingBy: 1) == 0.5 {
 			if m >= 30 {
 				m = m - 30
 			} else {
@@ -131,9 +131,9 @@ class HourRange {
 	}
 	
 	func seconds() -> Int {
-		let today:NSDate
-		today = NSDate.init()
-		return Int(secondFormatter.stringFromDate(today))!
+		let today:Date
+		today = Date.init()
+		return Int(secondFormatter.string(from: today))!
 	}
 	
 	func secondsLeft() -> Int {

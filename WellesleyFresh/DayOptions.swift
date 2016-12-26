@@ -11,21 +11,21 @@ import UIKit
 
 class DayOptions {
 	var days:[String] = [String]()
-	var formatter:NSDateFormatter
+	var formatter:DateFormatter
 	
 	init(initialDays:[String]) {
 		days = initialDays
-		formatter = NSDateFormatter()
-		formatter.locale = NSLocale(localeIdentifier: "en_US_POSIX")
+		formatter = DateFormatter()
+		formatter.locale = Locale(identifier: "en_US_POSIX")
 		formatter.dateFormat = "EEEEEE"
 	}
 	
 	func hasToday()-> Bool {
-		let today:NSDate
-		today = NSDate.init()
-		let day = formatter.stringFromDate(today)
+		let today:Date
+		today = Date.init()
+		let day = formatter.string(from: today)
 		for i in 0...days.count - 1 {
-			if (days[i].containsString(day)) {
+			if (days[i].contains(day)) {
 				return true;
 			}
 		}
@@ -33,11 +33,11 @@ class DayOptions {
 	}
 	
 	func getOption() -> Int {
-		let today:NSDate
-		today = NSDate.init()
-		let day = formatter.stringFromDate(today)
+		let today:Date
+		today = Date.init()
+		let day = formatter.string(from: today)
 		for i in 0...days.count - 1 {
-			if days[i].containsString(day) {
+			if days[i].contains(day) {
 				return i
 			}
 		}

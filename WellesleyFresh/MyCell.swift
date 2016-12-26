@@ -24,14 +24,14 @@ class MyCell: UITableViewCell {
 		let label = UILabel()
 		label.text = "Sample Item"
 		label.translatesAutoresizingMaskIntoConstraints = false
-		label.font = UIFont.systemFontOfSize(14)
+		label.font = UIFont.systemFont(ofSize: 14)
 		label.numberOfLines = 0
 		return label
 	}()
 	
 	let actionButton: UIButton = {
-		let button = UIButton(type: .System)
-		button.setTitle("Delete", forState: .Normal)
+		let button = UIButton(type: .system)
+		button.setTitle("Delete", for: UIControlState())
 		button.translatesAutoresizingMaskIntoConstraints = false
 		return button
 	}()
@@ -43,8 +43,8 @@ class MyCell: UITableViewCell {
 //		actionButton.addTarget(self, action: "handleAction", forControlEvents: .TouchUpInside)
 		
 		
-		addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-16-[v0]-|", options: NSLayoutFormatOptions(), metrics: nil, views: ["v0": nameLabel]))
-		addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|-8-[v0]-8-|", options: NSLayoutFormatOptions(), metrics: nil, views: ["v0": nameLabel]))
+		addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-16-[v0]-|", options: NSLayoutFormatOptions(), metrics: nil, views: ["v0": nameLabel]))
+		addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-8-[v0]-8-|", options: NSLayoutFormatOptions(), metrics: nil, views: ["v0": nameLabel]))
 	}
 	
 //	func handleAction() {

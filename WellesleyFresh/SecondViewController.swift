@@ -21,17 +21,17 @@ class SecondViewController: UITableViewController, UIPickerViewDataSource, UIPic
 	var diningHallArrays:[String:[String]] = [:]
 	var hallPicker:UIPickerView = UIPickerView()
 	let hallToolBar:UIToolbar = UIToolbar()
-	let storedData:NSUserDefaults = NSUserDefaults()
+	let storedData:UserDefaults = UserDefaults()
 	let diningHallDictionaryKey = "diningHallDictionaryKey"
 	let todaysDateKey = "todaysDateKey"
 	var barButtonDone:UIBarButtonItem {
-		return UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.Done, target: self, action: #selector(SecondViewController.madeSelection))
+		return UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.done, target: self, action: #selector(SecondViewController.madeSelection))
 	}
 	var barButtonSpace:UIBarButtonItem {
-		return UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FlexibleSpace, target: nil, action: nil)
+		return UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: nil, action: nil)
 	}
 	var barButtonCancel:UIBarButtonItem {
-		return UIBarButtonItem(title: "Cancel", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(SecondViewController.madeSelection))
+		return UIBarButtonItem(title: "Cancel", style: UIBarButtonItemStyle.plain, target: self, action: #selector(SecondViewController.madeSelection))
 	}
 	var hallInputView:UIInputView = UIInputView()
 	
@@ -43,24 +43,24 @@ class SecondViewController: UITableViewController, UIPickerViewDataSource, UIPic
 		super.viewDidLoad()
 		
 		// Get an NSDate object
-		var today:NSDate
-		today = NSDate.init()
+		var today:Date
+		today = Date.init()
 		
 		
 		// Create a date formatter
-		let MyDateFormatter = NSDateFormatter()
-		MyDateFormatter.locale = NSLocale(localeIdentifier: "en_US_POSIX")
+		let MyDateFormatter = DateFormatter()
+		MyDateFormatter.locale = Locale(identifier: "en_US_POSIX")
 		MyDateFormatter.dateFormat = "MMdd"
 		// Now make a date that represents today - we use this to retrieve the menu for the day
-		todayString = MyDateFormatter.stringFromDate(today)
+		todayString = MyDateFormatter.string(from: today)
 		
 		print(todayString)
 		//		todayString = "1004"
 		
-		if storedData.stringForKey(todaysDateKey) != nil {
-			if (storedData.stringForKey(todaysDateKey) == todayString) {
+		if storedData.string(forKey: todaysDateKey) != nil {
+			if (storedData.string(forKey: todaysDateKey) == todayString) {
 				print("Already got data today.")
-				diningHallArrays = storedData.dictionaryForKey(diningHallDictionaryKey) as! [String:[String]]
+				diningHallArrays = storedData.dictionary(forKey: diningHallDictionaryKey) as! [String:[String]]
 			} else {
 				print("Needed to get data for today.")
 				storedData.setValue(todayString, forKey: todaysDateKey)
@@ -80,12 +80,12 @@ class SecondViewController: UITableViewController, UIPickerViewDataSource, UIPic
 		navigationItem.title = "Menu"
 		
 		// Assigns the class MyCell to the type of cell that we use in the table view
-		tableView.registerClass(MyCell.self, forCellReuseIdentifier: "cellId")
+		tableView.register(MyCell.self, forCellReuseIdentifier: "cellId")
 		
 		// Assigns the class Header to the type of header cell that we use
-		tableView.registerClass(Header.self, forHeaderFooterViewReuseIdentifier: "headerId")
+		tableView.register(Header.self, forHeaderFooterViewReuseIdentifier: "headerId")
 		
-		navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Choose Hall", style: .Plain, target: self, action: #selector(SecondViewController.showPickerView))
+		navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Choose Hall", style: .plain, target: self, action: #selector(SecondViewController.showPickerView))
 		
 		tableView.sizeToFit()
 		
@@ -95,32 +95,32 @@ class SecondViewController: UITableViewController, UIPickerViewDataSource, UIPic
 		
 		// Adding picker view/controlling what it looks like
 		
-		hallPicker.hidden = false
+		hallPicker.isHidden = false
 		hallPicker.dataSource = self
 		hallPicker.delegate = self
-		hallPicker.backgroundColor = UIColor.whiteColor()
+		hallPicker.backgroundColor = UIColor.white
 		hallPicker.showsSelectionIndicator = true
 		
-		hallToolBar.barStyle = UIBarStyle.Default
-		hallToolBar.translucent = true
+		hallToolBar.barStyle = UIBarStyle.default
+		hallToolBar.isTranslucent = true
 		
 		hallToolBar.setItems([barButtonCancel, barButtonSpace, barButtonDone], animated: false)
 		hallPicker.tag = 40
 		hallInputView.addSubview(hallToolBar)
 		hallInputView.addSubview(hallPicker)
-		hallInputView.hidden = false
-		hallInputView.backgroundColor = UIColor.whiteColor()
+		hallInputView.isHidden = false
+		hallInputView.backgroundColor = UIColor.white
 		self.view.addSubview(hallInputView)
 	}
 	
-	override func viewWillAppear(animated: Bool) {
+	override func viewWillAppear(_ animated: Bool) {
 		let height = self.tableView.frame.origin.y + self.tableView.frame.size.height
 		print("superview:", self.tableView.superview)
 		print("Height:", self.tableView.superview!.frame.size.height - 400.0)
-		hallPicker.frame = CGRectMake(0, 40, tableView.contentSize.width, 400)
-		hallInputView.frame = CGRectMake(0, height - (height * 0.6), tableView.contentSize.width, height * 0.6)
-		hallToolBar.frame = CGRectMake(0, 0, tableView.contentSize.width, 40)
-		self.view.bringSubviewToFront(hallInputView)
+		hallPicker.frame = CGRect(x: 0, y: 40, width: tableView.contentSize.width, height: 400)
+		hallInputView.frame = CGRect(x: 0, y: height - (height * 0.6), width: tableView.contentSize.width, height: height * 0.6)
+		hallToolBar.frame = CGRect(x: 0, y: 0, width: tableView.contentSize.width, height: 40)
+		self.view.bringSubview(toFront: hallInputView)
 	}
 	
 	// --------------------------------------------------------------------
@@ -129,59 +129,59 @@ class SecondViewController: UITableViewController, UIPickerViewDataSource, UIPic
 	
 	// PICKER VIEW DELEGATE FUNCTIONS
 	
-	func numberOfComponentsInPickerView(pickerView: UIPickerView) -> Int {
+	func numberOfComponents(in pickerView: UIPickerView) -> Int {
 		return 1
 	}
 	
-	func pickerView(pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+	func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
 		return diningHalls.count
 	}
 	
-	func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+	func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
 		return diningHallFull[row]
 	}
 	
-	func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+	func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
 		diningHall = diningHalls[row]
 		diningHallName = diningHallFull[row]
 		print("Selected: ", diningHallName)
 	}
 	
-	func pickerView(pickerView: UIPickerView, widthForComponent component: Int) -> CGFloat {
+	func pickerView(_ pickerView: UIPickerView, widthForComponent component: Int) -> CGFloat {
 		return tableView.contentSize.width * 0.8
 	}
 	
-	func pickerView(pickerView: UIPickerView, rowHeightForComponent component: Int) -> CGFloat {
+	func pickerView(_ pickerView: UIPickerView, rowHeightForComponent component: Int) -> CGFloat {
 		return 40
 	}
 	
 	// TABLEVIEW DELEGATE FUNCTIONS
 	
-	override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+	override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 		return items.count
 	}
 	
-	override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-		let myCell = tableView.dequeueReusableCellWithIdentifier("cellId", forIndexPath: indexPath) as! MyCell
+	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+		let myCell = tableView.dequeueReusableCell(withIdentifier: "cellId", for: indexPath) as! MyCell
 		myCell.nameLabel.text = items[indexPath.row]
 		//		myCell.myTableViewController = self
 		return myCell
 	}
 	
-	override func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-		let myHeader = tableView.dequeueReusableHeaderFooterViewWithIdentifier("headerId") as! Header
+	override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+		let myHeader = tableView.dequeueReusableHeaderFooterView(withIdentifier: "headerId") as! Header
 		myHeader.nameLabel.text = self.diningHall
 		//		myHeader.myTableViewController = self
 		return myHeader
 	}
 	
-	func deleteCell(cell: UITableViewCell) {
-		if let deletionIndexPath = tableView.indexPathForCell(cell) {
-			items.removeAtIndex(deletionIndexPath.item)
-			tableView.deleteRowsAtIndexPaths([deletionIndexPath], withRowAnimation: .Automatic)
+	func deleteCell(_ cell: UITableViewCell) {
+		if let deletionIndexPath = tableView.indexPath(for: cell) {
+			items.remove(at: deletionIndexPath.item)
+			tableView.deleteRows(at: [deletionIndexPath], with: .automatic)
 		}
 	}
-	override func tableView(tableView: UITableView, didEndDisplayingCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
+	override func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
 		adjustHeightOfTableview()
 	}
 	
@@ -200,15 +200,15 @@ class SecondViewController: UITableViewController, UIPickerViewDataSource, UIPic
 	// -------------------------------------------------------------
 	
 	func madeSelection() {
-		self.hallInputView.hidden = true;
+		self.hallInputView.isHidden = true;
 		print("Made selection: \(diningHall).")
 		choose()
 	}
 	
 	func showPickerView() {
 		previousDiningHall = diningHall;
-		self.hallInputView.hidden = false
-		self.view.bringSubviewToFront(hallInputView)
+		self.hallInputView.isHidden = false
+		self.view.bringSubview(toFront: hallInputView)
 	}
 	
 	
@@ -221,18 +221,18 @@ class SecondViewController: UITableViewController, UIPickerViewDataSource, UIPic
 
 	
 	func retitleHeader() {
-		if (tableView.headerViewForSection(0) != nil) {
+		if (tableView.headerView(forSection: 0) != nil) {
 			for i in 0...diningHalls.count - 1 {
 				if (diningHalls[i] == self.diningHall) {
-					(tableView.headerViewForSection(0) as! Header).nameLabel.text = self.diningHallFull[i]
+					(tableView.headerView(forSection: 0) as! Header).nameLabel.text = self.diningHallFull[i]
 				}
 			}
 		}
 	}
 	
 	func headerTitle() -> String {
-		if (tableView.headerViewForSection(0) != nil) {
-			return (tableView.headerViewForSection(0) as! Header).nameLabel.text as String!
+		if (tableView.headerView(forSection: 0) != nil) {
+			return (tableView.headerView(forSection: 0) as! Header).nameLabel.text as String!
 		}
 		return ""
 	}
@@ -289,19 +289,19 @@ class SecondViewController: UITableViewController, UIPickerViewDataSource, UIPic
 	}
 	
 	func insertBatch() {
-		var indexPaths = [NSIndexPath]()
+		var indexPaths = [IndexPath]()
 		for i in items.count...items.count + 5 {
 			items.append("Item \(i + 1)")
-			indexPaths.append(NSIndexPath(forRow: i, inSection: 0))
+			indexPaths.append(IndexPath(row: i, section: 0))
 		}
 		
-		var bottomHalfIndexPaths = [NSIndexPath]()
+		var bottomHalfIndexPaths = [IndexPath]()
 		for _ in 0...indexPaths.count / 2 - 1 {
 			bottomHalfIndexPaths.append(indexPaths.removeLast())
 		}
 		tableView.beginUpdates()
-		tableView.insertRowsAtIndexPaths(indexPaths, withRowAnimation: .Right)
-		tableView.insertRowsAtIndexPaths(bottomHalfIndexPaths, withRowAnimation: .Left)
+		tableView.insertRows(at: indexPaths, with: .right)
+		tableView.insertRows(at: bottomHalfIndexPaths, with: .left)
 		tableView.endUpdates()
 	}
 	
@@ -311,9 +311,9 @@ class SecondViewController: UITableViewController, UIPickerViewDataSource, UIPic
 			let newSize:Int = normalArray.count
 			
 			print(originalSize, ", ", newSize, separator: "")
-			var indexPaths = [NSIndexPath]()
-			var originalPaths = [NSIndexPath]()
-			var bottomHalfIndexPaths = [NSIndexPath]()
+			var indexPaths = [IndexPath]()
+			var originalPaths = [IndexPath]()
+			var bottomHalfIndexPaths = [IndexPath]()
 			if (newSize >= originalSize) {
 				let isAbsoluteDiffGreaterThanOne:Bool = newSize - originalSize > 1
 				for i in 0...normalArray.count - 1 {
@@ -325,9 +325,9 @@ class SecondViewController: UITableViewController, UIPickerViewDataSource, UIPic
 						}
 					}
 					if (i >= originalSize) {
-						indexPaths.append(NSIndexPath(forRow: i, inSection: 0))
+						indexPaths.append(IndexPath(row: i, section: 0))
 					} else {
-						originalPaths.append(NSIndexPath(forRow: i, inSection: 0))
+						originalPaths.append(IndexPath(row: i, section: 0))
 					}
 				}
 				
@@ -338,12 +338,12 @@ class SecondViewController: UITableViewController, UIPickerViewDataSource, UIPic
 				}
 				
 				tableView.beginUpdates()
-				tableView.reloadRowsAtIndexPaths(originalPaths, withRowAnimation: .Fade)
+				tableView.reloadRows(at: originalPaths, with: .fade)
 				if (isAbsoluteDiffGreaterThanOne) {
-					tableView.insertRowsAtIndexPaths(indexPaths, withRowAnimation: .Right)
-					tableView.insertRowsAtIndexPaths(bottomHalfIndexPaths, withRowAnimation: .Left)
+					tableView.insertRows(at: indexPaths, with: .right)
+					tableView.insertRows(at: bottomHalfIndexPaths, with: .left)
 				} else if (newSize - originalSize == 1) {
-					tableView.insertRowsAtIndexPaths(indexPaths, withRowAnimation: .Right)
+					tableView.insertRows(at: indexPaths, with: .right)
 				}
 				tableView.endUpdates()
 			} else if (newSize < originalSize) {
@@ -356,9 +356,9 @@ class SecondViewController: UITableViewController, UIPickerViewDataSource, UIPic
 					}
 					
 					if (i >= newSize) {
-						indexPaths.append(NSIndexPath(forRow: i, inSection: 0))
+						indexPaths.append(IndexPath(row: i, section: 0))
 					} else {
-						originalPaths.append(NSIndexPath(forRow: i, inSection: 0))
+						originalPaths.append(IndexPath(row: i, section: 0))
 					}
 				}
 				
@@ -368,27 +368,27 @@ class SecondViewController: UITableViewController, UIPickerViewDataSource, UIPic
 					}
 					
 					tableView.beginUpdates()
-					tableView.reloadRowsAtIndexPaths(originalPaths, withRowAnimation: .Fade)
-					tableView.deleteRowsAtIndexPaths(indexPaths, withRowAnimation: .Right)
-					tableView.deleteRowsAtIndexPaths(bottomHalfIndexPaths, withRowAnimation: .Left)
+					tableView.reloadRows(at: originalPaths, with: .fade)
+					tableView.deleteRows(at: indexPaths, with: .right)
+					tableView.deleteRows(at: bottomHalfIndexPaths, with: .left)
 					tableView.endUpdates()
 				} else {
 					tableView.beginUpdates()
-					tableView.reloadRowsAtIndexPaths(originalPaths, withRowAnimation: .Fade)
-					tableView.deleteRowsAtIndexPaths(indexPaths, withRowAnimation: .Right)
+					tableView.reloadRows(at: originalPaths, with: .fade)
+					tableView.deleteRows(at: indexPaths, with: .right)
 					tableView.endUpdates()
 				}
 			}
 		}
 	}
 	
-	func batchInsertion(newStrings: [String]) {
+	func batchInsertion(_ newStrings: [String]) {
 		let originalSize:Int = items.count
 		print(originalSize)
 		let newSize:Int = newStrings.count
 		print(originalSize, ", ", newSize, separator: "")
 		if (newSize > originalSize) {
-			var indexPaths = [NSIndexPath]()
+			var indexPaths = [IndexPath]()
 			for i in 0...newStrings.count - 1 {
 				if (i < newStrings.count) {
 					if (i < items.count) {
@@ -397,22 +397,22 @@ class SecondViewController: UITableViewController, UIPickerViewDataSource, UIPic
 						items.append(newStrings[i])
 					}
 					if (i >= originalSize) {
-						indexPaths.append(NSIndexPath(forRow: i, inSection: 0))
+						indexPaths.append(IndexPath(row: i, section: 0))
 					}
 				}
 			}
 			
-			var bottomHalfIndexPaths = [NSIndexPath]()
+			var bottomHalfIndexPaths = [IndexPath]()
 			for _ in 0...indexPaths.count / 2 - 1 {
 				bottomHalfIndexPaths.append(indexPaths.removeLast())
 			}
 			
 			tableView.beginUpdates()
-			tableView.insertRowsAtIndexPaths(indexPaths, withRowAnimation: .Right)
-			tableView.insertRowsAtIndexPaths(bottomHalfIndexPaths, withRowAnimation: .Left)
+			tableView.insertRows(at: indexPaths, with: .right)
+			tableView.insertRows(at: bottomHalfIndexPaths, with: .left)
 			tableView.endUpdates()
 		} else if (newSize < originalSize) {
-			var indexPaths = [NSIndexPath]()
+			var indexPaths = [IndexPath]()
 			for i in 0...originalSize - 1 {
 				if (i < newSize) {
 					if (i < items.count) {
@@ -421,24 +421,24 @@ class SecondViewController: UITableViewController, UIPickerViewDataSource, UIPic
 						items.removeLast()
 					}
 					if (i >= newSize) {
-						indexPaths.append(NSIndexPath(forRow: i, inSection: 0))
+						indexPaths.append(IndexPath(row: i, section: 0))
 					}
 				}
 			}
 			
 			if ((originalSize - newSize) >= 2) {
-				var bottomHalfIndexPaths = [NSIndexPath]()
+				var bottomHalfIndexPaths = [IndexPath]()
 				for _ in 0...indexPaths.count / 2 - 1 {
 					bottomHalfIndexPaths.append(indexPaths.removeLast())
 				}
 				
 				tableView.beginUpdates()
-				tableView.deleteRowsAtIndexPaths(indexPaths, withRowAnimation: .Right)
-				tableView.deleteRowsAtIndexPaths(bottomHalfIndexPaths, withRowAnimation: .Left)
+				tableView.deleteRows(at: indexPaths, with: .right)
+				tableView.deleteRows(at: bottomHalfIndexPaths, with: .left)
 				tableView.endUpdates()
 			} else {
 				tableView.beginUpdates()
-				tableView.deleteRowsAtIndexPaths(indexPaths, withRowAnimation: .Right)
+				tableView.deleteRows(at: indexPaths, with: .right)
 				tableView.endUpdates()
 			}
 		}
@@ -446,37 +446,37 @@ class SecondViewController: UITableViewController, UIPickerViewDataSource, UIPic
 	
 	func insert() {
 		items.append("Item \(items.count + 1)")
-		let insertionIndexPath = NSIndexPath(forRow: items.count - 1, inSection: 0)
-		tableView.insertRowsAtIndexPaths([insertionIndexPath], withRowAnimation: .Automatic)
+		let insertionIndexPath = IndexPath(row: items.count - 1, section: 0)
+		tableView.insertRows(at: [insertionIndexPath], with: .automatic)
 	}
 	
-	func extractString(inputString:String, regex:NSRegularExpression, regexTemplate:String) -> String {
-		return regex.stringByReplacingMatchesInString(inputString, options: [], range: NSRange(location: 0, length: inputString.characters.count), withTemplate: regexTemplate)
+	func extractString(_ inputString:String, regex:NSRegularExpression, regexTemplate:String) -> String {
+		return regex.stringByReplacingMatches(in: inputString, options: [], range: NSRange(location: 0, length: inputString.characters.count), withTemplate: regexTemplate)
 	}
 	
 	// Load the information from a specific dining hall
-	func load(hall:String) {
+	func load(_ hall:String) {
 		self.loadingHall = true
 		print("loading hall ", hall)
 		
 		// Get the url for the specific menu
-		let url:NSURL! = NSURL(string: "http://www.wellesleyfresh.com/menus/" + hall + "/menu_" + todayString + ".htm")
+		let url:URL! = URL(string: "http://www.wellesleyfresh.com/menus/" + hall + "/menu_" + todayString + ".htm")
 		
 		// Create the task + the completion handler for the url session
-		let task = NSURLSession.sharedSession().dataTaskWithURL(url) { (data:NSData?, response:NSURLResponse?, error:NSError?) in
+		let task = URLSession.shared.dataTask(with: url, completionHandler: { (data:Data?, response:URLResponse?, error:NSError?) in
 			// Strings are Windows 1252 encoded for some reason
-			let mystring:NSString! = NSString(data: data!, encoding: NSWindowsCP1252StringEncoding)
+			let mystring:NSString! = NSString(data: data!, encoding: String.Encoding.windowsCP1252)
 			
 			let bodyString:String = self.regexHelper.extractInformationString(mystring as String)
 			print("\n\n\n\n\nDigest string:\n|", bodyString, "|\nEnd of string", separator: "")
-			self.normalArray = bodyString.componentsSeparatedByString("\n")
+			self.normalArray = bodyString.components(separatedBy: "\n")
 			self.diningHallArrays[hall] = self.normalArray
-			self.storedData.setObject(self.diningHallArrays, forKey: self.diningHallDictionaryKey)
-			for i in 0...(self.storedData.dictionaryForKey(self.diningHallDictionaryKey) as! [String: [String]])[hall]!.count - 1 {
-				print("The new string: ", (self.storedData.dictionaryForKey(self.diningHallDictionaryKey) as! [String: [String]])[hall]![i], separator: "")
+			self.storedData.set(self.diningHallArrays, forKey: self.diningHallDictionaryKey)
+			for i in 0...(self.storedData.dictionary(forKey: self.diningHallDictionaryKey) as! [String: [String]])[hall]!.count - 1 {
+				print("The new string: ", (self.storedData.dictionary(forKey: self.diningHallDictionaryKey) as! [String: [String]])[hall]![i], separator: "")
 			}
 			self.loadingHall = false;
-		}
+		}) 
 		// Start the task
 		task.resume()
 	}

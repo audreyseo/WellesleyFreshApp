@@ -36,7 +36,7 @@ class DiningHall {
 		return currentHours().name()
 	}
 	
-	func inBetween(a:HourRange, b:HourRange) {
+	func inBetween(_ a:HourRange, b:HourRange) {
 		let currentTime = a.currentHour()
 //		print("In-Between?: \(currentTime), (\(a.lowHour), \(a.highHour)), (\(b.lowHour), \(b.highHour))")
 		if currentTime >= a.highHour && currentTime <= b.lowHour {

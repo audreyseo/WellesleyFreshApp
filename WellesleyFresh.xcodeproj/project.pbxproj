@@ -240,13 +240,16 @@
 					76A331401D8263230079A6CE = {
 						CreatedOnToolsVersion = 7.2.1;
 						DevelopmentTeam = D56G98T36D;
+						LastSwiftMigration = 0820;
 					};
 					76A331561D8263230079A6CE = {
 						CreatedOnToolsVersion = 7.2.1;
+						LastSwiftMigration = 0820;
 						TestTargetID = 76A331401D8263230079A6CE;
 					};
 					76A331611D8263230079A6CE = {
 						CreatedOnToolsVersion = 7.2.1;
+						LastSwiftMigration = 0820;
 						TestTargetID = 76A331401D8263230079A6CE;
 					};
 				};
@@ -466,6 +469,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = AudreySeo.WellesleyFresh;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -481,6 +485,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = AudreySeo.WellesleyFresh;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};
@@ -492,6 +497,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = AudreySeo.WellesleyFreshTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/WellesleyFresh.app/WellesleyFresh";
 			};
 			name = Debug;
@@ -504,6 +510,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = AudreySeo.WellesleyFreshTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/WellesleyFresh.app/WellesleyFresh";
 			};
 			name = Release;
@@ -515,6 +522,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = AudreySeo.WellesleyFreshUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 				TEST_TARGET_NAME = WellesleyFresh;
 				USES_XCTRUNNER = YES;
 			};
@@ -527,6 +535,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = AudreySeo.WellesleyFreshUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 				TEST_TARGET_NAME = WellesleyFresh;
 				USES_XCTRUNNER = YES;
 			};

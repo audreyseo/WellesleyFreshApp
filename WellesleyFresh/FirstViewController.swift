@@ -35,18 +35,18 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UIPicker
 	let hallToolBar:UIToolbar = UIToolbar()
 	let hallInputView:UIInputView = UIInputView()
 	
-	let storedData:NSUserDefaults = NSUserDefaults()
+	let storedData:UserDefaults = UserDefaults()
 	var diningHallNames:[String] = ["", "", ""]
 	var diningHallNamesShort:[String] = ["", "", ""]
 	var items:[String] = []
 	var barButtonDone:UIBarButtonItem {
-		return UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.Done, target: self, action: #selector(madeSelection))
+		return UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.done, target: self, action: #selector(madeSelection))
 	}
 	var barButtonSpace:UIBarButtonItem {
-		return UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FlexibleSpace, target: nil, action: nil)
+		return UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: nil, action: nil)
 	}
 	var barButtonCancel:UIBarButtonItem {
-		return UIBarButtonItem(title: "Cancel", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(madeSelection))
+		return UIBarButtonItem(title: "Cancel", style: UIBarButtonItemStyle.plain, target: self, action: #selector(madeSelection))
 	}
 	
 	var tableview:UITableView = UITableView()
@@ -61,7 +61,7 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UIPicker
 	@IBOutlet weak var closest2: UILabel!
 	@IBOutlet weak var closest3: UILabel!
 	@IBAction func showSelector() {
-		hallInputView.hidden = false;
+		hallInputView.isHidden = false;
 	}
 	
 	override func viewDidLoad() {
@@ -71,9 +71,9 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UIPicker
 		
 		let authorizationCode = CLLocationManager.authorizationStatus()
 		
-		if authorizationCode == CLAuthorizationStatus.NotDetermined && coreLocationManager.respondsToSelector(#selector(CLLocationManager.requestWhenInUseAuthorization)){
+		if authorizationCode == CLAuthorizationStatus.notDetermined && coreLocationManager.responds(to: #selector(CLLocationManager.requestWhenInUseAuthorization)){
 			print("Authorization not determined...")
-			if NSBundle.mainBundle().objectForInfoDictionaryKey("NSLocationWhenInUseUsageDescription") != nil {
+			if Bundle.main.object(forInfoDictionaryKey: "NSLocationWhenInUseUsageDescription") != nil {
 				coreLocationManager.requestWhenInUseAuthorization()
 			} else {
 				print("No description provided")
@@ -82,10 +82,10 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UIPicker
 			self.getInitialLocation()
 		}
 		
-		tableview.registerClass(MyCell.self, forCellReuseIdentifier: "cellId")
+		tableview.register(MyCell.self, forCellReuseIdentifier: "cellId")
 		
 		// Assigns the class Header to the type of header cell that we use
-		tableview.registerClass(Header.self, forHeaderFooterViewReuseIdentifier: "headerId")
+		tableview.register(Header.self, forHeaderFooterViewReuseIdentifier: "headerId")
 		tableview.delegate = self
 		tableview.dataSource = self
 		
@@ -97,32 +97,32 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UIPicker
 		self.view.addSubview(tableview)
 		
 		
-		hallPicker.hidden = false
+		hallPicker.isHidden = false
 		hallPicker.dataSource = self
 		hallPicker.delegate = self
-		hallPicker.backgroundColor = UIColor.whiteColor()
+		hallPicker.backgroundColor = UIColor.white
 		hallPicker.showsSelectionIndicator = true
 		
-		hallToolBar.barStyle = UIBarStyle.Default
-		hallToolBar.translucent = true
+		hallToolBar.barStyle = UIBarStyle.default
+		hallToolBar.isTranslucent = true
 		
 		hallToolBar.setItems([barButtonCancel, barButtonSpace, barButtonDone], animated: false)
 		hallPicker.tag = 40
 		hallInputView.addSubview(hallToolBar)
 		hallInputView.addSubview(hallPicker)
-		hallInputView.hidden = true
-		hallInputView.backgroundColor = UIColor.whiteColor()
+		hallInputView.isHidden = true
+		hallInputView.backgroundColor = UIColor.white
 		self.view.addSubview(hallInputView)
 		
 	}
 	
-	override func viewWillAppear(animated: Bool) {
+	override func viewWillAppear(_ animated: Bool) {
 		let height = self.view.frame.origin.y + self.view.frame.size.height
-		hallPicker.frame = CGRectMake(0, 40, self.view.frame.size.width, 400)
-		hallInputView.frame = CGRectMake(0, self.view.frame.origin.y + self.view.frame.size.height - 440, self.view.frame.size.width, 440)
-		hallToolBar.frame = CGRectMake(0, 0, self.view.frame.size.width, 40)
+		hallPicker.frame = CGRect(x: 0, y: 40, width: self.view.frame.size.width, height: 400)
+		hallInputView.frame = CGRect(x: 0, y: self.view.frame.origin.y + self.view.frame.size.height - 440, width: self.view.frame.size.width, height: 440)
+		hallToolBar.frame = CGRect(x: 0, y: 0, width: self.view.frame.size.width, height: 40)
 		let hLimit = showDiningHallName.frame.origin.y + 30;
-		tableview.frame = CGRectMake(0, hLimit, self.view.frame.size.width * 0.95, (height - hLimit) * 0.8)
+		tableview.frame = CGRect(x: 0, y: hLimit, width: self.view.frame.size.width * 0.95, height: (height - hLimit) * 0.8)
 	}
 	
 	// --------------------------------------------------------------------
@@ -131,8 +131,8 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UIPicker
 	
 	// ------------UITableView Delegate and Datasource Methods-------------
 	
-	func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-		let myCell = tableView.dequeueReusableCellWithIdentifier("cellId", forIndexPath: indexPath) as! MyCell
+	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+		let myCell = tableView.dequeueReusableCell(withIdentifier: "cellId", for: indexPath) as! MyCell
 		if (items.count > 0) {
 			myCell.nameLabel.text = items[indexPath.row]
 		} else {
@@ -141,8 +141,8 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UIPicker
 		return myCell
 	}
 	
-	func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-		let myHeader = tableView.dequeueReusableHeaderFooterViewWithIdentifier("headerId") as! Header
+	func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+		let myHeader = tableView.dequeueReusableHeaderFooterView(withIdentifier: "headerId") as! Header
 //		if (self.chosenDiningHall != "") {
 //			myHeader.nameLabel.text = self.chosenDiningHall
 //		} else {
@@ -152,7 +152,7 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UIPicker
 		return myHeader
 	}
 	
-	func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 		return items.count
 	}
 	
@@ -167,8 +167,8 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UIPicker
 		var height:CGFloat = 0;
 		
 		for i in 0...items.count - 1 {
-			if (tableview.cellForRowAtIndexPath(NSIndexPath(forRow: i, inSection: 0)) != nil) {
-				let cell:MyCell = tableview.cellForRowAtIndexPath(NSIndexPath(forRow: i, inSection: 0)) as! MyCell
+			if (tableview.cellForRow(at: IndexPath(row: i, section: 0)) != nil) {
+				let cell:MyCell = tableview.cellForRow(at: IndexPath(row: i, section: 0)) as! MyCell
 				height = height + cell.frame.height;
 			}
 		}
@@ -181,29 +181,29 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UIPicker
 	
 	
 	// ----------UIPickerView Datasource and Delegate Functions-----------
-	func numberOfComponentsInPickerView(pickerView: UIPickerView) -> Int {
+	func numberOfComponents(in pickerView: UIPickerView) -> Int {
 		return 1
 	}
 	
-	func pickerView(pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+	func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
 		return 3
 	}
 	
-	func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+	func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
 		return diningHallNames[row]
 	}
 	
-	func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+	func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
 		chosenDiningHall = diningHallNames[row]
 		chosenShort = diningHallNamesShort[row]
 		print("Selected: ", diningHallNames[row])
 	}
 	
-	func pickerView(pickerView: UIPickerView, widthForComponent component: Int) -> CGFloat {
+	func pickerView(_ pickerView: UIPickerView, widthForComponent component: Int) -> CGFloat {
 		return self.view.frame.size.width * 0.8
 	}
 	
-	func pickerView(pickerView: UIPickerView, rowHeightForComponent component: Int) -> CGFloat {
+	func pickerView(_ pickerView: UIPickerView, rowHeightForComponent component: Int) -> CGFloat {
 		return 40
 	}
 	
@@ -211,12 +211,12 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UIPicker
 	// All of these functions react to a certain event.
 	
 	// Fires when an error happens.
-	func locationManager(manager: CLLocationManager, didFailWithError error: NSError) {
+	func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
 		print("Failed with an error")
 	}
 	
 	// Fires when the location updates.
-	func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+	func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
 		print("Updated location")
 		let last = locations.count - 1
 		displayLocation(locations[last])
@@ -224,8 +224,8 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UIPicker
 	}
 	
 	// Fires when the authorization status updates.
-	func locationManager(manager: CLLocationManager, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
-		if status != CLAuthorizationStatus.NotDetermined || status != CLAuthorizationStatus.Denied || status != CLAuthorizationStatus.Restricted {
+	func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
+		if status != CLAuthorizationStatus.notDetermined || status != CLAuthorizationStatus.denied || status != CLAuthorizationStatus.restricted {
 			if (first) {
 				first = false
 				displayDiningHallCenters()
@@ -241,31 +241,31 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UIPicker
 	
 	// Retitles the header of the tableview
 	func retitleHeader() {
-		if (tableview.headerViewForSection(0) != nil) {
-			(tableview.headerViewForSection(0) as! Header).nameLabel.text = self.chosenDiningHall
+		if (tableview.headerView(forSection: 0) != nil) {
+			(tableview.headerView(forSection: 0) as! Header).nameLabel.text = self.chosenDiningHall
 		}
 	}
 	
 	// Tells the hallInputView to go away
 	func madeSelection() {
 		showDiningHallName.text = chosenDiningHall
-		hallInputView.hidden = true
-		let storedDateKey:String = storedData.stringForKey(todaysDateKey)!
+		hallInputView.isHidden = true
+		let storedDateKey:String = storedData.string(forKey: todaysDateKey)!
 		
-		var today:NSDate
-		today = NSDate.init()
+		var today:Date
+		today = Date.init()
 		
 		
 		// Create a date formatter
-		let MyDateFormatter = NSDateFormatter()
-		MyDateFormatter.locale = NSLocale(localeIdentifier: "en_US_POSIX")
+		let MyDateFormatter = DateFormatter()
+		MyDateFormatter.locale = Locale(identifier: "en_US_POSIX")
 		MyDateFormatter.dateFormat = "MMdd"
 		// Now make a date that represents today - we use this to retrieve the menu for the day
-		let todayString:String = MyDateFormatter.stringFromDate(today)
+		let todayString:String = MyDateFormatter.string(from: today)
 		print(storedDateKey, "vs", todayString)
 		
 		if (storedDateKey == todayString) {
-			menus = storedData.dictionaryForKey(diningHallDictionaryKey) as! [String:[String]]
+			menus = storedData.dictionary(forKey: diningHallDictionaryKey) as! [String:[String]]
 			newCellsInsertion()
 			retitleHeader()
 		}
@@ -281,9 +281,9 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UIPicker
 			let newSize:Int = normalArray.count
 			
 			print("Old Size, New Size: ", originalSize, ", ", newSize, separator: "")
-			var indexPaths = [NSIndexPath]()
-			var originalPaths = [NSIndexPath]()
-			var bottomHalfIndexPaths = [NSIndexPath]()
+			var indexPaths = [IndexPath]()
+			var originalPaths = [IndexPath]()
+			var bottomHalfIndexPaths = [IndexPath]()
 			if (newSize >= originalSize) {
 				let isAbsoluteDiffGreaterThanOne:Bool = newSize - originalSize > 1
 				for i in 0...normalArray.count - 1 {
@@ -295,9 +295,9 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UIPicker
 						}
 					}
 					if (i >= originalSize) {
-						indexPaths.append(NSIndexPath(forRow: i, inSection: 0))
+						indexPaths.append(IndexPath(row: i, section: 0))
 					} else {
-						originalPaths.append(NSIndexPath(forRow: i, inSection: 0))
+						originalPaths.append(IndexPath(row: i, section: 0))
 					}
 				}
 				
@@ -308,12 +308,12 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UIPicker
 				}
 				
 				tableview.beginUpdates()
-				tableview.reloadRowsAtIndexPaths(originalPaths, withRowAnimation: .Fade)
+				tableview.reloadRows(at: originalPaths, with: .fade)
 				if (isAbsoluteDiffGreaterThanOne) {
-					tableview.insertRowsAtIndexPaths(indexPaths, withRowAnimation: .Right)
-					tableview.insertRowsAtIndexPaths(bottomHalfIndexPaths, withRowAnimation: .Left)
+					tableview.insertRows(at: indexPaths, with: .right)
+					tableview.insertRows(at: bottomHalfIndexPaths, with: .left)
 				} else if (newSize - originalSize == 1) {
-					tableview.insertRowsAtIndexPaths(indexPaths, withRowAnimation: .Right)
+					tableview.insertRows(at: indexPaths, with: .right)
 				}
 				tableview.endUpdates()
 				adjustHeightOfTableview()
@@ -327,9 +327,9 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UIPicker
 					}
 					
 					if (i >= newSize) {
-						indexPaths.append(NSIndexPath(forRow: i, inSection: 0))
+						indexPaths.append(IndexPath(row: i, section: 0))
 					} else {
-						originalPaths.append(NSIndexPath(forRow: i, inSection: 0))
+						originalPaths.append(IndexPath(row: i, section: 0))
 					}
 				}
 				
@@ -339,15 +339,15 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UIPicker
 					}
 					
 					tableview.beginUpdates()
-					tableview.reloadRowsAtIndexPaths(originalPaths, withRowAnimation: .Fade)
-					tableview.deleteRowsAtIndexPaths(indexPaths, withRowAnimation: .Right)
-					tableview.deleteRowsAtIndexPaths(bottomHalfIndexPaths, withRowAnimation: .Left)
+					tableview.reloadRows(at: originalPaths, with: .fade)
+					tableview.deleteRows(at: indexPaths, with: .right)
+					tableview.deleteRows(at: bottomHalfIndexPaths, with: .left)
 					tableview.endUpdates()
 					adjustHeightOfTableview()
 				} else {
 					tableview.beginUpdates()
-					tableview.reloadRowsAtIndexPaths(originalPaths, withRowAnimation: .Fade)
-					tableview.deleteRowsAtIndexPaths(indexPaths, withRowAnimation: .Right)
+					tableview.reloadRows(at: originalPaths, with: .fade)
+					tableview.deleteRows(at: indexPaths, with: .right)
 					tableview.endUpdates()
 					adjustHeightOfTableview()
 				}
@@ -357,7 +357,7 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UIPicker
 
 	
 	// Helper function that calculates distance over a sphere.
-	func distance(first:CLLocation, second:CLLocationCoordinate2D) -> Float {
+	func distance(_ first:CLLocation, second:CLLocationCoordinate2D) -> Float {
 		let lat1 = Float(first.coordinate.latitude)
 		let lon1 = Float(first.coordinate.longitude)
 		let lat2 = Float(second.latitude)
@@ -376,7 +376,7 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UIPicker
 	}
 	
 	// Helper function that converts degrees (latitude, longitude) to radians
-	func radians(degrees:Float)->Float {
+	func radians(_ degrees:Float)->Float {
 		return degrees * Float(M_PI / 180.0);
 	}
 	
@@ -400,12 +400,12 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UIPicker
 	
 	// Downloads the data from the Wellesley Fresh site in an attempt to get the data.
 	func getWellesleyFreshData() {
-		let url = NSURL(string: "http://www.wellesleyfresh.com/today-s-menu.html")
-		let task = NSURLSession.sharedSession().dataTaskWithURL(url!) {(data, response, error) in
+		let url = URL(string: "http://www.wellesleyfresh.com/today-s-menu.html")
+		let task = URLSession.shared.dataTask(with: url!, completionHandler: {(data, response, error) in
 			if error == nil {
-				print(NSString(data: data!, encoding: NSUTF8StringEncoding))
+				print(NSString(data: data!, encoding: String.Encoding.utf8.rawValue))
 			}
-		}
+		}) 
 		task.resume()
 	}
 	
@@ -421,7 +421,7 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UIPicker
 	
 	// Finds all of the distances between the location of the user and each of the dining halls,
 	// then assigns this information to the subtitles of the dining halls.
-	func findDistances(myLocation:CLLocation) {
+	func findDistances(_ myLocation:CLLocation) {
 		var myDistances: [Float] = [Float]()
 		for i in 0...diningHallAnnotations.count - 1 {
 			let dist = distance(myLocation, second: diningHallAnnotations[i].coordinate)
@@ -434,7 +434,7 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UIPicker
 	// -----------------------Configure 3-Smallest Labels-----------------------------
 	
 	// Finds the three smallest distances from a float array and then changes the information shown to the user.
-	func findThreeSmallest(myDistances: [Float]) {
+	func findThreeSmallest(_ myDistances: [Float]) {
 		var num1:Float = 10000.0
 		var i1 = -1
 		var num2:Float = 10000.0
@@ -473,7 +473,7 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UIPicker
 	
 	
 	// Creates a dining hall from a given index point for the names, longitudes, and latitudes array.
-	func displayDiningHall(index:Int) {
+	func displayDiningHall(_ index:Int) {
 		if (index < names.count) {
 			let name = names[index]
 			let longitude = longitudes[index]
@@ -489,7 +489,7 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UIPicker
 	}
 	
 	// Displays the user's location.
-	func displayLocation(location:CLLocation) {
+	func displayLocation(_ location:CLLocation) {
 		mapViewer.setRegion(MKCoordinateRegion(center: CLLocationCoordinate2DMake(location.coordinate.latitude, location.coordinate.longitude), span: MKCoordinateSpanMake(0.05, 0.05)), animated: true)
 		
 		let locationPinCoord = CLLocationCoordinate2D(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude)

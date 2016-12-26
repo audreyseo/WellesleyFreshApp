@@ -16,7 +16,7 @@ class ThirdViewController: UIViewController, MFMailComposeViewControllerDelegate
 		super.viewDidLoad()
 	}
 	
-	func configuredMailComposeViewController(targetHall:String) -> MFMailComposeViewController {
+	func configuredMailComposeViewController(_ targetHall:String) -> MFMailComposeViewController {
 		let mailComposerVC = MFMailComposeViewController()
 		mailComposerVC.mailComposeDelegate = self
 		
@@ -28,53 +28,53 @@ class ThirdViewController: UIViewController, MFMailComposeViewControllerDelegate
 	}
 	
 	func showSendMailErrorAlert() {
-		let sendMailErrorAlert = UIAlertController(title: "Could Not Send Email", message: "Your device could not send e-mail.  Please check e-mail configuration and try again.", preferredStyle: UIAlertControllerStyle.Alert)
-		let defaultAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
+		let sendMailErrorAlert = UIAlertController(title: "Could Not Send Email", message: "Your device could not send e-mail.  Please check e-mail configuration and try again.", preferredStyle: UIAlertControllerStyle.alert)
+		let defaultAction = UIAlertAction(title: "OK", style: .default, handler: nil)
 		sendMailErrorAlert.addAction(defaultAction)
 		
-		presentViewController(sendMailErrorAlert, animated: true, completion: nil)
+		present(sendMailErrorAlert, animated: true, completion: nil)
 	}
 	
-	func mailComposeController(controller: MFMailComposeViewController, didFinishWithResult result: MFMailComposeResult, error: NSError?) {
-		controller.dismissViewControllerAnimated(false, completion: nil)
+	func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
+		controller.dismiss(animated: false, completion: nil)
 	}
 	
-	@IBAction func pomFeedback(sender: AnyObject) {
+	@IBAction func pomFeedback(_ sender: AnyObject) {
 		let mailComposeViewController = configuredMailComposeViewController("Pomeroy")
 		if MFMailComposeViewController.canSendMail() {
-			self.presentViewController(mailComposeViewController, animated: true, completion: nil)
+			self.present(mailComposeViewController, animated: true, completion: nil)
 		} else {
 			self.showSendMailErrorAlert()
 		}
 	}
-	@IBAction func towerFeedback(sender: AnyObject) {
+	@IBAction func towerFeedback(_ sender: AnyObject) {
 		let mailComposeViewController = configuredMailComposeViewController("Tower")
 		if MFMailComposeViewController.canSendMail() {
-			self.presentViewController(mailComposeViewController, animated: true, completion: nil)
+			self.present(mailComposeViewController, animated: true, completion: nil)
 		} else {
 			self.showSendMailErrorAlert()
 		}
 	}
-	@IBAction func stonedFeedback(sender: AnyObject) {
+	@IBAction func stonedFeedback(_ sender: AnyObject) {
 		let mailComposeViewController = configuredMailComposeViewController("Stone_D")
 		if MFMailComposeViewController.canSendMail() {
-			self.presentViewController(mailComposeViewController, animated: true, completion: nil)
+			self.present(mailComposeViewController, animated: true, completion: nil)
 		} else {
 			self.showSendMailErrorAlert()
 		}
 	}
-	@IBAction func batesFeedback(sender: AnyObject) {
+	@IBAction func batesFeedback(_ sender: AnyObject) {
 		let mailComposeViewController = configuredMailComposeViewController("Bates")
 		if MFMailComposeViewController.canSendMail() {
-			self.presentViewController(mailComposeViewController, animated: true, completion: nil)
+			self.present(mailComposeViewController, animated: true, completion: nil)
 		} else {
 			self.showSendMailErrorAlert()
 		}
 	}
-	@IBAction func bplcFeedback(sender: AnyObject) {
+	@IBAction func bplcFeedback(_ sender: AnyObject) {
 		let mailComposeViewController = configuredMailComposeViewController("BPLC")
 		if MFMailComposeViewController.canSendMail() {
-			self.presentViewController(mailComposeViewController, animated: true, completion: nil)
+			self.present(mailComposeViewController, animated: true, completion: nil)
 		} else {
 			self.showSendMailErrorAlert()
 		}

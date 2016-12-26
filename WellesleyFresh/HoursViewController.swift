@@ -11,7 +11,7 @@ import UIKit
 class HoursViewController: UITableViewController {
 	var hours = DiningHours()
 	var diningHallName = ["stonedavis":"Stone Davis", "bates":"Bates", "bplc":"Lulu", "tower":"Tower", "pomeroy":"Pomeroy"]
-	var timer: NSTimer = NSTimer()
+	var timer: Timer = Timer()
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
@@ -25,21 +25,21 @@ class HoursViewController: UITableViewController {
 //		navigationItem.rightBarButtonItem = button
 		
 		// Assigns the class MyCell to the type of cell that we use in the table view
-		tableView.registerClass(ProgressCell.self, forCellReuseIdentifier: "cellId")
-		timer = NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: #selector(HoursViewController.update), userInfo: nil, repeats: true)
+		tableView.register(ProgressCell.self, forCellReuseIdentifier: "cellId")
+		timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(HoursViewController.update), userInfo: nil, repeats: true)
 	}
 	
 	
 	func update() {
 		for i in 0...4 {
-			let cell = tableView.cellForRowAtIndexPath(NSIndexPath(forRow: i, inSection: 0)) as! ProgressCell
+			let cell = tableView.cellForRow(at: IndexPath(row: i, section: 0)) as! ProgressCell
 			cell.timeLabel.text = formattedTime(i)
 			cell.timeLeft.text = formattedTimeLeft(i)
 			cell.setProgressDouble(hours.percentDone(i) / 100.0)
 		}
 	}
 	
-	func formattedTime(index: Int) -> String {
+	func formattedTime(_ index: Int) -> String {
 		let seconds = hours.secsElapsed(index)
 		let minutes = hours.minsElapsed(index)
 		var secondsZero = ""
@@ -53,7 +53,7 @@ class HoursViewController: UITableViewController {
 		return "\(hours.hoursElapsed(index)):\(minutesZero)\(minutes):\(secondsZero)\(seconds)"
 	}
 	
-	func formattedTimeLeft(index: Int) -> String {
+	func formattedTimeLeft(_ index: Int) -> String {
 		let seconds = hours.secsLeft(index)
 		let minutes = hours.minsLeft(index)
 		let h = hours.hoursLeft(index)
@@ -68,16 +68,16 @@ class HoursViewController: UITableViewController {
 		return "\(h):\(minutesZero)\(minutes):\(secondsZero)\(seconds)"
 	}
 	
-	override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+	override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 		return 5
 	}
 	
-	override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+	override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
 		return 80
 	}
 	
-	override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-		let myCell = tableView.dequeueReusableCellWithIdentifier("cellId", forIndexPath: indexPath) as! ProgressCell
+	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+		let myCell = tableView.dequeueReusableCell(withIdentifier: "cellId", for: indexPath) as! ProgressCell
 		myCell.nameLabel.text = diningHallName[hours.halls[indexPath.row]]
 		myCell.mealLabel.text = hours.meal(indexPath.row)
 		myCell.timeLabel.text = formattedTime(indexPath.row)

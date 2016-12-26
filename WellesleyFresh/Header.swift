@@ -24,7 +24,7 @@ class Header: UITableViewHeaderFooterView {
 		let label = UILabel()
 		label.text = "My Header"
 		label.translatesAutoresizingMaskIntoConstraints = false
-		label.font = UIFont.boldSystemFontOfSize(14)
+		label.font = UIFont.boldSystemFont(ofSize: 14)
 		return label
 	}()
 	
@@ -32,7 +32,7 @@ class Header: UITableViewHeaderFooterView {
 	
 	func setupViews() {
 		addSubview(nameLabel)
-		addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-16-[v0]|", options: NSLayoutFormatOptions(), metrics: nil, views: ["v0": nameLabel]))
-		addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[v0]|", options: NSLayoutFormatOptions(), metrics: nil, views: ["v0": nameLabel]))
+		addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-16-[v0]|", options: NSLayoutFormatOptions(), metrics: nil, views: ["v0": nameLabel]))
+		addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[v0]|", options: NSLayoutFormatOptions(), metrics: nil, views: ["v0": nameLabel]))
 	}
 }
