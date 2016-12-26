@@ -13,14 +13,15 @@ class ThirdViewController: UIViewController, MFMailComposeViewControllerDelegate
 	var tableview:UITableView = UITableView()
 	var units:String = "Preferred Units"
 	var unitOptions:[String] = ["m", "ft"]
-	var items: [[String]] = [["HI", "Lol", "Preferred Units", "I just want to see if this works"], ["More Hi"]]
-	var titles:[String] = ["Miscellaneous", "Feedback"]
+	var items: [[String]] = [["HI", "Lol", "Preferred Units", "I just want to see if this works"], ["Bates", "Lulu Chow Wang", "Pomeroy", "Stone-Davis", "Tower"]]
+	var titles:[String] = ["Settings", "Feedback"]
 	
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		tableview.register(MyCell.self, forCellReuseIdentifier: "cellId")
 		tableview.register(SegmentedControlCell.self, forCellReuseIdentifier: "segmentedCellId")
+		tableview.register(CustomButtonCell.self, forCellReuseIdentifier: "buttonCellId")
 		
 		// Assigns the class Header to the type of header cell that we use
 		tableview.register(Header.self, forHeaderFooterViewReuseIdentifier: "headerId")
@@ -61,6 +62,25 @@ class ThirdViewController: UIViewController, MFMailComposeViewControllerDelegate
 				myCell.nameLabel.text = ""
 			}
 			myCell.setupSegmentedControl(items: unitOptions)
+			return myCell
+		} else if titles[indexPath.section].contains("Feedback") {
+			let myCell = tableView.dequeueReusableCell(withIdentifier: "buttonCellId", for: indexPath) as! CustomButtonCell
+			myCell.nameButton(newName: items[indexPath.section][indexPath.row])
+			switch items[indexPath.section][indexPath.row] {
+				case "Bates":
+				myCell.actionButton.addTarget(self, action: #selector(batesFeedback), for: .touchUpInside)
+				case "Lulu Chow Wang":
+				myCell.actionButton.addTarget(self, action: #selector(bplcFeedback), for: .touchUpInside)
+				case "Pomeroy":
+				myCell.actionButton.addTarget(self, action: #selector(pomFeedback), for: .touchUpInside)
+				case "Stone-Davis":
+				myCell.actionButton.addTarget(self, action: #selector(stonedFeedback), for: .touchUpInside)
+				case "Tower":
+				myCell.actionButton.addTarget(self, action: #selector(towerFeedback), for: .touchUpInside)
+			default:
+				break;
+			}
+			
 			return myCell
 		} else {
 			let myCell = tableView.dequeueReusableCell(withIdentifier: "cellId", for: indexPath) as! MyCell
