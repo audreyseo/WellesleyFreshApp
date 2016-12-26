@@ -64,7 +64,8 @@ class DiningHours {
 	}
 	
 	func percentDone(index:Int) -> Double {
-		return (diningHalls[halls[index]]?.percentLeft())!
+		print("Percent left: ", diningHalls[halls[index]]!.percentLeft())
+		return (diningHalls[halls[index]]!.percentLeft())
 	}
 	
 	func hoursElapsed(index:Int) -> Int {

@@ -63,6 +63,7 @@ class SecondViewController: UITableViewController, UIPickerViewDataSource, UIPic
 				diningHallArrays = storedData.dictionaryForKey(diningHallDictionaryKey) as! [String:[String]]
 			} else {
 				print("Needed to get data for today.")
+				storedData.setValue(todayString, forKey: todaysDateKey)
 				preload()
 				refresh()
 			}

@@ -68,20 +68,27 @@ class DiningHall {
 	}
 	
 	func percentLeft() -> Double {
-		if (self.openToday()) {
+		print("Are we open today?: ", self.openToday())
+		if self.openToday() {
+			print("Hi.")
 			let option = self.days.getOption()
 			
 			if !in_between.withinRange() {
-				for i in 0...hours.count - 1 {
+				for i in 0...hours[option].count - 1 {
 					if hours[option][i].withinRange() {
+						print("If happened")
 						return hours[option][i].percentTimeElapsed()
 					}
 				}
 			} else {
+				print("Else happened");
 				return in_between.percentTimeElapsed()
 			}
 			
+		} else {
+			print("Other hi")
+			return 0
 		}
-		return 0
+		return 0.0
 	}
 }

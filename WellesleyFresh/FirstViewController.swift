@@ -250,9 +250,26 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UIPicker
 	func madeSelection() {
 		showDiningHallName.text = chosenDiningHall
 		hallInputView.hidden = true
-		menus = storedData.dictionaryForKey(diningHallDictionaryKey) as! [String:[String]]
-		newCellsInsertion()
-		retitleHeader()
+		let storedDateKey:String = storedData.stringForKey(todaysDateKey)!
+		
+		var today:NSDate
+		today = NSDate.init()
+		
+		
+		// Create a date formatter
+		let MyDateFormatter = NSDateFormatter()
+		MyDateFormatter.locale = NSLocale(localeIdentifier: "en_US_POSIX")
+		MyDateFormatter.dateFormat = "MMdd"
+		// Now make a date that represents today - we use this to retrieve the menu for the day
+		let todayString:String = MyDateFormatter.stringFromDate(today)
+		print(storedDateKey, "vs", todayString)
+		
+		if (storedDateKey == todayString) {
+			menus = storedData.dictionaryForKey(diningHallDictionaryKey) as! [String:[String]]
+			newCellsInsertion()
+			retitleHeader()
+		}
+		
 	}
 	
 	// ------------------Functions for Showing New Data-------------------

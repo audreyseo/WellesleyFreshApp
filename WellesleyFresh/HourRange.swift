@@ -168,6 +168,7 @@ class HourRange {
 	func percentTimeElapsed() -> Double {
 		let total = highHour - lowHour;
 		let elapsed = currentHour() - lowHour;
+		print("Total: ", total, " Elapsed: ", elapsed);
 		return 100.0 * (elapsed / total)
 	}
 }
