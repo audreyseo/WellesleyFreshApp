@@ -44,23 +44,32 @@ class DiningHall {
 		}
 	}
 	
+	func findRange(option:Int) -> HourRange {
+		for i in 0...hours[option].count - 1 {
+			if hours[option][i].withinRange() {
+				return hours[option][i]
+			}
+			if i < hours[option].count - 1 {
+				inBetween(hours[option][i], b: hours[option][i + 1])
+				if in_between.withinRange() {
+					return in_between
+				}
+			}
+		}
+		return HourRange(low: 0, high: 0, name: "blank")
+	}
+	
 	func currentHours() -> HourRange {
 		if (self.openToday()) {
 			let option = self.days.getOption()
-			if (!in_between.hasARange()) {
-				for i in 0...hours[option].count - 1 {
-					if hours[option][i].withinRange() {
-						return hours[option][i]
-					}
-					if i < hours[option].count - 1 {
-						inBetween(hours[option][i], b: hours[option][i + 1])
-						if in_between.withinRange() {
-							return in_between
-						}
-					}
+			if (in_between.hasARange()) {
+				if (!in_between.withinRange()) {
+					return findRange(option: option)
+				} else {
+					return in_between
 				}
 			} else {
-				return in_between
+				return findRange(option: option)
 			}
 			
 		}

@@ -149,7 +149,7 @@ class HourRange {
 	}
 	
 	func minutesLeft() -> Int {
-		return (Int(highMinutes() - onlyMinutes()) % 60) - 1
+		return (Int(highMinutes() - onlyMinutes()) % 60) - Int(ceil(Double((60 - seconds()) % 60) / 60.0))
 //		var m:Int = minutes()
 //		if highHour.truncatingRemainder(dividingBy: 1) == 0.5 {
 //			if m < 30 {
@@ -184,7 +184,7 @@ class HourRange {
 	}
 	
 	func secondsLeft() -> Int {
-		return 60 - seconds()
+		return (60 - seconds()) % 60
 	}
 	
 	func secondsElapsed() -> Int {
