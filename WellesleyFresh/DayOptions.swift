@@ -32,6 +32,15 @@ class DayOptions {
 		return false;
 	}
 	
+	func dayInDayOptions(day:String) -> Bool {
+		for i in 0...days.count - 1 {
+			if days[i].contains(day) {
+				return true
+			}
+		}
+		return false
+	}
+	
 	func getOption() -> Int {
 		let today:Date
 		today = Date.init()

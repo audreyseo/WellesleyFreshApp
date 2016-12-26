@@ -1,12 +1,15 @@
 //
 //  DiningHall.swift
 //  WellesleyFresh
+//	
+//	Represents a dining halls' operating hours and times.
 //
 //  Created by Audrey Seo on 22/10/2016.
 //  Copyright © 2016 Audrey Seo. All rights reserved.
 //
 
 import UIKit
+
 
 class DiningHall {
 	var hours:[[HourRange]]
