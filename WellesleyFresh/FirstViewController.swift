@@ -14,7 +14,7 @@
 import UIKit
 import MapKit
 
-class FirstViewController: UIViewController, CLLocationManagerDelegate, UIPickerViewDataSource, UIPickerViewDelegate, UITableViewDelegate, UITableViewDataSource {
+class FirstViewController: UIViewController, CLLocationManagerDelegate, UIPickerViewDataSource, UIPickerViewDelegate, UITableViewDelegate, UITableViewDataSource, MKMapViewDelegate {
 	var coreLocationManager = CLLocationManager()
 	var chosenDiningHall = ""
 	var chosenShort = ""
@@ -50,9 +50,10 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UIPicker
 	}
 	
 	var tableview:UITableView = UITableView()
+	var meters = true
 	
 	@IBOutlet weak var mapViewer: MKMapView!
-	
+	@IBOutlet weak var pickerButton: UIButton!
 	
 	@IBOutlet weak var locationInfo: UILabel!
 	
@@ -65,7 +66,10 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UIPicker
 	}
 	
 	override func viewDidLoad() {
+		
 		super.viewDidLoad()
+		
+		mapViewer.delegate = self
 		
 		coreLocationManager.delegate = self
 		
@@ -78,7 +82,9 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UIPicker
 			} else {
 				print("No description provided")
 			}
+			storedData.set("m", forKey: "Preferred Units")
 		} else {
+			print("Getting initial location...")
 			self.getInitialLocation()
 		}
 		
@@ -114,6 +120,14 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UIPicker
 		hallInputView.backgroundColor = UIColor.white
 		self.view.addSubview(hallInputView)
 		
+		
+		let m:String = storedData.object(forKey: "Preferred Units") as! String
+		if m.hasPrefix("m") {
+			meters = true
+		} else {
+			meters = false
+		}
+		print("Meters: ", meters)
 	}
 	
 	override func viewWillAppear(_ animated: Bool) {
@@ -121,8 +135,21 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UIPicker
 		hallPicker.frame = CGRect(x: 0, y: 40, width: self.view.frame.size.width, height: 400)
 		hallInputView.frame = CGRect(x: 0, y: self.view.frame.origin.y + self.view.frame.size.height - 440, width: self.view.frame.size.width, height: 440)
 		hallToolBar.frame = CGRect(x: 0, y: 0, width: self.view.frame.size.width, height: 40)
-		let hLimit = showDiningHallName.frame.origin.y + 30;
-		tableview.frame = CGRect(x: 0, y: hLimit, width: self.view.frame.size.width * 0.95, height: (height - hLimit) * 0.8)
+//		let hLimit = showDiningHallName.frame.origin.y + 30;
+		
+		let tableX = 0.0
+		let tableY = pickerButton.frame.origin.y + pickerButton.frame.size.height;
+		let tableW = self.view.frame.size.width * 0.95
+		let tableH = (height - tableY);
+		tableview.frame = CGRect(x: CGFloat(tableX), y: tableY, width: tableW, height: tableH)
+//		tableview.frame = CGRect(x: 0, y: hLimit, width: self.view.frame.size.width * 0.95, height: (height - hLimit) * 0.8)
+		
+		
+		if CLLocationManager.authorizationStatus() == .authorizedWhenInUse {
+			mapViewer.showsUserLocation = true
+		}
+		
+//		print(mapViewer.frame)
 	}
 	
 	// --------------------------------------------------------------------
@@ -236,6 +263,12 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UIPicker
 		}
 	}
 	
+	// -----------------MKMapViewDelegate Delegate Functions-----------------
+	
+	func mapViewWillStartLoadingMap(_ mapView: MKMapView) {
+		print("Will start loading the map!")
+	}
+	
 	
 	// ------------------------------HELPERS---------------------------------
 	
@@ -250,31 +283,38 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UIPicker
 	func madeSelection() {
 		showDiningHallName.text = chosenDiningHall
 		hallInputView.isHidden = true
-		let storedDateKey:String = storedData.string(forKey: todaysDateKey)!
-		
-		var today:Date
-		today = Date.init()
-		
-		
-		// Create a date formatter
-		let MyDateFormatter = DateFormatter()
-		MyDateFormatter.locale = Locale(identifier: "en_US_POSIX")
-		MyDateFormatter.dateFormat = "MMdd"
-		// Now make a date that represents today - we use this to retrieve the menu for the day
-		let todayString:String = MyDateFormatter.string(from: today)
-		print(storedDateKey, "vs", todayString)
-		
-		if (storedDateKey == todayString) {
-			menus = storedData.dictionary(forKey: diningHallDictionaryKey) as! [String:[String]]
-			newCellsInsertion()
-			retitleHeader()
+		if storedData.string(forKey: todaysDateKey) != nil {
+			let storedDateKey:String = storedData.string(forKey: todaysDateKey)!
+			
+			var today:Date
+			today = Date.init()
+			
+			
+			// Create a date formatter
+			let MyDateFormatter = DateFormatter()
+			MyDateFormatter.locale = Locale(identifier: "en_US_POSIX")
+			MyDateFormatter.dateFormat = "MMdd"
+			// Now make a date that represents today - we use this to retrieve the menu for the day
+			let todayString:String = MyDateFormatter.string(from: today)
+			print(storedDateKey, "vs", todayString)
+			
+			if (storedDateKey == todayString) {
+				menus = storedData.dictionary(forKey: diningHallDictionaryKey) as! [String:[String]]
+				newCellsInsertion()
+				retitleHeader()
+			}
 		}
-		
 	}
 	
 	// ------------------Functions for Showing New Data-------------------
 	
 	func newCellsInsertion() {
+		if menus[chosenShort] != nil {
+			performInsertion()
+		}
+	}
+	
+	func performInsertion() {
 		var normalArray:[String] = menus[chosenShort]!
 		if (normalArray.count >= 1) {
 			let originalSize:Int = items.count
@@ -372,7 +412,12 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UIPicker
 		let a = (sin(deltaPhi / 2.0) * sin(deltaPhi / 2.0)) + (cos(phi1) * cos(phi2) * sin(deltaLambda / 2.0) * sin(deltaLambda / 2.0));
 		let c = atan(sqrt(a) / sqrt(1 - a)) * 2.0; // Float(M_PI);
 		let d = 6371043 * c;
-		return d;
+		if (meters) {
+			return d;
+		} else {
+			return d * 3.28084
+		}
+		
 	}
 	
 	// Helper function that converts degrees (latitude, longitude) to radians
@@ -401,11 +446,11 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UIPicker
 	// Downloads the data from the Wellesley Fresh site in an attempt to get the data.
 	func getWellesleyFreshData() {
 		let url = URL(string: "http://www.wellesleyfresh.com/today-s-menu.html")
-		let task = URLSession.shared.dataTask(with: url!, completionHandler: {(data, response, error) in
+		let task = URLSession.shared.dataTask(with: url!) {(data, response, error) in
 			if error == nil {
-				print(NSString(data: data!, encoding: String.Encoding.utf8.rawValue))
+				print(String(data: data!, encoding: .utf8)!)
 			}
-		}) 
+		}
 		task.resume()
 	}
 	
@@ -460,9 +505,11 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UIPicker
 				num3 = myDistances[i]
 			}
 		}
-		closest1.text = "1. \(names[i1]), \(num1) meters"
-		closest2.text = "2. \(names[i2]), \(num2) meters"
-		closest3.text = "3. \(names[i3]), \(num3) meters"
+		let myUnits = meters ? "m" : "ft"
+		
+		closest1.text = "1. \(names[i1]), \(num1) \(myUnits)"
+		closest2.text = "2. \(names[i2]), \(num2) \(myUnits)"
+		closest3.text = "3. \(names[i3]), \(num3) \(myUnits)"
 		diningHallNames[0] = names[i1]
 		diningHallNames[1] = names[i2]
 		diningHallNames[2] = names[i3]
@@ -492,14 +539,14 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UIPicker
 	func displayLocation(_ location:CLLocation) {
 		mapViewer.setRegion(MKCoordinateRegion(center: CLLocationCoordinate2DMake(location.coordinate.latitude, location.coordinate.longitude), span: MKCoordinateSpanMake(0.05, 0.05)), animated: true)
 		
-		let locationPinCoord = CLLocationCoordinate2D(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude)
-		let annotation = MKPointAnnotation()
-		annotation.coordinate = locationPinCoord
-		annotation.title = "You are Here"
+//		let locationPinCoord = CLLocationCoordinate2D(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude)
+//		let annotation = MKPointAnnotation()
+//		annotation.coordinate = locationPinCoord
+//		annotation.title = "You are Here"
 		findDistances(location)
-		mapViewer.addAnnotation(annotation)
-		let all = diningHallAnnotations + [annotation];
-		mapViewer.showAnnotations(all, animated: true)
+//		mapViewer.addAnnotation(annotation)
+//		let all = diningHallAnnotations + [annotation];
+		mapViewer.showAnnotations(diningHallAnnotations, animated: true)
 	}
 	
 	override func didReceiveMemoryWarning() {

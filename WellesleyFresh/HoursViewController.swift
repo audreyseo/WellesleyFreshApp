@@ -33,6 +33,7 @@ class HoursViewController: UITableViewController {
 	func update() {
 		for i in 0...4 {
 			let cell = tableView.cellForRow(at: IndexPath(row: i, section: 0)) as! ProgressCell
+			cell.mealLabel.text = hours.meal(i)
 			cell.timeLabel.text = formattedTime(i)
 			cell.timeLeft.text = formattedTimeLeft(i)
 			cell.setProgressDouble(hours.percentDone(i) / 100.0)

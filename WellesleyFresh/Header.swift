@@ -22,7 +22,7 @@ class Header: UITableViewHeaderFooterView {
 	
 	let nameLabel: UILabel = {
 		let label = UILabel()
-		label.text = "My Header"
+//		label.text = "My Header"
 		label.translatesAutoresizingMaskIntoConstraints = false
 		label.font = UIFont.boldSystemFont(ofSize: 14)
 		return label

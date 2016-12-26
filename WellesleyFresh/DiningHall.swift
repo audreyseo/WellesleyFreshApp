@@ -40,14 +40,14 @@ class DiningHall {
 		let currentTime = a.currentHour()
 //		print("In-Between?: \(currentTime), (\(a.lowHour), \(a.highHour)), (\(b.lowHour), \(b.highHour))")
 		if currentTime >= a.highHour && currentTime <= b.lowHour {
-			in_between = HourRange(low: a.highHour, high: b.lowHour, name: "Closed, Next: \(b.name())")
+			in_between = HourRange(low: a.highHour, high: b.lowHour, name: "Next: \(b.name())")
 		}
 	}
 	
 	func currentHours() -> HourRange {
 		if (self.openToday()) {
 			let option = self.days.getOption()
-			if (!in_between.withinRange()) {
+			if (!in_between.hasARange()) {
 				for i in 0...hours[option].count - 1 {
 					if hours[option][i].withinRange() {
 						return hours[option][i]
@@ -68,25 +68,25 @@ class DiningHall {
 	}
 	
 	func percentLeft() -> Double {
-		print("Are we open today?: ", self.openToday())
+//		print("Are we open today?: ", self.openToday())
 		if self.openToday() {
-			print("Hi.")
+//			print("Hi.")
 			let option = self.days.getOption()
 			
-			if !in_between.withinRange() {
+			if !in_between.hasARange() {
 				for i in 0...hours[option].count - 1 {
 					if hours[option][i].withinRange() {
-						print("If happened")
+//						print("If happened")
 						return hours[option][i].percentTimeElapsed()
 					}
 				}
 			} else {
-				print("Else happened");
+//				print("Else happened");
 				return in_between.percentTimeElapsed()
 			}
 			
 		} else {
-			print("Other hi")
+//			print("Other hi")
 			return 0
 		}
 		return 0.0

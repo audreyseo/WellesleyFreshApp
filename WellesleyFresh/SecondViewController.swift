@@ -460,12 +460,14 @@ class SecondViewController: UITableViewController, UIPickerViewDataSource, UIPic
 		print("loading hall ", hall)
 		
 		// Get the url for the specific menu
-		let url:URL! = URL(string: "http://www.wellesleyfresh.com/menus/" + hall + "/menu_" + todayString + ".htm")
+		let urlString = "http://www.wellesleyfresh.com/menus/" + hall + "/menu_" + todayString + ".htm"
+		let url = URLRequest(url: URL(string: urlString)!)
 		
 		// Create the task + the completion handler for the url session
-		let task = URLSession.shared.dataTask(with: url, completionHandler: { (data:Data?, response:URLResponse?, error:NSError?) in
+		//let task = URLSession.shared.dataTask(da
+		URLSession.shared.dataTask(with: url) { (data, response, error) in
 			// Strings are Windows 1252 encoded for some reason
-			let mystring:NSString! = NSString(data: data!, encoding: String.Encoding.windowsCP1252)
+			let mystring:String! = String(data: data!, encoding: .windowsCP1252)
 			
 			let bodyString:String = self.regexHelper.extractInformationString(mystring as String)
 			print("\n\n\n\n\nDigest string:\n|", bodyString, "|\nEnd of string", separator: "")
@@ -476,8 +478,9 @@ class SecondViewController: UITableViewController, UIPickerViewDataSource, UIPic
 				print("The new string: ", (self.storedData.dictionary(forKey: self.diningHallDictionaryKey) as! [String: [String]])[hall]![i], separator: "")
 			}
 			self.loadingHall = false;
-		}) 
+			
+		}.resume()
 		// Start the task
-		task.resume()
+		//task.resume()
 	}
 }

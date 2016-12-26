@@ -26,17 +26,17 @@ class DiningHours {
 		diningHalls["tower"] = DiningHall(newDays: ["MoTuWeThFr", "SaSu"], newHours: towerHours, meals: [["Continental Breakfast", "Full Breakfast", "Lunch", "Dinner"], ["Continental Breakfast", "Hot Brunch", "Dinner"]]);
 		diningHalls["bates"] = diningHalls["tower"]
 		diningHalls["pomeroy"] = diningHalls["bates"]
-		var firstHoursA = [[7, 7.5]]
+		var firstHoursA:[[Double]] = [[7, 7.5]]
 		firstHoursA.append([7.5, 10.0])
 		firstHoursA.append([11.5, 14.0])
 		firstHoursA.append([17.0, 20.0])
 		firstHoursA.append([20.0, 22.0])
-		var secondHoursA = [[7.0, 7.5]]
+		var secondHoursA:[[Double]] = [[7.0, 7.5]]
 		secondHoursA.append([7.5, 10.0])
 		secondHoursA.append([11.5, 14.0])
 		secondHoursA.append([17.0, 20.0])
-		let stoneHours = [firstHoursA, secondHoursA]
-		diningHalls["stonedavis"] = DiningHall(newDays: ["MoTuWeTh", "Fr"], newHours: stoneHours as! [[[Double]]], meals: [["Continental Breakfast", "Full Breakfast", "Lunch", "Dinner", "Late Night"], ["Continental Breakfast", "Full Breakfast", "Lunch", "Dinner"]])
+		let stoneHours:[[[Double]]] = [firstHoursA, secondHoursA]
+		diningHalls["stonedavis"] = DiningHall(newDays: ["MoTuWeTh", "Fr"], newHours: stoneHours, meals: [["Continental Breakfast", "Full Breakfast", "Lunch", "Dinner", "Late Night"], ["Continental Breakfast", "Full Breakfast", "Lunch", "Dinner"]])
 		var firstHoursB = [[7.0, 10.5]]
 		firstHoursB.append([11.5, 14.0])
 		firstHoursB.append([17.0, 20.0])
@@ -64,7 +64,7 @@ class DiningHours {
 	}
 	
 	func percentDone(_ index:Int) -> Double {
-		print("Percent left: ", diningHalls[halls[index]]!.percentLeft())
+//		print("Percent left: ", diningHalls[halls[index]]!.percentLeft())
 		return (diningHalls[halls[index]]!.percentLeft())
 	}
 	

@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		760B43C71DBAEF61003D8CE0 /* TimeProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 760B43C61DBAEF61003D8CE0 /* TimeProgressView.swift */; };
+		764458871E11585900AE8251 /* SegmentedControlCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 764458861E11585900AE8251 /* SegmentedControlCell.swift */; };
 		76A331451D8263230079A6CE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76A331441D8263230079A6CE /* AppDelegate.swift */; };
 		76A331471D8263230079A6CE /* FirstViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76A331461D8263230079A6CE /* FirstViewController.swift */; };
 		76A331491D8263230079A6CE /* SecondViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76A331481D8263230079A6CE /* SecondViewController.swift */; };
@@ -50,6 +51,7 @@
 
 /* Begin PBXFileReference section */
 		760B43C61DBAEF61003D8CE0 /* TimeProgressView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimeProgressView.swift; sourceTree = "<group>"; };
+		764458861E11585900AE8251 /* SegmentedControlCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SegmentedControlCell.swift; sourceTree = "<group>"; };
 		76A331411D8263230079A6CE /* WellesleyFresh.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WellesleyFresh.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		76A331441D8263230079A6CE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		76A331461D8263230079A6CE /* FirstViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstViewController.swift; sourceTree = "<group>"; };
@@ -132,13 +134,14 @@
 			isa = PBXGroup;
 			children = (
 				76A331441D8263230079A6CE /* AppDelegate.swift */,
-				76E302EE1DAD65FE00E958BB /* Header.swift */,
 				76D71ACA1DBBAFC8005B7211 /* HoursViewController.swift */,
 				76A331461D8263230079A6CE /* FirstViewController.swift */,
 				76A331481D8263230079A6CE /* SecondViewController.swift */,
 				76E302F01DB3031800E958BB /* ThirdViewController.swift */,
+				76E302EE1DAD65FE00E958BB /* Header.swift */,
 				76E302EC1DAD65F700E958BB /* MyCell.swift */,
 				76B2B9A71DBBC0130084A43B /* ProgressCell.swift */,
+				764458861E11585900AE8251 /* SegmentedControlCell.swift */,
 				76E302EA1DAD65F100E958BB /* WellesleyFreshRegex.swift */,
 				760B43C61DBAEF61003D8CE0 /* TimeProgressView.swift */,
 				76E302F21DB4332000E958BB /* DiningHours.swift */,
@@ -234,7 +237,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0720;
-				LastUpgradeCheck = 0720;
+				LastUpgradeCheck = 0820;
 				ORGANIZATIONNAME = "Audrey Seo";
 				TargetAttributes = {
 					76A331401D8263230079A6CE = {
@@ -309,6 +312,7 @@
 			files = (
 				76A331491D8263230079A6CE /* SecondViewController.swift in Sources */,
 				76B2B9A81DBBC0130084A43B /* ProgressCell.swift in Sources */,
+				764458871E11585900AE8251 /* SegmentedControlCell.swift in Sources */,
 				76D71ACB1DBBAFC8005B7211 /* HoursViewController.swift in Sources */,
 				76D71AC91DBBA562005B7211 /* DayOptions.swift in Sources */,
 				76E302ED1DAD65F700E958BB /* MyCell.swift in Sources */,
@@ -389,8 +393,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -433,8 +439,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
