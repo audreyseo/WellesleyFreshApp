@@ -290,8 +290,9 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UIPicker
 	
 	// Tells the hallInputView to go away
 	func madeSelection() {
-		showDiningHallName.text = chosenDiningHall
 		hallInputView.isHidden = true
+
+			
 		if storedData.string(forKey: todaysDateKey) != nil {
 			let storedDateKey:String = storedData.string(forKey: todaysDateKey)!
 			
@@ -313,6 +314,7 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UIPicker
 				retitleHeader()
 			}
 		}
+		
 	}
 	
 	// ------------------Functions for Showing New Data-------------------

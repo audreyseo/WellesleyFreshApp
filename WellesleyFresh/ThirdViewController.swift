@@ -13,8 +13,8 @@ class ThirdViewController: UIViewController, MFMailComposeViewControllerDelegate
 	var tableview:UITableView = UITableView()
 	var units:String = "Preferred Units"
 	var unitOptions:[String] = ["m", "ft"]
-	var items: [[String]] = [["HI", "Lol", "Preferred Units", "I just want to see if this works"], ["Bates", "Lulu Chow Wang", "Pomeroy", "Stone-Davis", "Tower"]]
-	var titles:[String] = ["Settings", "Feedback"]
+	var items: [[String]] = [["Bates", "Lulu Chow Wang", "Pomeroy", "Stone-Davis", "Tower"], ["HI", "Lol", "Preferred Units", "About"]]
+	var titles:[String] = ["Feedback", "Settings"]
 	
 	
 	override func viewDidLoad() {
@@ -24,7 +24,8 @@ class ThirdViewController: UIViewController, MFMailComposeViewControllerDelegate
 		tableview.register(CustomButtonCell.self, forCellReuseIdentifier: "buttonCellId")
 		
 		// Assigns the class Header to the type of header cell that we use
-		tableview.register(Header.self, forHeaderFooterViewReuseIdentifier: "headerId")
+		tableview.register(GroupHeader.self, forHeaderFooterViewReuseIdentifier: "headerId")
+		
 		tableview.delegate = self
 		tableview.dataSource = self
 		
@@ -37,9 +38,9 @@ class ThirdViewController: UIViewController, MFMailComposeViewControllerDelegate
 	}
 	
 	override func viewWillAppear(_ animated: Bool) {
-		let tableX:CGFloat = self.view.frame.size.width * 0.025
+		let tableX:CGFloat = self.view.frame.size.width * 0.0
 		let tableY:CGFloat = 20.0;
-		let tableW:CGFloat = self.view.frame.size.width * 0.95
+		let tableW:CGFloat = self.view.frame.size.width * 1.0
 		let tableH:CGFloat = (self.view.frame.size.height - tableY);
 		tableview.frame = CGRect(x: CGFloat(tableX), y: tableY, width: tableW, height: tableH)
 	}
@@ -98,14 +99,18 @@ class ThirdViewController: UIViewController, MFMailComposeViewControllerDelegate
 	}
 	
 	func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-		let myHeader = tableView.dequeueReusableHeaderFooterView(withIdentifier: "headerId") as! Header
+		let myHeader = tableView.dequeueReusableHeaderFooterView(withIdentifier: "headerId") as! GroupHeader
 		//		if (self.chosenDiningHall != "") {
 		//			myHeader.nameLabel.text = self.chosenDiningHall
 		//		} else {
-//		myHeader.nameLabel.text = titles[section]
+		//myHeader.nameLabel.text = titles[section]
 		//		}
 		//		myHeader.myTableViewController = self
 		return myHeader
+	}
+	
+	func tableView(_ tableView: UITableView, estimatedHeightForHeaderInSection section: Int) -> CGFloat {
+		return 80
 	}
 	
 	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

@@ -25,13 +25,13 @@ class SecondViewController: UITableViewController, UIPickerViewDataSource, UIPic
 	let diningHallDictionaryKey = "diningHallDictionaryKey"
 	let todaysDateKey = "todaysDateKey"
 	var barButtonDone:UIBarButtonItem {
-		return UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.done, target: self, action: #selector(SecondViewController.madeSelection))
+		return UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.done, target: self, action: #selector(self.madeSelection))
 	}
 	var barButtonSpace:UIBarButtonItem {
 		return UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: nil, action: nil)
 	}
 	var barButtonCancel:UIBarButtonItem {
-		return UIBarButtonItem(title: "Cancel", style: UIBarButtonItemStyle.plain, target: self, action: #selector(SecondViewController.madeSelection))
+		return UIBarButtonItem(title: "Cancel", style: UIBarButtonItemStyle.plain, target: self, action: #selector(self.madeSelection))
 	}
 	var hallInputView:UIInputView = UIInputView()
 	
@@ -110,17 +110,20 @@ class SecondViewController: UITableViewController, UIPickerViewDataSource, UIPic
 		hallInputView.addSubview(hallPicker)
 		hallInputView.isHidden = false
 		hallInputView.backgroundColor = UIColor.white
-		self.view.addSubview(hallInputView)
+		self.navigationController?.view.addSubview(hallInputView)
 	}
 	
 	override func viewWillAppear(_ animated: Bool) {
 		let height = self.tableView.frame.origin.y + self.tableView.frame.size.height
-		print("superview:", self.tableView.superview)
-		print("Height:", self.tableView.superview!.frame.size.height - 400.0)
+		//print("superview:", self.tableView.superview?)
+		//print("Height:", self.tableView.superview!.frame.size.height - 400.0)
 		hallPicker.frame = CGRect(x: 0, y: 40, width: tableView.contentSize.width, height: 400)
+		
 		hallInputView.frame = CGRect(x: 0, y: height - (height * 0.6), width: tableView.contentSize.width, height: height * 0.6)
 		hallToolBar.frame = CGRect(x: 0, y: 0, width: tableView.contentSize.width, height: 40)
-		self.view.bringSubview(toFront: hallInputView)
+		//self.view.bringSubview(toFront: hallInputView)
+		//self.navigationController?.view.bringSubview(toFront: hallPicker)
+		
 	}
 	
 	// --------------------------------------------------------------------
@@ -222,11 +225,13 @@ class SecondViewController: UITableViewController, UIPickerViewDataSource, UIPic
 	
 	func retitleHeader() {
 		if (tableView.headerView(forSection: 0) != nil) {
-			for i in 0...diningHalls.count - 1 {
-				if (diningHalls[i] == self.diningHall) {
-					(tableView.headerView(forSection: 0) as! Header).nameLabel.text = self.diningHallFull[i]
-				}
-			}
+			//for i in 0...diningHalls.count - 1 {
+			//	if (diningHalls[i] == self.diningHall) {
+			//		(tableView.headerView(forSection: 0) as! Header).nameLabel.text = self.diningHallFull[i]
+			//	}
+			//}
+			(tableView.headerView(forSection: 0) as! Header).nameLabel.text = self.diningHallName
+			print("Tried to assign ", diningHallName, " to the header view.")
 		}
 	}
 	
@@ -238,9 +243,11 @@ class SecondViewController: UITableViewController, UIPickerViewDataSource, UIPic
 	}
 	
 	func choose() {
-		if !loadingHall {
+		//if !loadingHall {
+		print("Hey there!!!!!!!!")
+		retitleHeader()
 			if previousDiningHall != diningHall {
-				retitleHeader()
+				
 				if (diningHallArrays[diningHall] != nil) {
 					normalArray = diningHallArrays[diningHall]!
 				}
@@ -259,7 +266,7 @@ class SecondViewController: UITableViewController, UIPickerViewDataSource, UIPic
 				}
 				newCellsInsertion()
 			}
-		}
+		//}
 	}
 	
 	func refresh() {

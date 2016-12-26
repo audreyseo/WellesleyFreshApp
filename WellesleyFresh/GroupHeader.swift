@@ -1,5 +1,5 @@
 //
-//  Header.swift
+//  GroupHeader.swift
 //  tableViewApp
 //
 //  Created by Audrey Seo on 10/10/2016.
@@ -8,8 +8,8 @@
 
 import UIKit
 
-class Header: UITableViewHeaderFooterView {
-//	var myTableViewController: SecondViewController?
+class GroupHeader: UITableViewHeaderFooterView {
+	//	var myTableViewController: SecondViewController?
 	
 	override init(reuseIdentifier: String?) {
 		super.init(reuseIdentifier: reuseIdentifier)
@@ -22,10 +22,10 @@ class Header: UITableViewHeaderFooterView {
 	
 	let nameLabel: UILabel = {
 		let label = UILabel()
-//		label.text = "My Header"
-		label.text = ""
+		//		label.text = "My Header"
+		//label.text = ""
 		label.translatesAutoresizingMaskIntoConstraints = false
-		label.font = UIFont.boldSystemFont(ofSize: 14)
+		label.font = UIFont.boldSystemFont(ofSize: 18)
 		return label
 	}()
 	
@@ -34,6 +34,6 @@ class Header: UITableViewHeaderFooterView {
 	func setupViews() {
 		addSubview(nameLabel)
 		addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-16-[v0]|", options: NSLayoutFormatOptions(), metrics: nil, views: ["v0": nameLabel]))
-		addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-2-[v0]-2-|", options: NSLayoutFormatOptions(), metrics: nil, views: ["v0": nameLabel]))
+		addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|->=6-[v0(>=30)]-2-|", options: NSLayoutFormatOptions(), metrics: nil, views: ["v0": nameLabel]))
 	}
 }
