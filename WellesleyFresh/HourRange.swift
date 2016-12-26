@@ -193,7 +193,7 @@ class HourRange {
 	
 	func withinRange() -> Bool {
 		let hour:Double = currentHour()
-		if hour < highHour && hour > lowHour {
+		if hour < highHour && hour >= lowHour {
 			return true
 		}
 		return false

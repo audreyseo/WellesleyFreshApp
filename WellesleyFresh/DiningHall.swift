@@ -56,7 +56,7 @@ class DiningHall {
 				}
 			}
 		}
-		return HourRange(low: 0, high: 0, name: "blank")
+		return HourRange(low: 0, high: 0, name: "Closed")
 	}
 	
 	func currentHours() -> HourRange {
@@ -77,27 +77,32 @@ class DiningHall {
 	}
 	
 	func percentLeft() -> Double {
-//		print("Are we open today?: ", self.openToday())
-		if self.openToday() {
-//			print("Hi.")
-			let option = self.days.getOption()
-			
-			if !in_between.hasARange() {
-				for i in 0...hours[option].count - 1 {
-					if hours[option][i].withinRange() {
-//						print("If happened")
-						return hours[option][i].percentTimeElapsed()
-					}
-				}
-			} else {
-//				print("Else happened");
-				return in_between.percentTimeElapsed()
-			}
-			
-		} else {
-//			print("Other hi")
-			return 0
+		let current = currentHours()
+		if (current.name() != "Closed") {
+			return currentHours().percentTimeElapsed()
 		}
 		return 0.0
+		//		print("Are we open today?: ", self.openToday())
+//		if self.openToday() {
+//			print("Hi.")
+//			let option = self.days.getOption()
+		
+//			if !in_between.hasARange() {
+//				for i in 0...hours[option].count - 1 {
+//					if hours[option][i].withinRange() {
+//						print("If happened")
+//						return hours[option][i].percentTimeElapsed()
+//					}
+//				}
+//			} else {
+//				print("Else happened");
+//				return in_between.percentTimeElapsed()
+//			}
+		
+//		} else {
+//			print("Other hi")
+//			return 0
+//		}
+		
 	}
 }
