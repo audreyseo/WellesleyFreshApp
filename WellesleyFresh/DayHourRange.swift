@@ -35,7 +35,7 @@ class DayHourRange:HourRange {
 		//timeFormatter.dateFormat = "kk:mm:ss"
 	}
 	
-	init( lowHour:Double, highHour:Double, name:String, dayChange:Int) {
+	init(lowHour:Double, highHour:Double, name:String, dayChange:Int) {
 		super.init(low: lowHour, high: highHour, name: name)
 		
 		dayFormatter = DateFormatter()
@@ -60,5 +60,32 @@ class DayHourRange:HourRange {
 		//timeFormatter = DateFormatter()
 		//timeFormatter.locale = Locale(identifier: "en_US_POSIX")
 		//timeFormatter.dateFormat = "kk:mm:ss"
+	}
+	
+	override func currentHour() -> Double {
+		let today:Date = Date.init()
+		let todayDate = getDate(aDate: today)
+		let todayHour = getHour(aDate: today)
+		var totalHours:Double = 0.0
+		
+		var diff:Double = Double(todayDate - lowDay)
+		
+		if diff > 0 {
+			totalHours += (24 - lowHour)
+			diff -= 1.0
+			let diff1 = highDay - todayDate
+			if diff1 == 0 {
+				diff -= 1.0
+				return totalHours + Double(todayHour) + (diff * 24.0)
+			}
+			return totalHours + Double(todayHour)
+		} else {
+			return Double(todayHour) - lowHour
+		}
+	}
+	
+	
+	func getDate(aDate:Date) -> Int {
+		return Int(dayFormatter.string(from: aDate))!
 	}
 }

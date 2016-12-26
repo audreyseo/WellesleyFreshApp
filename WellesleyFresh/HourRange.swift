@@ -37,6 +37,18 @@ class HourRange {
 		timeFormatter.dateFormat = "kk:mm:ss"
 	}
 	
+	func getHour(aDate:Date) -> Int {
+		return Int(hourFormatter.string(from: aDate))!
+	}
+	
+	func getMinute(aDate:Date) -> Int {
+		return Int(minuteFormatter.string(from: aDate))!
+	}
+	
+	func getSecond(aDate:Date) -> Int {
+		return Int(secondFormatter.string(from: aDate))!
+	}
+	
 	func currentHour() -> Double {
 		let today:Date
 		today = Date.init()
@@ -212,9 +224,17 @@ class HourRange {
 		}
 	}
 	
+	func totalChange() -> Double {
+		return highHour - lowHour
+	}
+	
+	func elapsedTime() -> Double {
+		return currentHour() - lowHour
+	}
+	
 	func percentTimeElapsed() -> Double {
-		let total = highHour - lowHour;
-		let elapsed = currentHour() - lowHour;
+		let total = totalChange()
+		let elapsed = elapsedTime()
 //		print("Total: ", total, " Elapsed: ", elapsed);
 		return 100.0 * (elapsed / total)
 	}
