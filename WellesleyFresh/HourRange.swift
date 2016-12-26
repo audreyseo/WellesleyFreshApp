@@ -24,6 +24,8 @@ class HourRange {
 		self.lowHour = low;
 		self.rangeName = name;
 		self.hourFormatter = DateFormatter()
+		
+		// Use 24-hour time
 		hourFormatter.locale = Locale(identifier: "en_US_POSIX")
 		hourFormatter.dateFormat = "k"
 		minuteFormatter = DateFormatter()
@@ -108,50 +110,12 @@ class HourRange {
 	}
 	
 	func hoursLeft() -> Int {
-//		var h:Int = onlyMinutes()
 		return Int(floor((highMinutes() - onlyMinutes()) / 60))
-//		print("\(h), \(Int(highHour)), \(highHour)")
-//		if (highHour == 0) {
-//			if lowHour.truncatingRemainder(dividingBy: 1.0) == 0.5 {
-//				let m = minutes()
-//				if (m > 30) {
-//					return 24 - (h + 1)
-//				} else {
-//					return 24 - h
-//				}
-//			} else {
-//				return 24 - h
-//			}
-//		}
-//		if (highHour.truncatingRemainder(dividingBy: 1) == 0) {
-//			let m = minutes()
-//			if (m > 30) {
-//				return Int(highHour) - (h + 1)
-//			} else {
-//				return Int(highHour) - h
-//			}
-//		} else if highHour.truncatingRemainder(dividingBy: 1) == 0.5 {
-//			let m = minutes()
-//			if m <= 30 {
-//				h += 1
-//			}
-//			return Int(highHour) - h
-//		}
-//		return Int(highHour) - h
 	}
 	
 	func hoursElapsed() -> Int {
 		let dif = onlyMinutes() - lowMinutes()
 		return Int(floor(dif / 60))
-//		var h:Int = hours()
-//		let m:Int = minutes()
-//		if lowHour.truncatingRemainder(dividingBy: 1) == 0.5 {
-//			if m > 30 {
-//				h += 1;
-//			}
-//		}
-//		print("\(h), \(Int(lowHour)), \(lowHour)")
-//		return h - Int(round(lowHour))
 	}
 	
 	func minutes() -> Int {
@@ -162,31 +126,10 @@ class HourRange {
 	
 	func minutesLeft() -> Int {
 		return (Int(highMinutes() - onlyMinutes()) % 60) - Int(ceil(Double((60 - seconds()) % 60) / 60.0))
-//		var m:Int = minutes()
-//		if highHour.truncatingRemainder(dividingBy: 1) == 0.5 {
-//			if m < 30 {
-//				m += 30
-//			}
-//		}
-//		if (m != 0) {
-//			return 59 - m
-//		}
-//		else {
-//			return m
-//		}
 	}
 	
 	func minutesElapsed() -> Int {
 		return Int(onlyMinutes() - lowMinutes()) % 60
-//		var m:Int = minutes()
-//		if lowHour.truncatingRemainder(dividingBy: 1) == 0.5 {
-//			if m >= 30 {
-//				m = m - 30
-//			} else {
-//				m = 60 + (m - 30)
-//			}
-//		}
-//		return m
 	}
 	
 	func seconds() -> Int {
@@ -235,12 +178,11 @@ class HourRange {
 	func percentTimeElapsed() -> Double {
 		let total = totalChange()
 		let elapsed = elapsedTime()
-//		print("Total: ", total, " Elapsed: ", elapsed);
 		return 100.0 * (elapsed / total)
 	}
 	
 	func hasARange() -> Bool {
-		if highHour - lowHour > 0 {
+		if totalChange() > 0 {
 			return true
 		}
 		return false

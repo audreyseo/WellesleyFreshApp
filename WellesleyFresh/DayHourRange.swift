@@ -84,6 +84,14 @@ class DayHourRange:HourRange {
 		}
 	}
 	
+	override func totalChange() -> Double {
+		return (Double(highDay - lowDay) * 24.0) + (24.0 - lowHour) + highHour
+	}
+	
+	override func elapsedTime() -> Double {
+		return currentHour()
+	}
+	
 	
 	func getDate(aDate:Date) -> Int {
 		return Int(dayFormatter.string(from: aDate))!
