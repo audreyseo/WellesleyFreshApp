@@ -15,6 +15,10 @@ class DiningHall {
 	var hours:[[HourRange]]
 	var days:DayOptions
 	var in_between:HourRange
+	let nextDay:[String:String] = [
+		"Su":"Mo", "Mo":"Tu", "Tu":"We", "We":"Th", "Th":"Fr", "Fr":"Sa", "Sa": "Su"
+	]
+	
 	init(newDays: [String], newHours: [[[Double]]], meals: [[String]]) {
 		hours = [[HourRange]]()
 		for i in 0...newHours.count - 1 {
@@ -29,6 +33,49 @@ class DiningHall {
 	
 	func openToday() -> Bool {
 		return days.hasToday()
+	}
+	
+	func nextOpenIndex() -> Int {
+		let today = days.todaysWeekDate()
+		var count:Int = 0
+		
+		while count < 7 {
+			var next = nextDay[today]
+			if days.dayInDayOptions(day: next!) {
+				return days.getOptionForDay(day: next!)
+			} else {
+				next = nextDay[next!]
+				count += 1
+			}
+		}
+		
+		return -1
+	}
+	
+	func whenNextOpen() -> Int {
+		let today = days.todaysWeekDate()
+		var count:Int = 0
+		var next = nextDay[today]
+		count += 1
+		while count < 7 {
+			if days.dayInDayOptions(day: next!) {
+				return count
+			} else {
+				next = nextDay[next!]
+				count += 1
+			}
+		}
+		
+		return -1
+	}
+	
+	func nextOpenInterval() {
+		let lastOpenIndex = days.getOption()
+		let nextOpenIndex = self.nextOpenIndex()
+		
+		if nextOpenIndex >= 0 {
+			let endHour = 
+		}
 	}
 	
 	func closed() -> Bool {

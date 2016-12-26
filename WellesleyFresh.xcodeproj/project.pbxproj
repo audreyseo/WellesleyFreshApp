@@ -11,6 +11,7 @@
 		764458871E11585900AE8251 /* SegmentedControlCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 764458861E11585900AE8251 /* SegmentedControlCell.swift */; };
 		76477FDC1E1192E600CA74CE /* CustomButtonCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76477FDB1E1192E600CA74CE /* CustomButtonCell.swift */; };
 		76477FDE1E11BD7700CA74CE /* GroupHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76477FDD1E11BD7700CA74CE /* GroupHeader.swift */; };
+		76477FE01E11C97700CA74CE /* DayHourRange.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76477FDF1E11C97700CA74CE /* DayHourRange.swift */; };
 		76A331451D8263230079A6CE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76A331441D8263230079A6CE /* AppDelegate.swift */; };
 		76A331471D8263230079A6CE /* FirstViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76A331461D8263230079A6CE /* FirstViewController.swift */; };
 		76A331491D8263230079A6CE /* SecondViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76A331481D8263230079A6CE /* SecondViewController.swift */; };
@@ -56,6 +57,7 @@
 		764458861E11585900AE8251 /* SegmentedControlCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SegmentedControlCell.swift; sourceTree = "<group>"; };
 		76477FDB1E1192E600CA74CE /* CustomButtonCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomButtonCell.swift; sourceTree = "<group>"; };
 		76477FDD1E11BD7700CA74CE /* GroupHeader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupHeader.swift; sourceTree = "<group>"; };
+		76477FDF1E11C97700CA74CE /* DayHourRange.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DayHourRange.swift; sourceTree = "<group>"; };
 		76A331411D8263230079A6CE /* WellesleyFresh.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WellesleyFresh.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		76A331441D8263230079A6CE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		76A331461D8263230079A6CE /* FirstViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstViewController.swift; sourceTree = "<group>"; };
@@ -152,6 +154,7 @@
 				760B43C61DBAEF61003D8CE0 /* TimeProgressView.swift */,
 				76E302F21DB4332000E958BB /* DiningHours.swift */,
 				76D71AC41DBBA24A005B7211 /* HourRange.swift */,
+				76477FDF1E11C97700CA74CE /* DayHourRange.swift */,
 				76D71AC61DBBA523005B7211 /* DiningHall.swift */,
 				76D71AC81DBBA562005B7211 /* DayOptions.swift */,
 				76A3314A1D8263230079A6CE /* Main.storyboard */,
@@ -334,6 +337,7 @@
 				76A331471D8263230079A6CE /* FirstViewController.swift in Sources */,
 				76D71AC71DBBA523005B7211 /* DiningHall.swift in Sources */,
 				76D71AC51DBBA24A005B7211 /* HourRange.swift in Sources */,
+				76477FE01E11C97700CA74CE /* DayHourRange.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

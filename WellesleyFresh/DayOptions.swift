@@ -12,6 +12,7 @@ import UIKit
 class DayOptions {
 	var days:[String] = [String]()
 	var formatter:DateFormatter
+	var dayOfTheWeek:String = ""
 	
 	init(initialDays:[String]) {
 		days = initialDays
@@ -32,10 +33,26 @@ class DayOptions {
 		return false;
 	}
 	
+	func todaysWeekDate() -> String {
+		let today:Date
+		today = Date.init()
+		let day = formatter.string(from: today)
+		return day
+	}
+	
 	func dayInDayOptions(day:String) -> Bool {
 		for i in 0...days.count - 1 {
 			if days[i].contains(day) {
 				return true
+			}
+		}
+		return false
+	}
+	
+	func getOptionForDay(day:String) -> Int {
+		for i in 0...days.count - 1 {
+			if days[i].contains(day) {
+				return i
 			}
 		}
 		return false
