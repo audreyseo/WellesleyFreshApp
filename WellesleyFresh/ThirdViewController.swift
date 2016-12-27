@@ -87,9 +87,13 @@ class ThirdViewController: UIViewController, MFMailComposeViewControllerDelegate
 			let myCell = tableView.dequeueReusableCell(withIdentifier: "cellId", for: indexPath) as! MyCell
 			if (items.count > 0) {
 				myCell.nameLabel.text = items[indexPath.section][indexPath.row]
+				if items[indexPath.section][indexPath.row].contains("About") {
+					myCell.accessoryType = .disclosureIndicator
+				}
 			} else {
 				myCell.nameLabel.text = ""
 			}
+			
 			return myCell
 		}
 	}

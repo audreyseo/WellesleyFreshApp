@@ -171,6 +171,9 @@ class DayHourRange:HourRange {
 	override func totalChange() -> Double {
 		let dayHours:Double = Double((highDay - lowDay) - 1) * 24.0
 		let hourHours:Double = (24.0 - lowHour) + highHour
+		
+		print("Total change: ", dayHours + hourHours)
+		print("High: ", highHour, " low: ", lowHour)
 		return dayHours + hourHours
 	}
 	

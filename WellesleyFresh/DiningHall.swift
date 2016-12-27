@@ -43,9 +43,13 @@ class DiningHall {
 	func nextOpenIndex() -> Int {
 		let today = days.todaysWeekDate()
 		var count:Int = 0
+		//if openToday() && hours[0][0].hours() < 12 {
+		//	return days.getOptionForDay(day: today)
+		//}
+		var next = nextDay[today]
 		
 		while count < 7 {
-			var next = nextDay[today]
+			
 			if days.dayInDayOptions(day: next!) {
 				return days.getOptionForDay(day: next!)
 			} else {
@@ -76,7 +80,7 @@ class DiningHall {
 	
 	func whenLastOpen() -> String {
 		let today = days.todaysWeekDate()
-		if openToday() {
+		if openToday() && hours[0][0].hours() >= 12 {
 			return today
 		}
 		var count:Int = 0
@@ -102,6 +106,9 @@ class DiningHall {
 		
 		if nextOpenIndex >= 0 {
 			endHour = hours[nextOpenIndex][0].lowHour
+			for i in 0...hours[nextOpenIndex].count - 1 {
+				print("#", i, " : ", hours[nextOpenIndex][i].lowHour)
+			}
 		}
 		
 		if lastOpenIndex >= 0 {

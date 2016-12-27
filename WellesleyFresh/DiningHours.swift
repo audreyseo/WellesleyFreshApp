@@ -34,7 +34,7 @@ class DiningHours {
 		var secondHoursA:[[Double]] = [[7.0, 7.5]]
 		secondHoursA.append([7.5, 10.0])
 		secondHoursA.append([11.5, 14.0])
-		secondHoursA.append([17.0, 20.0])
+		secondHoursA.append([17.0, 19.0])
 		let stoneHours:[[[Double]]] = [firstHoursA, secondHoursA]
 		diningHalls["stonedavis"] = DiningHall(newDays: ["MoTuWeTh", "Fr"], newHours: stoneHours, meals: [["Continental Breakfast", "Full Breakfast", "Lunch", "Dinner", "Late Night"], ["Continental Breakfast", "Full Breakfast", "Lunch", "Dinner"]])
 		var firstHoursB = [[7.0, 10.5]]
