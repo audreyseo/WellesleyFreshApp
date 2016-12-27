@@ -8,25 +8,25 @@ This list is a summary of all of the app's current capabilities:
  - Show the menu of a given dining hall (Tower, Bates, Pomeroy, Lulu, Stone-Davis)
   - Use a drop-down type menu to choose which one
  - List the 3 closest dining halls to your current location
-  - Provide easy access to their menus
- - Provides the hours of all the dining halls
+  - Provides easy access to their menus
+ - Provides hours of all the dining halls
   - Shows a progress bar that shows how much time has elapsed, percentage-wise
   - In between meals, shows how much time is left until the next meal
   - Gives time also over the weekends if you're Stone-Davis or overnight until the next time the dining hall will be open
+ - Provide hours of operation for different establishments, i.e. El Table, the Emporium, the Leaky Beaker
  - Map shows your own location
- - Can select preference either for feet or meters
+ - Can select preference either for feet, meters, yards, miles, and kilometers
  - Only fetches data from WellesleyFresh once per day - saves time on load
 
 
 ###Features in Development
 These are features planned for future releases:
  - Provide feedback to the dining hall
- - Add support for yards, miles, etc.
  - Connect "about" page to the app "about" button
  - Over the holidays/vacations, app should not say that the dining hall is open
- - Provide hours of operation for different establishments, i.e. El Table, the Emporium, the Leaky Beaker
  - Adapt bagged lunch form for mobile app - make it easy to order one from your phone
  - Show future menus for the coming days
+ - Adapt order form for Claflin Bakery to iPhone
 
 
 ###Possible Android Version

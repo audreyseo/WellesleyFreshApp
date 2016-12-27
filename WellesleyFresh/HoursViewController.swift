@@ -10,8 +10,8 @@ import UIKit
 
 class HoursViewController: UITableViewController {
 	var hours = DiningHours()
-	var diningHallName = ["stonedavis":"Stone Davis", "bates":"Bates", "bplc":"Lulu", "tower":"Tower", "pomeroy":"Pomeroy", "emporium": "Emporium"]
-	var foodEstablishments = [["bplc", "bates", "tower", "stonedavis", "pomeroy"], ["emporium"]]
+	var diningHallName = ["stonedavis":"Stone Davis", "bates":"Bates", "bplc":"Lulu", "tower":"Tower", "pomeroy":"Pomeroy", "emporium": "Emporium", "collins": "Collins Cafe", "beaker": "Leaky Beaker"]
+	var foodEstablishments = [["bplc", "bates", "tower", "stonedavis", "pomeroy"], ["emporium", "collins", "beaker"]]
 	var titles = ["Dining Halls", "Retail Centers"]
 	var timer: Timer = Timer()
 	
@@ -37,11 +37,12 @@ class HoursViewController: UITableViewController {
 	func update() {
 		for j in 0...titles.count - 1 {
 			for i in 0...foodEstablishments[j].count - 1 {
-				let cell = tableView.cellForRow(at: IndexPath(row: i, section: j)) as! ProgressCell
-				cell.mealLabel.text = hours.meal(j, index: i)
-				cell.timeLabel.text = formattedTime(j, index: i)
-				cell.timeLeft.text = formattedTimeLeft(j, index: i)
-				cell.setProgressDouble(hours.percentDone(j, index: i) / 100.0)
+				print(i, ":", j)
+				let cell = tableView.cellForRow(at: IndexPath(row: i, section: j)) as? ProgressCell
+				cell?.mealLabel.text = hours.meal(j, index: i)
+				cell?.timeLabel.text = formattedTime(j, index: i)
+				cell?.timeLeft.text = formattedTimeLeft(j, index: i)
+				cell?.setProgressDouble(hours.percentDone(j, index: i) / 100.0)
 			}
 		}
 	}

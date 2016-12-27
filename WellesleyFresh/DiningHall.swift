@@ -106,9 +106,9 @@ class DiningHall {
 		
 		if nextOpenIndex >= 0 {
 			endHour = hours[nextOpenIndex][0].lowHour
-			for i in 0...hours[nextOpenIndex].count - 1 {
-				print("#", i, " : ", hours[nextOpenIndex][i].lowHour)
-			}
+//			for i in 0...hours[nextOpenIndex].count - 1 {
+//				print("#", i, " : ", hours[nextOpenIndex][i].lowHour)
+//			}
 		}
 		
 		if lastOpenIndex >= 0 {

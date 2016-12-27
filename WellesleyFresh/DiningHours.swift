@@ -11,7 +11,7 @@ import Foundation
 
 class DiningHours {
 	var diningHalls:[String:DiningHall]
-	let halls:[String] = ["bplc", "bates", "tower", "stonedavis", "pomeroy", "emporium"]
+	let halls:[String] = ["bplc", "bates", "tower", "stonedavis", "pomeroy", "emporium", "collins", "beaker"]
 	init() {
 		
 		var firstHours:[[Double]] = [[7, 7.5]]
@@ -51,6 +51,11 @@ class DiningHours {
 		let emporiumHours = [[[7.0, 20.0]], [[7.0, 24.0]], [[12.0, 20.0]]]
 		diningHalls["emporium"] = DiningHall(newDays: ["MoFr", "TuWeTh", "SaSu"], newHours: emporiumHours, meals: [["Open"], ["Open"], ["Open"]])
 		
+		let collinsHours = [[[8.0, 14.0]]]
+		diningHalls["collins"] = DiningHall(newDays: ["MoTuWeThFr"], newHours: collinsHours, meals: [["Open"]])
+		
+		let beakerHours = [[[8.0, 16.0]]]
+		diningHalls["beaker"] = DiningHall(newDays: ["MoTuWeThFr"], newHours: beakerHours, meals: [["Open"]])
 	}
 	
 	func isOpen(_ section:Int, index: Int) -> Bool {
@@ -84,14 +89,14 @@ class DiningHours {
 	func percentDone(_ section:Int, index:Int) -> Double {
 		//		print("Percent left: ", diningHalls[halls[index]]!.percentLeft())
 		if (diningHalls[halls[(section * 5) + index]]?.isClosed())! {
-			return (self.diningHalls[self.halls[index]]?.closedHours().percentTimeElapsed())!
+			return (self.diningHalls[self.halls[index + section * 5]]?.closedHours().percentTimeElapsed())!
 		}
 		return (diningHalls[halls[(section * 5) + index]]!.percentLeft())
 	}
 	
 	func hoursElapsed(_ section:Int, index:Int) -> Int {
 		if (diningHalls[halls[(section * 5) + index]]?.isClosed())! {
-			return (self.diningHalls[self.halls[index]]?.closedHours().hoursElapsed())!
+			return (self.diningHalls[self.halls[index + section * 5]]?.closedHours().hoursElapsed())!
 		}
 		return (diningHalls[halls[(section * 5) + index]]?.currentHours().hoursElapsed())!
 	}
@@ -99,21 +104,21 @@ class DiningHours {
 	
 	func minsElapsed(_ section:Int, index:Int) -> Int {
 		if (diningHalls[halls[(section * 5) + index]]?.isClosed())! {
-			return (self.diningHalls[self.halls[index]]?.closedHours().minutesElapsed())!
+			return (self.diningHalls[self.halls[index + section * 5]]?.closedHours().minutesElapsed())!
 		}
 		return (diningHalls[halls[(section * 5) + index]]?.currentHours().minutesElapsed())!
 	}
 	
 	func secsElapsed(_ section:Int, index:Int) -> Int {
 		if (diningHalls[halls[(section * 5) + index]]?.isClosed())! {
-			return (self.diningHalls[self.halls[index]]?.closedHours().secondsElapsed())!
+			return (self.diningHalls[self.halls[index + section * 5]]?.closedHours().secondsElapsed())!
 		}
 		return (diningHalls[halls[(section * 5) + index]]?.currentHours().secondsElapsed())!
 	}
 	
 	func hoursLeft(_ section:Int, index:Int) -> Int {
 		if (diningHalls[halls[(section * 5) + index]]?.isClosed())! {
-			return (self.diningHalls[self.halls[index]]?.closedHours().hoursLeft())!
+			return (self.diningHalls[self.halls[index + section * 5]]?.closedHours().hoursLeft())!
 		}
 		return (diningHalls[halls[(section * 5) + index]]?.currentHours().hoursLeft())!
 	}
@@ -122,7 +127,7 @@ class DiningHours {
 		if (diningHalls[halls[(section * 5) + index]]?.isClosed())! {
 			return (self.diningHalls[self.halls[(section * 5) + index]]?.closedHours().minutesLeft())!
 		}
-		return (diningHalls[halls[index]]?.currentHours().minutesLeft())!
+		return (diningHalls[halls[index + section * 5]]?.currentHours().minutesLeft())!
 	}
 	
 	func secsLeft(_ section:Int, index:Int) -> Int {
