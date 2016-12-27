@@ -92,6 +92,7 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UIPicker
 		
 		// Assigns the class Header to the type of header cell that we use
 		tableview.register(Header.self, forHeaderFooterViewReuseIdentifier: "headerId")
+		
 		tableview.delegate = self
 		tableview.dataSource = self
 		
@@ -183,6 +184,8 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UIPicker
 //			myHeader.nameLabel.text = self.chosenDiningHall
 //		} else {
 			myHeader.nameLabel.text = "Choose a dining hall by clicking the button above."
+		myHeader.alpha = 1
+		print("Header being used!!!!!")
 //		}
 		//		myHeader.myTableViewController = self
 		return myHeader
@@ -190,6 +193,10 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UIPicker
 	
 	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 		return items.count
+	}
+	
+	func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+		return 50
 	}
 	
 //	func tableView(tableView: UITableView, didEndDisplayingCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
