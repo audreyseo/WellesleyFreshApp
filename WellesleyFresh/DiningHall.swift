@@ -15,8 +15,12 @@ class DiningHall {
 	var hours:[[HourRange]]
 	var days:DayOptions
 	var in_between:HourRange
+	var whenClosed:DayHourRange
 	let nextDay:[String:String] = [
 		"Su":"Mo", "Mo":"Tu", "Tu":"We", "We":"Th", "Th":"Fr", "Fr":"Sa", "Sa": "Su"
+	]
+	let yesterday:[String:String] = [
+		"Su":"Sa", "Sa":"Fr", "Fr":"Th", "Th":"We", "We":"Tu", "Tu":"Mo", "Mo":"Su"
 	]
 	
 	init(newDays: [String], newHours: [[[Double]]], meals: [[String]]) {
@@ -29,6 +33,7 @@ class DiningHall {
 		}
 		days = DayOptions(initialDays: newDays)
 		in_between = HourRange(low: 0, high: 0, name: "Closed")
+		whenClosed = DayHourRange(lowHour: 0.0, highHour: 0.0, name: "Closed", lowDay: 0, highDay: 0)
 	}
 	
 	func openToday() -> Bool {
@@ -52,29 +57,59 @@ class DiningHall {
 		return -1
 	}
 	
-	func whenNextOpen() -> Int {
+	func whenNextOpen() -> String {
 		let today = days.todaysWeekDate()
 		var count:Int = 0
 		var next = nextDay[today]
 		count += 1
 		while count < 7 {
 			if days.dayInDayOptions(day: next!) {
-				return count
+				return next!
 			} else {
 				next = nextDay[next!]
 				count += 1
 			}
 		}
 		
-		return -1
+		return ""
+	}
+	
+	func whenLastOpen() -> String {
+		let today = days.todaysWeekDate()
+		var count:Int = 0
+		var next = nextDay[today]
+		count += 1
+		while count < 7 {
+			if days.dayInDayOptions(day: next!) {
+				return next!
+			} else {
+				next = nextDay[next!]
+				count += 1
+			}
+		}
+		
+		return ""
 	}
 	
 	func nextOpenInterval() {
 		let lastOpenIndex = days.getOption()
 		let nextOpenIndex = self.nextOpenIndex()
+		var endHour:Double = -1.0
+		var beginHour:Double = -1.0
 		
 		if nextOpenIndex >= 0 {
-			let endHour = 
+			endHour = hours[nextOpenIndex][0].lowHour
+		}
+		
+		if lastOpenIndex >= 0 {
+			beginHour = hours[lastOpenIndex][hours[lastOpenIndex].count - 1].highHour
+		}
+		
+		let lastDay:String = whenNextOpen()
+		let firstDay:String = whenLastOpen()
+		
+		if lastDay != "" && firstDay != "" {
+			whenClosed = DayHourRange(lowHour: beginHour, highHour: endHour, name: "Closed", lowWeekDay: firstDay, highWeekDay: lastDay)
 		}
 	}
 	

@@ -55,7 +55,7 @@ class DayOptions {
 				return i
 			}
 		}
-		return false
+		return -1
 	}
 	
 	func getOption() -> Int {

@@ -14,8 +14,50 @@ class DayHourRange:HourRange {
 	var highDay = -1
 	var dayFormatter:DateFormatter
 	
-	init( lowHour:Double, highHour:Double, name:String, lowDay:Int, highDay:Int) {
+	var dayNames:[String:String] = [
+		"Mo": "Monday",
+		"Tu": "Tuesday",
+		"We": "Wednesday",
+		"Th": "Thursday",
+		"Fr": "Friday",
+		"Sa": "Saturday",
+		"Su": "Sunday"
+	]
+	
+	init( lowHour:Double, highHour:Double, name:String, lowWeekDay:String, highWeekDay:String) {
+		dayFormatter = DateFormatter()
+		dayFormatter.locale = Locale(identifier: "en_US_POSIX")
+		dayFormatter.dateFormat = "d"
 		super.init(low: lowHour, high: highHour, name: name)
+		
+		let date1:Date = self.get(direction: .Previous, dayNames[lowWeekDay]!, considerToday: true)
+		let date2:Date = self.get(direction: .Next, dayNames[highWeekDay]!, considerToday: true)
+		
+		self.lowDay = getDate(aDate: date1)
+		self.highDay = getDate(aDate: date2)
+		//self.highHour = high;
+		//self.lowHour = low;
+		//self.rangeName = name;
+		//self.hourFormatter = DateFormatter()
+		//hourFormatter.locale = Locale(identifier: "en_US_POSIX")
+		//hourFormatter.dateFormat = "k"
+		//minuteFormatter = DateFormatter()
+		//minuteFormatter.locale = Locale(identifier: "en_US_POSIX")
+		//minuteFormatter.dateFormat = "m"
+		//secondFormatter = DateFormatter()
+		//secondFormatter.locale = Locale(identifier: "en_US_POSIX")
+		//secondFormatter.dateFormat = "s"
+		//timeFormatter = DateFormatter()
+		//timeFormatter.locale = Locale(identifier: "en_US_POSIX")
+		//timeFormatter.dateFormat = "kk:mm:ss"
+	}
+	
+	init( lowHour:Double, highHour:Double, name:String, lowDay:Int, highDay:Int) {
+		dayFormatter = DateFormatter()
+		dayFormatter.locale = Locale(identifier: "en_US_POSIX")
+		dayFormatter.dateFormat = "d"
+		super.init(low: lowHour, high: highHour, name: name)
+		
 		self.lowDay = lowDay
 		self.highDay = highDay
 		//self.highHour = high;
@@ -36,11 +78,12 @@ class DayHourRange:HourRange {
 	}
 	
 	init(lowHour:Double, highHour:Double, name:String, dayChange:Int) {
-		super.init(low: lowHour, high: highHour, name: name)
-		
 		dayFormatter = DateFormatter()
 		dayFormatter.locale = Locale(identifier: "en_US_POSIX")
 		dayFormatter.dateFormat = "d"
+		super.init(low: lowHour, high: highHour, name: name)
+		
+		
 		let today:Date = Date.init()
 		lowDay = Int(dayFormatter.string(from: today))!
 		highDay = lowDay + dayChange
