@@ -139,7 +139,7 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UIPicker
 //		let hLimit = showDiningHallName.frame.origin.y + 30;
 		
 		let tableX = 0.0
-		let tableY = pickerButton.frame.origin.y + pickerButton.frame.size.height;
+		let tableY = pickerButton.frame.origin.y + pickerButton.frame.size.height*2;
 		let tableW = self.view.frame.size.width * 0.95
 		let tableH = (height - tableY);
 		tableview.frame = CGRect(x: CGFloat(tableX), y: tableY, width: tableW, height: tableH)
