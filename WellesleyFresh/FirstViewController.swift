@@ -533,21 +533,24 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UIPicker
 		}
 		//let myUnits = meters ? "m" : "ft"
 		
-		closest1.text = "1. \(names[i1]), \(num1) \(myUnits)"
-		closest2.text = "2. \(names[i2]), \(num2) \(myUnits)"
-		closest3.text = "3. \(names[i3]), \(num3) \(myUnits)"
-		diningHallNames[0] = names[i1]
-		diningHallNames[1] = names[i2]
-		diningHallNames[2] = names[i3]
-		diningHallNamesShort[0] = diningHalls[i1]
-		diningHallNamesShort[1] = diningHalls[i2]
-		diningHallNamesShort[2] = diningHalls[i3]
+		if (i1 >= 0 && i2 >= 0 && i3 >= 0) {
+			closest1.text = "1. \(names[i1]), \(num1) \(myUnits)"
+			closest2.text = "2. \(names[i2]), \(num2) \(myUnits)"
+			closest3.text = "3. \(names[i3]), \(num3) \(myUnits)"
+			diningHallNames[0] = names[i1]
+			diningHallNames[1] = names[i2]
+			diningHallNames[2] = names[i3]
+			diningHallNamesShort[0] = diningHalls[i1]
+			diningHallNamesShort[1] = diningHalls[i2]
+			diningHallNamesShort[2] = diningHalls[i3]
+		}
 	}
 	
 	
 	// Creates a dining hall from a given index point for the names, longitudes, and latitudes array.
 	func displayDiningHall(_ index:Int) {
 		if (index < names.count) {
+			
 			let name = names[index]
 			let longitude = longitudes[index]
 			let latitude = latitudes[index]
