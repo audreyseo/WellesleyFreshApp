@@ -13,8 +13,10 @@ class ThirdViewController: UIViewController, MFMailComposeViewControllerDelegate
 	var tableview:UITableView = UITableView()
 	var units:String = "Preferred Units"
 	var unitOptions:[String] = ["m", "ft", "yd", "km", "mi"]
-	var items: [[String]] = [["Bates", "Lulu Chow Wang", "Pomeroy", "Stone-Davis", "Tower"], ["HI", "Lol", "Preferred Units", "About"]]
-	var titles:[String] = ["Feedback", "Settings"]
+	var items: [[String]] = [["Bates", "Lulu Chow Wang", "Pomeroy", "Stone-Davis", "Tower"], ["Bagged Lunch Form"], ["HI", "Lol", "Preferred Units", "About"]]
+	var titles:[String] = ["Feedback", "Order", "Settings"]
+	
+	var disclosureCells:[String] = ["About", "Bagged Lunch Form"]
 	
 	
 	override func viewDidLoad() {
@@ -38,8 +40,9 @@ class ThirdViewController: UIViewController, MFMailComposeViewControllerDelegate
 	}
 	
 	override func viewWillAppear(_ animated: Bool) {
+		
 		let tableX:CGFloat = self.view.frame.size.width * 0.0
-		let tableY:CGFloat = 20.0;
+		let tableY:CGFloat = (self.navigationController?.navigationBar.frame.size.height)! + (self.navigationController?.navigationBar.frame.origin.y)!
 		let tableW:CGFloat = self.view.frame.size.width * 1.0
 		let tableH:CGFloat = (self.view.frame.size.height - tableY);
 		tableview.frame = CGRect(x: CGFloat(tableX), y: tableY, width: tableW, height: tableH)
@@ -57,7 +60,7 @@ class ThirdViewController: UIViewController, MFMailComposeViewControllerDelegate
 		if (items[indexPath.section][indexPath.row].hasPrefix(units)) {
 			print("Making a segmented control cell.")
 			let myCell = tableView.dequeueReusableCell(withIdentifier: "segmentedCellId", for: indexPath) as! SegmentedControlCell
-			if (items.count > 0) {
+			if (items[indexPath.section].count > 0) {
 				myCell.nameLabel.text = items[indexPath.section][indexPath.row]
 			} else {
 				myCell.nameLabel.text = ""
@@ -66,6 +69,9 @@ class ThirdViewController: UIViewController, MFMailComposeViewControllerDelegate
 			return myCell
 		} else if titles[indexPath.section].contains("Feedback") {
 			let myCell = tableView.dequeueReusableCell(withIdentifier: "buttonCellId", for: indexPath) as! CustomButtonCell
+			//let myCell = tableView.dequeueReusableCell(withIdentifier: "cellId", for: indexPath) as! MyCell
+			//myCell.nameLabel.text = items[indexPath.section][indexPath.row]
+			
 			myCell.nameButton(newName: items[indexPath.section][indexPath.row])
 			switch items[indexPath.section][indexPath.row] {
 				case "Bates":
@@ -81,13 +87,14 @@ class ThirdViewController: UIViewController, MFMailComposeViewControllerDelegate
 			default:
 				break;
 			}
+			myCell.accessoryType = .disclosureIndicator
 			
 			return myCell
 		} else {
 			let myCell = tableView.dequeueReusableCell(withIdentifier: "cellId", for: indexPath) as! MyCell
-			if (items.count > 0) {
+			if (items[indexPath.section].count > 0) {
 				myCell.nameLabel.text = items[indexPath.section][indexPath.row]
-				if items[indexPath.section][indexPath.row].contains("About") {
+				if disclosureCells.contains(items[indexPath.section][indexPath.row]) {
 					myCell.accessoryType = .disclosureIndicator
 				}
 			} else {
@@ -147,45 +154,62 @@ class ThirdViewController: UIViewController, MFMailComposeViewControllerDelegate
 		controller.dismiss(animated: false, completion: nil)
 	}
 	
+	
 	@IBAction func pomFeedback(_ sender: AnyObject) {
-		let mailComposeViewController = configuredMailComposeViewController("Pomeroy")
-		if MFMailComposeViewController.canSendMail() {
-			self.present(mailComposeViewController, animated: true, completion: nil)
-		} else {
-			self.showSendMailErrorAlert()
-		}
+		let nextViewController = self.storyboard?.instantiateViewController(withIdentifier: "pomFeedbackView")
+		nextViewController?.navigationItem.title = "Review Pomeroy"
+		self.navigationController?.pushViewController(nextViewController!, animated:true)
+
+		//let mailComposeViewController = configuredMailComposeViewController("Pomeroy")
+		//if MFMailComposeViewController.canSendMail() {
+		//	self.present(mailComposeViewController, animated: true, completion: nil)
+		//} else {
+		//	self.showSendMailErrorAlert()
+		//}
 	}
 	@IBAction func towerFeedback(_ sender: AnyObject) {
-		let mailComposeViewController = configuredMailComposeViewController("Tower")
-		if MFMailComposeViewController.canSendMail() {
-			self.present(mailComposeViewController, animated: true, completion: nil)
-		} else {
-			self.showSendMailErrorAlert()
-		}
+		let nextViewController = self.storyboard?.instantiateViewController(withIdentifier: "pomFeedbackView")
+		nextViewController?.navigationItem.title = "Review Tower"
+		self.navigationController?.pushViewController(nextViewController!, animated:true)
+//		let mailComposeViewController = configuredMailComposeViewController("Tower")
+//		if MFMailComposeViewController.canSendMail() {
+//			self.present(mailComposeViewController, animated: true, completion: nil)
+//		} else {
+//			self.showSendMailErrorAlert()
+//		}
 	}
 	@IBAction func stonedFeedback(_ sender: AnyObject) {
-		let mailComposeViewController = configuredMailComposeViewController("Stone_D")
-		if MFMailComposeViewController.canSendMail() {
-			self.present(mailComposeViewController, animated: true, completion: nil)
-		} else {
-			self.showSendMailErrorAlert()
-		}
+		let nextViewController = self.storyboard?.instantiateViewController(withIdentifier: "pomFeedbackView")
+		nextViewController?.navigationItem.title = "Review Stone-Davis"
+		self.navigationController?.pushViewController(nextViewController!, animated:true)
+//		let mailComposeViewController = configuredMailComposeViewController("Stone_D")
+//		if MFMailComposeViewController.canSendMail() {
+//			self.present(mailComposeViewController, animated: true, completion: nil)
+//		} else {
+//			self.showSendMailErrorAlert()
+//		}
 	}
 	@IBAction func batesFeedback(_ sender: AnyObject) {
-		let mailComposeViewController = configuredMailComposeViewController("Bates")
-		if MFMailComposeViewController.canSendMail() {
-			self.present(mailComposeViewController, animated: true, completion: nil)
-		} else {
-			self.showSendMailErrorAlert()
-		}
+		let nextViewController = self.storyboard?.instantiateViewController(withIdentifier: "pomFeedbackView")
+		nextViewController?.navigationItem.title = "Review Bates"
+		self.navigationController?.pushViewController(nextViewController!, animated:true)
+//		let mailComposeViewController = configuredMailComposeViewController("Bates")
+//		if MFMailComposeViewController.canSendMail() {
+//			self.present(mailComposeViewController, animated: true, completion: nil)
+//		} else {
+//			self.showSendMailErrorAlert()
+//		}
 	}
 	@IBAction func bplcFeedback(_ sender: AnyObject) {
-		let mailComposeViewController = configuredMailComposeViewController("BPLC")
-		if MFMailComposeViewController.canSendMail() {
-			self.present(mailComposeViewController, animated: true, completion: nil)
-		} else {
-			self.showSendMailErrorAlert()
-		}
+		let nextViewController = self.storyboard?.instantiateViewController(withIdentifier: "pomFeedbackView")
+		nextViewController?.navigationItem.title = "Review Lulu"
+		self.navigationController?.pushViewController(nextViewController!, animated:true)
+//		let mailComposeViewController = configuredMailComposeViewController("BPLC")
+//		if MFMailComposeViewController.canSendMail() {
+//			self.present(mailComposeViewController, animated: true, completion: nil)
+//		} else {
+//			self.showSendMailErrorAlert()
+//		}
 	}
 	
 }
