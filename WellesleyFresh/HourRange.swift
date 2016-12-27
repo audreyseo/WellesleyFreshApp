@@ -110,12 +110,14 @@ class HourRange {
 	}
 	
 	func hoursLeft() -> Int {
-		return Int(floor((highMinutes() - onlyMinutes()) / 60))
+		let secondsDiff = Int(ceil(Double((60 - seconds()) % 60) / 60.0))
+		return Int(floor((highMinutes() - onlyMinutes() - Double(secondsDiff)) / 60))
 	}
 	
 	func hoursElapsed() -> Int {
 		let dif = onlyMinutes() - lowMinutes()
-		return Int(floor(dif / 60))
+		let hoursPlain = Int(floor(dif / 60))
+		return hoursPlain
 	}
 	
 	func minutes() -> Int {
@@ -125,7 +127,7 @@ class HourRange {
 	}
 	
 	func minutesLeft() -> Int {
-		return (Int(highMinutes() - onlyMinutes()) % 60) - Int(ceil(Double((60 - seconds()) % 60) / 60.0))
+		return max(((Int(highMinutes() - onlyMinutes()) - Int(ceil(Double((60 - seconds()) % 60) / 60.0))) % 60), 0)
 	}
 	
 	func minutesElapsed() -> Int {

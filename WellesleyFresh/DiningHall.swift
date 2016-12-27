@@ -76,14 +76,17 @@ class DiningHall {
 	
 	func whenLastOpen() -> String {
 		let today = days.todaysWeekDate()
+		if openToday() {
+			return today
+		}
 		var count:Int = 0
-		var next = nextDay[today]
+		var yester = yesterday[today]
 		count += 1
 		while count < 7 {
-			if days.dayInDayOptions(day: next!) {
-				return next!
+			if days.dayInDayOptions(day: yester!) {
+				return yester!
 			} else {
-				next = nextDay[next!]
+				yester = yesterday[yester!]
 				count += 1
 			}
 		}
@@ -115,6 +118,10 @@ class DiningHall {
 	
 	func closed() -> Bool {
 		return !days.hasToday()
+	}
+	
+	func isClosed() -> Bool {
+		return currentHours().name().contains("Closed")
 	}
 	
 	func currentMeal() -> String {
@@ -156,9 +163,15 @@ class DiningHall {
 			} else {
 				return findRange(option: option)
 			}
-			
 		}
 		return HourRange(low: 0, high: 0, name: "Closed")
+	}
+	
+	func closedHours() -> DayHourRange {
+		if !whenClosed.hasARange() && !whenClosed.withinRange() {
+			nextOpenInterval()
+		}
+		return whenClosed
 	}
 	
 	func percentLeft() -> Double {
@@ -166,7 +179,17 @@ class DiningHall {
 		if (current.name() != "Closed") {
 			return currentHours().percentTimeElapsed()
 		}
-		return 0.0
+		if !whenClosed.hasARange() && !whenClosed.withinRange() {
+			nextOpenInterval()
+			print("When Closed Percent Time Elapsed: ", whenClosed.percentTimeElapsed())
+			print("Current Hours:                    ", whenClosed.currentHour())
+			print("Hours to go:                      ", whenClosed.totalChange() - whenClosed.currentHour())
+		}
+		
+		
+		//print("WHen Closed Beginnings: ", whenClosed.lowDay, ", ",  whenClosed.lowHour)
+		//print("When Closed Endings: ", whenClosed.highDay, ", ", whenClosed.highHour)
+		return whenClosed.percentTimeElapsed()
 		//		print("Are we open today?: ", self.openToday())
 //		if self.openToday() {
 //			print("Hi.")

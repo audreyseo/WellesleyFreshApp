@@ -143,6 +143,31 @@ class DayHourRange:HourRange {
 		//}
 	}
 	
+	override func highMinutes() -> Double {
+		return totalChange() * 60.0
+	}
+	
+	override func onlyMinutes() -> Double {
+		return (currentHour() * 60.0) + Double(minutes())
+	}
+	
+	override func hoursLeft() -> Int {
+		let secondsDiff = Int(ceil(Double((60 - seconds()) % 60) / 60.0))
+		return Int(floor(((totalChange() * 60 - currentHour() * 60) - Double(secondsDiff)) / 60))
+	}
+	
+	override func minutesLeft() -> Int {
+		return max(((Int(highMinutes() - onlyMinutes()) - Int(ceil(Double((60 - seconds()) % 60) / 60.0))) % 60), 0)
+	}
+	
+	override func minutesElapsed() -> Int {
+		return minutes()
+	}
+	
+	override func hoursElapsed() -> Int {
+		return Int(currentHour())
+	}
+	
 	override func totalChange() -> Double {
 		let dayHours:Double = Double((highDay - lowDay) - 1) * 24.0
 		let hourHours:Double = (24.0 - lowHour) + highHour
