@@ -65,6 +65,8 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UIPicker
 		hallInputView.isHidden = false;
 	}
 	
+	var myUnits:String = ""
+	
 	override func viewDidLoad() {
 		
 		super.viewDidLoad()
@@ -122,13 +124,7 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UIPicker
 		self.view.addSubview(hallInputView)
 		
 		
-		let m:String = storedData.object(forKey: "Preferred Units") as! String
-		if m.hasPrefix("m") {
-			meters = true
-		} else {
-			meters = false
-		}
-		print("Meters: ", meters)
+		myUnits = storedData.object(forKey: "Preferred Units") as! String
 	}
 	
 	override func viewWillAppear(_ animated: Bool) {
@@ -150,15 +146,12 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UIPicker
 		if CLLocationManager.authorizationStatus() == .authorizedWhenInUse {
 			mapViewer.showsUserLocation = true
 		}
-		let m = storedData.object(forKey: "Preferred Units") as! String
-		if (meters && m.contains("ft")) {
+		let oldUnits:String = myUnits
+		myUnits = storedData.object(forKey: "Preferred Units") as! String
+		if (!myUnits.contains(oldUnits)) {
 			meters = false
 			findDistances(mapViewer.userLocation.location!)
-		} else if (!meters && !m.contains("ft")) {
-			meters = true;
-			findDistances(mapViewer.userLocation.location!)
 		}
-		
 //		print(mapViewer.frame)
 	}
 	
@@ -429,12 +422,26 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UIPicker
 		
 		let a = (sin(deltaPhi / 2.0) * sin(deltaPhi / 2.0)) + (cos(phi1) * cos(phi2) * sin(deltaLambda / 2.0) * sin(deltaLambda / 2.0));
 		let c = atan(sqrt(a) / sqrt(1 - a)) * 2.0; // Float(M_PI);
-		let d = 6371043 * c;
-		if (meters) {
-			return d;
-		} else {
-			return d * 3.28084
+		var d:Float = 6371043.0 * c;
+		switch myUnits {
+			case "ft":
+			d *= 3.28084
+			case "km":
+			d *= 0.001
+			case "yd":
+			d *= 0.333 * 3.28084
+			case "mi":
+			d *= 3.28084 * (1.0 / 5280.0)
+		default:
+			break
 		}
+		
+		return d
+		//if (meters) {
+		//	return d;
+		//} else {
+		//	return d * 3.28084
+		//}
 		
 	}
 	
@@ -489,7 +496,7 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UIPicker
 		for i in 0...diningHallAnnotations.count - 1 {
 			let dist = distance(myLocation, second: diningHallAnnotations[i].coordinate)
 			myDistances += [dist]
-			let myUnits = meters ? "m" : "ft"
+			//let myUnits = meters ? "m" : "ft"
 			diningHallAnnotations[i].subtitle = "\(dist) \(myUnits) away"
 		}
 		findThreeSmallest(myDistances)
@@ -524,7 +531,7 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UIPicker
 				num3 = myDistances[i]
 			}
 		}
-		let myUnits = meters ? "m" : "ft"
+		//let myUnits = meters ? "m" : "ft"
 		
 		closest1.text = "1. \(names[i1]), \(num1) \(myUnits)"
 		closest2.text = "2. \(names[i2]), \(num2) \(myUnits)"

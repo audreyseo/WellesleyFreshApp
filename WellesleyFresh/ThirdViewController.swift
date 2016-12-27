@@ -12,7 +12,7 @@ import MessageUI
 class ThirdViewController: UIViewController, MFMailComposeViewControllerDelegate, UITableViewDelegate, UITableViewDataSource {
 	var tableview:UITableView = UITableView()
 	var units:String = "Preferred Units"
-	var unitOptions:[String] = ["m", "ft"]
+	var unitOptions:[String] = ["m", "ft", "yd", "km", "mi"]
 	var items: [[String]] = [["Bates", "Lulu Chow Wang", "Pomeroy", "Stone-Davis", "Tower"], ["HI", "Lol", "Preferred Units", "About"]]
 	var titles:[String] = ["Feedback", "Settings"]
 	
