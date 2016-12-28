@@ -13,7 +13,7 @@ class ThirdViewController: UIViewController, MFMailComposeViewControllerDelegate
 	var tableview:UITableView = UITableView()
 	var units:String = "Preferred Units"
 	var unitOptions:[String] = ["m", "ft", "yd", "km", "mi"]
-	var items: [[String]] = [["Bates", "Lulu Chow Wang", "Pomeroy", "Stone-Davis", "Tower"], ["Bagged Lunch Form"], ["HI", "Lol", "Preferred Units", "About"]]
+	var items: [[String]] = [["Bates", "Lulu Chow Wang", "Pomeroy", "Stone-Davis", "Tower"], ["Bagged Lunch Form"], ["Preferred Units", "About"]]
 	var titles:[String] = ["Feedback", "Order", "Settings"]
 	
 	var disclosureCells:[String] = ["About", "Bagged Lunch Form"]
