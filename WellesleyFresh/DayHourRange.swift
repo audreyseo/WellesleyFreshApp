@@ -12,7 +12,10 @@ import UIKit
 class DayHourRange:HourRange {
 	var lowDay = -1
 	var highDay = -1
-	var dayFormatter:DateFormatter
+	var lowYear = -1
+	var highYear = -1
+	var dayFormatter:DateFormatter = DateFormatter()
+	var yearFormatter:DateFormatter = DateFormatter()
 	
 	var dayNames:[String:String] = [
 		"Mo": "Monday",
@@ -25,43 +28,115 @@ class DayHourRange:HourRange {
 	]
 	
 	init( lowHour:Double, highHour:Double, name:String, lowWeekDay:String, highWeekDay:String) {
-		dayFormatter = DateFormatter()
-		dayFormatter.locale = Locale(identifier: "en_US_POSIX")
-		dayFormatter.dateFormat = "d"
 		super.init(low: lowHour, high: highHour, name: name)
+		initFormatters()
 		
 		let date1:Date = self.get(direction: .Previous, dayNames[lowWeekDay]!, considerToday: true)
 		let date2:Date = self.get(direction: .Next, dayNames[highWeekDay]!, considerToday: true)
 		
 		self.lowDay = getDate(aDate: date1)
 		self.highDay = getDate(aDate: date2)
+		self.lowYear = getYear(aDate: date1)
+		self.highYear = getYear(aDate: date2)
 	}
 	
 	init( lowHour:Double, highHour:Double, name:String, lowDay:Int, highDay:Int) {
-		dayFormatter = DateFormatter()
-		dayFormatter.locale = Locale(identifier: "en_US_POSIX")
-		dayFormatter.dateFormat = "d"
 		super.init(low: lowHour, high: highHour, name: name)
+		initFormatters()
 		
 		self.lowDay = lowDay
 		self.highDay = highDay
 	}
 	
 	init(lowHour:Double, highHour:Double, name:String, dayChange:Int) {
-		dayFormatter = DateFormatter()
-		dayFormatter.locale = Locale(identifier: "en_US_POSIX")
-		dayFormatter.dateFormat = "d"
 		super.init(low: lowHour, high: highHour, name: name)
+		initFormatters()
 		
 		
 		let today:Date = Date.init()
-		lowDay = Int(dayFormatter.string(from: today))!
-		highDay = lowDay + dayChange
+		self.lowDay = Int(self.dayFormatter.string(from: today))!
+		self.highDay = lowDay + dayChange
+		self.lowYear = getYear(aDate: today)
+		
+	}
+	
+	func initFormatters() {
+		yearFormatter = DateFormatter();
+		yearFormatter.locale = Locale(identifier: "en_US_POSIX")
+		yearFormatter.dateFormat = "yyyy";
+		dayFormatter = DateFormatter()
+		dayFormatter.locale = Locale(identifier: "en_US_POSIX")
+		dayFormatter.dateFormat = "D"
+	}
+	
+	// The following two functions were found on stack overflow, with 
+	// some modifications by me so that they're compatible with Swift3
+	// http://stackoverflow.com/questions/16809269/how-to-find-out-whether-current-year-leap-year-or-not-in-iphone
+	func isYearLeapYear(year:Int) -> Bool {
+		return ((( year % 100 != 0) && (year % 4 == 0)) || (year % 400 == 0));
+	}
+	func isYearLeapYear(aDate:Date) -> Bool {
+		let year:Int = self.getYear(aDate: aDate);
+		return ((( year % 100 != 0) && (year % 4 == 0)) || (year % 400 == 0));
+	}
+	
+	func getYear(aDate:Date) -> Int {
+		let year:Int = Int(yearFormatter.string(from: aDate))!
+		return year;
+	}
+	
+	func getLowDay() -> Int {
+		return lowDay
+//		if self.isYearLeapYear(year: lowYear) {
+//			if self.lowDay > 365 {
+//				return self.lowDay % 366
+//			} else {
+//				return self.lowDay
+//			}
+//		} else {
+//			if self.lowDay > 364 {
+//				return self.lowDay % 365
+//			} else {
+//				return self.lowDay
+//			}
+//		}
+	}
+	
+	func getHigherDay(higherDay:Int) -> Int {
+		if self.isYearLeapYear(year: lowYear) {
+			if higherDay < self.lowDay {
+				return higherDay + 366
+			} else {
+				return higherDay
+			}
+		} else {
+			if higherDay > self.lowDay {
+				return higherDay + 365
+			} else {
+				return higherDay
+			}
+		}
+	}
+	
+	func getHighDay() -> Int {
+		if self.isYearLeapYear(year: lowYear) {
+			if self.highDay < self.lowDay {
+				return self.highDay + 366
+			} else {
+				return self.highDay
+			}
+		} else {
+			if self.highDay > self.lowDay {
+				return self.highDay + 365
+			} else {
+				return self.highDay
+			}
+		}
 	}
 	
 	override func currentHour() -> Double {
 		let today:Date = Date.init()
-		let todayDate = getDate(aDate: today)
+		let todayDate = getHigherDay(higherDay: getDate(aDate: today))
 		let todayHour = Double(getHour(aDate: today))
 		var totalHours:Double = 0.0
 		
@@ -71,7 +146,7 @@ class DayHourRange:HourRange {
 			totalHours += todayHour - lowHour
 		}
 		
-		if todayDate == highDay {
+		if todayDate == self.getHighDay() {
 			totalHours += todayHour
 		}
 		
@@ -108,7 +183,7 @@ class DayHourRange:HourRange {
 	}
 	
 	override func totalChange() -> Double {
-		let dayHours:Double = Double((highDay - lowDay) - 1) * 24.0
+		let dayHours:Double = Double((self.getHighDay() - lowDay) - 1) * 24.0
 		let hourHours:Double = (24.0 - lowHour) + highHour
 		
 		return dayHours + hourHours
