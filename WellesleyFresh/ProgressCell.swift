@@ -51,7 +51,7 @@ class ProgressCell: UITableViewCell {
 	
 	var progress: UIProgressView = {
 		let prog = UIProgressView(progressViewStyle: UIProgressViewStyle.default)
-		prog.layer.cornerRadius = 0.0
+		prog.layer.cornerRadius = 2.0
 		prog.layer.masksToBounds = true
 		prog.progressTintColor = UIColor.blue
 //		prog.layer.
@@ -73,7 +73,7 @@ class ProgressCell: UITableViewCell {
 	}
 	
 	func setProgressFloat(_ num: Float) {
-		print("Progress:", num)
+//		print("Progress:", num)
 		if  absoluteValue(a: progress.progress, b: num) > 0.03 {
 //			print("Progress was wildly different.")
 //			progress = UIProgressView(progressViewStyle: .default)

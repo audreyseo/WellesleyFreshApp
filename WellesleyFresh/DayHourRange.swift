@@ -190,7 +190,7 @@ class DayHourRange:HourRange {
 	}
 	
 	override func elapsedTime() -> Double {
-		return currentHour()
+		return (currentHour() + (Double(minutesElapsed()) / 60.0) + (Double(secondsElapsed()) / (60.0 * 60.0)))
 	}
 	
 	
