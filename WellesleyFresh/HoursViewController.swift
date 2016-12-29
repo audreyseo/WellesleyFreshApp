@@ -31,14 +31,26 @@ class HoursViewController: UITableViewController {
 	
 	
 	func update() {
-		for j in 0...titles.count - 1 {
-			for i in 0...foodEstablishments[j].count - 1 {
+		for j in 0..<titles.count {
+			for i in 0..<foodEstablishments[j].count {
 //				print(i, ":", j)
 				let cell = tableView.cellForRow(at: IndexPath(row: i, section: j)) as? ProgressCell
-				cell?.mealLabel.text = hours.meal(j, index: i)
+				let meal:String = hours.meal(j, index: i)
+				cell?.setMealLabel(label: meal)
+//				cell?.mealLabel.text = meal
 				cell?.timeLabel.text = formattedTime(j, index: i)
 				cell?.timeLeft.text = formattedTimeLeft(j, index: i)
 				cell?.setProgressDouble(hours.percentDone(j, index: i) / 100.0)
+				cell?.progress.progressViewStyle = .default
+				cell?.progress.layer.cornerRadius = 3.0
+//				cell?.progress.pr
+//				if meal.contains("Closed") {
+//					cell?.progress.progressTintColor = UIColor.red
+//				} else if meal.contains("Next") {
+//					cell?.progress.progressTintColor = UIColor.orange
+//				} else {
+//					cell?.progress.progressTintColor = UIColor.blue
+//				}
 			}
 		}
 	}
@@ -112,7 +124,16 @@ class HoursViewController: UITableViewController {
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		let myCell = tableView.dequeueReusableCell(withIdentifier: "cellId", for: indexPath) as! ProgressCell
 		myCell.nameLabel.text = diningHallName[hours.halls[indexPath.section * 5 + indexPath.row]]
-		myCell.mealLabel.text = hours.meal(indexPath.section, index: indexPath.row)
+		let meal:String = hours.meal(indexPath.section, index: indexPath.row)
+		myCell.setMealLabel(label: meal)
+//		myCell.mealLabel.text = meal
+//		if meal.contains("Closed") {
+//			myCell.progress.progressTintColor = UIColor.red
+//		} else if meal.contains("Next") {
+//			myCell.progress.progressTintColor = UIColor.orange
+//		} else {
+//			myCell.progress.progressTintColor = UIColor.blue
+//		}
 		myCell.timeLabel.text = formattedTime(indexPath.section, index: indexPath.row)
 		myCell.timeLeft.text = formattedTimeLeft(indexPath.section, index: indexPath.row)
 		myCell.setProgressDouble(hours.percentDone(indexPath.section, index: indexPath.row) / 100.0)
