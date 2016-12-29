@@ -37,7 +37,7 @@ class HoursViewController: UITableViewController {
 	func update() {
 		for j in 0...titles.count - 1 {
 			for i in 0...foodEstablishments[j].count - 1 {
-				print(i, ":", j)
+//				print(i, ":", j)
 				let cell = tableView.cellForRow(at: IndexPath(row: i, section: j)) as? ProgressCell
 				cell?.mealLabel.text = hours.meal(j, index: i)
 				cell?.timeLabel.text = formattedTime(j, index: i)

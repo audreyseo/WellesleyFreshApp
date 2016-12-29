@@ -42,7 +42,7 @@ class ThirdViewController: UIViewController, MFMailComposeViewControllerDelegate
 	override func viewWillAppear(_ animated: Bool) {
 		
 		let tableX:CGFloat = self.view.frame.size.width * 0.0
-		let tableY:CGFloat = (self.navigationController?.navigationBar.frame.size.height)! //+ (self.navigationController?.navigationBar.frame.origin.y)!
+		let tableY:CGFloat = 0.0 //(self.navigationController?.navigationBar.frame.size.height)! //+ (self.navigationController?.navigationBar.frame.origin.y)!
 		let tableW:CGFloat = self.view.frame.size.width * 1.0
 		let tableH:CGFloat = (self.view.frame.size.height - tableY);
 		self.tableview.frame = CGRect(x: CGFloat(tableX), y: tableY, width: tableW, height: tableH)
@@ -58,7 +58,7 @@ class ThirdViewController: UIViewController, MFMailComposeViewControllerDelegate
 	
 	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		if (items[indexPath.section][indexPath.row].hasPrefix(units)) {
-			print("Making a segmented control cell.")
+//			print("Making a segmented control cell.")
 			let myCell = tableView.dequeueReusableCell(withIdentifier: "segmentedCellId", for: indexPath) as! SegmentedControlCell
 			if (items[indexPath.section].count > 0) {
 				myCell.nameLabel.text = items[indexPath.section][indexPath.row]
