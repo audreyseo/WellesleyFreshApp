@@ -42,7 +42,7 @@ class ThirdViewController: UIViewController, MFMailComposeViewControllerDelegate
 	override func viewWillAppear(_ animated: Bool) {
 		
 		let tableX:CGFloat = self.view.frame.size.width * 0.0
-		let tableY:CGFloat = (self.navigationController?.navigationBar.frame.size.height)! + (self.navigationController?.navigationBar.frame.origin.y)!
+		let tableY:CGFloat = (self.navigationController?.navigationBar.frame.size.height)! //+ (self.navigationController?.navigationBar.frame.origin.y)!
 		let tableW:CGFloat = self.view.frame.size.width * 1.0
 		let tableH:CGFloat = (self.view.frame.size.height - tableY);
 		self.tableview.frame = CGRect(x: CGFloat(tableX), y: tableY, width: tableW, height: tableH)
