@@ -24,7 +24,6 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UIPicker
 	// Leaky beaker: 42.293866, -71.302857,
 	let diningHalls:[String] = ["bplc", "bates", "tower", "stonedavis", "pomeroy"]
 	var names = ["Bao Pao Lu Chow", "Bates", "Tower", "Stone Davis", "Pomeroy"]
-//	var names = ["Stone-Davis Dining", "Bates Dining","The Leaky Beaker", "The Lulu", "Pomeroy", "Tower"]
 	var menus = [String:[String]]()
 	let diningHallDictionaryKey = "diningHallDictionaryKey"
 	let todaysDateKey = "todaysDateKey"
@@ -140,7 +139,6 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UIPicker
 		let tableW = self.view.frame.size.width * 0.95
 		let tableH = (height - tableY);
 		tableview.frame = CGRect(x: CGFloat(tableX), y: tableY, width: tableW, height: tableH)
-//		tableview.frame = CGRect(x: 0, y: hLimit, width: self.view.frame.size.width * 0.95, height: (height - hLimit) * 0.8)
 		
 		
 		if CLLocationManager.authorizationStatus() == .authorizedWhenInUse {
@@ -173,14 +171,10 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UIPicker
 	
 	func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
 		let myHeader = tableView.dequeueReusableHeaderFooterView(withIdentifier: "headerId") as! Header
-//		if (self.chosenDiningHall != "") {
-//			myHeader.nameLabel.text = self.chosenDiningHall
-//		} else {
-			myHeader.nameLabel.text = "Choose a dining hall by clicking the button above."
+
+		myHeader.nameLabel.text = "Choose a dining hall by clicking the button above."
 		myHeader.alpha = 1
 		print("Header being used!!!!!")
-//		}
-		//		myHeader.myTableViewController = self
 		return myHeader
 	}
 	
@@ -192,14 +186,8 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UIPicker
 		return 50
 	}
 	
-//	func tableView(tableView: UITableView, didEndDisplayingCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
-//		if (indexPath.row >= items.count - 1) {
-//			adjustHeightOfTableview()
-//		}
-//	}
 	
 	func adjustHeightOfTableview() {
-//		let height:CGFloat = CGFloat(items.count * 50);
 		var height:CGFloat = 0;
 		
 		for i in 0...items.count - 1 {
@@ -208,7 +196,6 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UIPicker
 				height = height + cell.frame.height;
 			}
 		}
-		//		let maxHeight:CGFloat = self.tableView.superview!.frame.size.height - self.tableView.frame.origin.y;
 		
 		if tableview.contentSize.height != height {
 			tableview.contentSize = CGSize(width: tableview.contentSize.width, height: height)
@@ -567,14 +554,8 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UIPicker
 	// Displays the user's location.
 	func displayLocation(_ location:CLLocation) {
 		mapViewer.setRegion(MKCoordinateRegion(center: CLLocationCoordinate2DMake(location.coordinate.latitude, location.coordinate.longitude), span: MKCoordinateSpanMake(0.05, 0.05)), animated: true)
-		
-//		let locationPinCoord = CLLocationCoordinate2D(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude)
-//		let annotation = MKPointAnnotation()
-//		annotation.coordinate = locationPinCoord
-//		annotation.title = "You are Here"
+
 		findDistances(location)
-//		mapViewer.addAnnotation(annotation)
-//		let all = diningHallAnnotations + [annotation];
 		mapViewer.showAnnotations(diningHallAnnotations, animated: true)
 	}
 	

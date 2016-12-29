@@ -225,11 +225,6 @@ class SecondViewController: UITableViewController, UIPickerViewDataSource, UIPic
 	
 	func retitleHeader() {
 		if (tableView.headerView(forSection: 0) != nil) {
-			//for i in 0...diningHalls.count - 1 {
-			//	if (diningHalls[i] == self.diningHall) {
-			//		(tableView.headerView(forSection: 0) as! Header).nameLabel.text = self.diningHallFull[i]
-			//	}
-			//}
 			(tableView.headerView(forSection: 0) as! Header).nameLabel.text = self.diningHallName
 			print("Tried to assign ", diningHallName, " to the header view.")
 		}
@@ -487,7 +482,5 @@ class SecondViewController: UITableViewController, UIPickerViewDataSource, UIPic
 			self.loadingHall = false;
 			
 		}.resume()
-		// Start the task
-		//task.resume()
 	}
 }

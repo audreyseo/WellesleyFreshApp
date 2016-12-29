@@ -98,9 +98,6 @@ class HourRange {
 	func onlyMinutes() -> Double {
 		return Double((hours() * 60) + minutes())
 	}
-
-	
-	
 	
 	
 	func hours() -> Int {

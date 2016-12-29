@@ -35,21 +35,6 @@ class DayHourRange:HourRange {
 		
 		self.lowDay = getDate(aDate: date1)
 		self.highDay = getDate(aDate: date2)
-		//self.highHour = high;
-		//self.lowHour = low;
-		//self.rangeName = name;
-		//self.hourFormatter = DateFormatter()
-		//hourFormatter.locale = Locale(identifier: "en_US_POSIX")
-		//hourFormatter.dateFormat = "k"
-		//minuteFormatter = DateFormatter()
-		//minuteFormatter.locale = Locale(identifier: "en_US_POSIX")
-		//minuteFormatter.dateFormat = "m"
-		//secondFormatter = DateFormatter()
-		//secondFormatter.locale = Locale(identifier: "en_US_POSIX")
-		//secondFormatter.dateFormat = "s"
-		//timeFormatter = DateFormatter()
-		//timeFormatter.locale = Locale(identifier: "en_US_POSIX")
-		//timeFormatter.dateFormat = "kk:mm:ss"
 	}
 	
 	init( lowHour:Double, highHour:Double, name:String, lowDay:Int, highDay:Int) {
@@ -60,21 +45,6 @@ class DayHourRange:HourRange {
 		
 		self.lowDay = lowDay
 		self.highDay = highDay
-		//self.highHour = high;
-		//self.lowHour = low;
-		//self.rangeName = name;
-		//self.hourFormatter = DateFormatter()
-		//hourFormatter.locale = Locale(identifier: "en_US_POSIX")
-		//hourFormatter.dateFormat = "k"
-		//minuteFormatter = DateFormatter()
-		//minuteFormatter.locale = Locale(identifier: "en_US_POSIX")
-		//minuteFormatter.dateFormat = "m"
-		//secondFormatter = DateFormatter()
-		//secondFormatter.locale = Locale(identifier: "en_US_POSIX")
-		//secondFormatter.dateFormat = "s"
-		//timeFormatter = DateFormatter()
-		//timeFormatter.locale = Locale(identifier: "en_US_POSIX")
-		//timeFormatter.dateFormat = "kk:mm:ss"
 	}
 	
 	init(lowHour:Double, highHour:Double, name:String, dayChange:Int) {
@@ -87,22 +57,6 @@ class DayHourRange:HourRange {
 		let today:Date = Date.init()
 		lowDay = Int(dayFormatter.string(from: today))!
 		highDay = lowDay + dayChange
-		
-		//self.highHour = high;
-		//self.lowHour = low;
-		//self.rangeName = name;
-		//self.hourFormatter = DateFormatter()
-		//hourFormatter.locale = Locale(identifier: "en_US_POSIX")
-		//hourFormatter.dateFormat = "k"
-		//minuteFormatter = DateFormatter()
-		//minuteFormatter.locale = Locale(identifier: "en_US_POSIX")
-		//minuteFormatter.dateFormat = "m"
-		//secondFormatter = DateFormatter()
-		//secondFormatter.locale = Locale(identifier: "en_US_POSIX")
-		//secondFormatter.dateFormat = "s"
-		//timeFormatter = DateFormatter()
-		//timeFormatter.locale = Locale(identifier: "en_US_POSIX")
-		//timeFormatter.dateFormat = "kk:mm:ss"
 	}
 	
 	override func currentHour() -> Double {
@@ -126,21 +80,6 @@ class DayHourRange:HourRange {
 		}
 		
 		return totalHours
-		
-		//var diff:Double = Double(todayDate - lowDay)
-		
-		//if diff > 0 {
-		//	totalHours += (24 - lowHour)
-		//	diff -= 1.0
-		//	let diff1 = highDay - todayDate
-		//	if diff1 == 0 {
-		//		diff -= 1.0
-		//		return totalHours + Double(todayHour) + (diff * 24.0)
-		//	}
-		//	return totalHours + Double(todayHour)
-		//} else {
-		//	return Double(todayHour) - lowHour
-		//}
 	}
 	
 	override func highMinutes() -> Double {
@@ -172,8 +111,6 @@ class DayHourRange:HourRange {
 		let dayHours:Double = Double((highDay - lowDay) - 1) * 24.0
 		let hourHours:Double = (24.0 - lowHour) + highHour
 		
-//		print("Total change: ", dayHours + hourHours)
-//		print("High: ", highHour, " low: ", lowHour)
 		return dayHours + hourHours
 	}
 	

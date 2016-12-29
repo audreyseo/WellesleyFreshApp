@@ -38,16 +38,8 @@ class MyCell: UITableViewCell {
 	
 	func setupViews() {
 		addSubview(nameLabel)
-		//		addSubview(actionButton)
-		
-//		actionButton.addTarget(self, action: "handleAction", forControlEvents: .TouchUpInside)
-		
 		
 		addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-16-[v0]-|", options: NSLayoutFormatOptions(), metrics: nil, views: ["v0": nameLabel]))
 		addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-8-[v0]-8-|", options: NSLayoutFormatOptions(), metrics: nil, views: ["v0": nameLabel]))
 	}
-	
-//	func handleAction() {
-//		myTableViewController?.deleteCell(self)
-//	}
 }

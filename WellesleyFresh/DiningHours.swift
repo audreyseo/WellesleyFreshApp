@@ -138,7 +138,6 @@ class DiningHours {
 	}
 	
 	func percentDone(_ index:Int) -> Double {
-//		print("Percent left: ", diningHalls[halls[index]]!.percentLeft())
 		if (diningHalls[halls[index]]?.isClosed())! {
 			return (self.diningHalls[self.halls[index]]?.closedHours().percentTimeElapsed())!
 		}

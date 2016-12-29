@@ -21,15 +21,6 @@ class CustomButtonCell:UITableViewCell {
 		fatalError("init(coder:) has not been implemented")
 	}
 	
-//	let nameLabel: UILabel = {
-//		let label = UILabel()
-//		label.text = "Sample Item"
-//		label.translatesAutoresizingMaskIntoConstraints = false
-//		label.font = UIFont.systemFont(ofSize: 14)
-//		label.numberOfLines = 0
-//		return label
-//	}()
-	
 	let actionButton: UIButton = {
 		let button = UIButton(type: .system)
 		button.setTitle("Delete", for: UIControlState())
@@ -43,16 +34,8 @@ class CustomButtonCell:UITableViewCell {
 	
 	func setupViews() {
 		addSubview(actionButton)
-		//		addSubview(actionButton)
-		
-		//		actionButton.addTarget(self, action: "handleAction", forControlEvents: .TouchUpInside)
-		
-		
+
 		addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-16-[v0]-|", options: NSLayoutFormatOptions(), metrics: nil, views: ["v0": actionButton]))
 		addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-8-[v0]-8-|", options: NSLayoutFormatOptions(), metrics: nil, views: ["v0": actionButton]))
 	}
-	
-	//	func handleAction() {
-	//		myTableViewController?.deleteCell(self)
-	//	}
 }

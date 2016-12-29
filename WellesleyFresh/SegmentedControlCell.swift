@@ -67,10 +67,6 @@ class SegmentedControlCell: UITableViewCell {
 		
 		control.addTarget(self, action: #selector(alterDefaults), for: .valueChanged)
 		
-		
-		//		actionButton.addTarget(self, action: "handleAction", forControlEvents: .TouchUpInside)
-		
-		
 		addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-16-[v0]->=50-[v1]-16-|", options: NSLayoutFormatOptions(), metrics: nil, views: ["v0": nameLabel, "v1": control]))
 		addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-8-[v0]-8-|", options: NSLayoutFormatOptions(), metrics: nil, views: ["v0": nameLabel]))
 		addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-8-[v0]-8-|", options: NSLayoutFormatOptions(), metrics: nil, views: ["v0": control]))
