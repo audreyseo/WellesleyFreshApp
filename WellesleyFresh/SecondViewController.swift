@@ -22,8 +22,8 @@ class SecondViewController: UITableViewController, UIPickerViewDataSource, UIPic
 	var hallPicker:UIPickerView = UIPickerView()
 	let hallToolBar:UIToolbar = UIToolbar()
 	let storedData:UserDefaults = UserDefaults()
-	let diningHallDictionaryKey = "diningHallDictionaryKey"
-	let todaysDateKey = "todaysDateKey"
+	let diningHallDictionaryKey:String = "diningHallDictionaryKey"
+	let todaysDateKey:String = "todaysDateKey"
 	var barButtonDone:UIBarButtonItem {
 		return UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.done, target: self, action: #selector(self.madeSelection))
 	}

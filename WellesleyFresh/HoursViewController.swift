@@ -9,10 +9,10 @@
 import UIKit
 
 class HoursViewController: UITableViewController {
-	var hours = DiningHours()
-	var diningHallName = ["stonedavis":"Stone Davis", "bates":"Bates", "bplc":"Lulu", "tower":"Tower", "pomeroy":"Pomeroy", "emporium": "Emporium", "collins": "Collins Cafe", "beaker": "Leaky Beaker"]
-	var foodEstablishments = [["bplc", "bates", "tower", "stonedavis", "pomeroy"], ["emporium", "collins", "beaker"]]
-	var titles = ["Dining Halls", "Retail Centers"]
+	var hours:DiningHours = DiningHours()
+	var diningHallName:[String:String] = ["stonedavis":"Stone Davis", "bates":"Bates", "bplc":"Lulu", "tower":"Tower", "pomeroy":"Pomeroy", "emporium": "Emporium", "collins": "Collins Cafe", "beaker": "Leaky Beaker"]
+	var foodEstablishments:[[String]] = [["bplc", "bates", "tower", "stonedavis", "pomeroy"], ["emporium", "collins", "beaker"]]
+	var titles:[String] = ["Dining Halls", "Retail Centers"]
 	var timer: Timer = Timer()
 	
 	override func viewDidLoad() {

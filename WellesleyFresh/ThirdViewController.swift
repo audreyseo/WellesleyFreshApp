@@ -21,20 +21,20 @@ class ThirdViewController: UIViewController, MFMailComposeViewControllerDelegate
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
-		tableview.register(MyCell.self, forCellReuseIdentifier: "cellId")
-		tableview.register(SegmentedControlCell.self, forCellReuseIdentifier: "segmentedCellId")
-		tableview.register(CustomButtonCell.self, forCellReuseIdentifier: "buttonCellId")
+		self.tableview.register(MyCell.self, forCellReuseIdentifier: "cellId")
+		self.tableview.register(SegmentedControlCell.self, forCellReuseIdentifier: "segmentedCellId")
+		self.tableview.register(CustomButtonCell.self, forCellReuseIdentifier: "buttonCellId")
 		
 		// Assigns the class Header to the type of header cell that we use
-		tableview.register(GroupHeader.self, forHeaderFooterViewReuseIdentifier: "headerId")
+		self.tableview.register(GroupHeader.self, forHeaderFooterViewReuseIdentifier: "headerId")
 		
-		tableview.delegate = self
-		tableview.dataSource = self
+		self.tableview.delegate = self
+		self.tableview.dataSource = self
 		
-		tableview.sizeToFit()
+		self.tableview.sizeToFit()
 		
 		// ty to this tutorial for the following code for auto-height for cells: https://www.raywenderlich.com/129059/self-sizing-table-view-cells
-		tableview.estimatedRowHeight = 140
+		self.tableview.estimatedRowHeight = 140
 		
 		self.view.addSubview(tableview)
 	}
@@ -45,7 +45,7 @@ class ThirdViewController: UIViewController, MFMailComposeViewControllerDelegate
 		let tableY:CGFloat = (self.navigationController?.navigationBar.frame.size.height)! + (self.navigationController?.navigationBar.frame.origin.y)!
 		let tableW:CGFloat = self.view.frame.size.width * 1.0
 		let tableH:CGFloat = (self.view.frame.size.height - tableY);
-		tableview.frame = CGRect(x: CGFloat(tableX), y: tableY, width: tableW, height: tableH)
+		self.tableview.frame = CGRect(x: CGFloat(tableX), y: tableY, width: tableW, height: tableH)
 	}
 	
 	// ---------------------DELEGATE METHODS----------------------
@@ -155,7 +155,7 @@ class ThirdViewController: UIViewController, MFMailComposeViewControllerDelegate
 	}
 	
 	
-	@IBAction func pomFeedback(_ sender: AnyObject) {
+	func pomFeedback(_ sender: AnyObject) {
 		let nextViewController = self.storyboard?.instantiateViewController(withIdentifier: "pomFeedbackView")
 		nextViewController?.navigationItem.title = "Review Pomeroy"
 		self.navigationController?.pushViewController(nextViewController!, animated:true)
@@ -167,7 +167,7 @@ class ThirdViewController: UIViewController, MFMailComposeViewControllerDelegate
 		//	self.showSendMailErrorAlert()
 		//}
 	}
-	@IBAction func towerFeedback(_ sender: AnyObject) {
+	func towerFeedback(_ sender: AnyObject) {
 		let nextViewController = self.storyboard?.instantiateViewController(withIdentifier: "pomFeedbackView")
 		nextViewController?.navigationItem.title = "Review Tower"
 		self.navigationController?.pushViewController(nextViewController!, animated:true)
@@ -178,7 +178,7 @@ class ThirdViewController: UIViewController, MFMailComposeViewControllerDelegate
 //			self.showSendMailErrorAlert()
 //		}
 	}
-	@IBAction func stonedFeedback(_ sender: AnyObject) {
+	func stonedFeedback(_ sender: AnyObject) {
 		let nextViewController = self.storyboard?.instantiateViewController(withIdentifier: "pomFeedbackView")
 		nextViewController?.navigationItem.title = "Review Stone-Davis"
 		self.navigationController?.pushViewController(nextViewController!, animated:true)
@@ -189,7 +189,7 @@ class ThirdViewController: UIViewController, MFMailComposeViewControllerDelegate
 //			self.showSendMailErrorAlert()
 //		}
 	}
-	@IBAction func batesFeedback(_ sender: AnyObject) {
+	func batesFeedback(_ sender: AnyObject) {
 		let nextViewController = self.storyboard?.instantiateViewController(withIdentifier: "pomFeedbackView")
 		nextViewController?.navigationItem.title = "Review Bates"
 		self.navigationController?.pushViewController(nextViewController!, animated:true)
@@ -200,7 +200,7 @@ class ThirdViewController: UIViewController, MFMailComposeViewControllerDelegate
 //			self.showSendMailErrorAlert()
 //		}
 	}
-	@IBAction func bplcFeedback(_ sender: AnyObject) {
+	func bplcFeedback(_ sender: AnyObject) {
 		let nextViewController = self.storyboard?.instantiateViewController(withIdentifier: "pomFeedbackView")
 		nextViewController?.navigationItem.title = "Review Lulu"
 		self.navigationController?.pushViewController(nextViewController!, animated:true)

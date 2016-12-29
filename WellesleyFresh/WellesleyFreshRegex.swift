@@ -9,10 +9,10 @@
 import UIKit
 
 class WellesleyFreshRegex {
-	let deleteLineBreaks = "\n|\r"
-	let reorganizeString = "\\s*<span class=\"SpellE\"\\s*>([a-zA-Z]+)<\\/span>\\s*"
-	let titleExtractor = "<b[^>]+><span[^>]+>(Brunch|Dinner|Lunch)<\\/span><\\/b>"
-	let mealItemExtractor = "<p[^>]+><b><span[^>]+>((?:[-a-zA-Z]+(?: [-a-zA-Z]+)* (?:Lunch|Dinner))|(?:Soup))-?\\s?<\\/span><\\/b><span[^>]+>([^<]+)<\\/span>"
+	let deleteLineBreaks:String = "\n|\r"
+	let reorganizeString:String = "\\s*<span class=\"SpellE\"\\s*>([a-zA-Z]+)<\\/span>\\s*"
+	let titleExtractor:String = "<b[^>]+><span[^>]+>(Brunch|Dinner|Lunch)<\\/span><\\/b>"
+	let mealItemExtractor:String = "<p[^>]+><b><span[^>]+>((?:[-a-zA-Z]+(?: [-a-zA-Z]+)* (?:Lunch|Dinner))|(?:Soup))-?\\s?<\\/span><\\/b><span[^>]+>([^<]+)<\\/span>"
 	var bodyExtraction:String = ".*<div[^>]+>((.(?!<\\/div>))*).*"
 	var spanDeletionPattern:String = "<\\/?span[^>]*>"
 	var allElementDeletion:String = "<[^>]*>"

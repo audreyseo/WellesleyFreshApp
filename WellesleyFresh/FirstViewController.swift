@@ -19,8 +19,8 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UIPicker
 	var chosenDiningHall = ""
 	var chosenShort = ""
 	var first = true
-	var latitudes = [42.294580,42.291953,42.292747,42.291104,42.295818]
-	var longitudes = [-71.308941,-71.300282,-71.308737,-71.302814,-71.307396]
+	var latitudes:[Double] = [42.294580,42.291953,42.292747,42.291104,42.295818]
+	var longitudes:[Double] = [-71.308941,-71.300282,-71.308737,-71.302814,-71.307396]
 	// Leaky beaker: 42.293866, -71.302857,
 	let diningHalls:[String] = ["bplc", "bates", "tower", "stonedavis", "pomeroy"]
 	var names = ["Bao Pao Lu Chow", "Bates", "Tower", "Stone Davis", "Pomeroy"]
@@ -163,7 +163,7 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UIPicker
 	
 	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		let myCell = tableView.dequeueReusableCell(withIdentifier: "cellId", for: indexPath) as! MyCell
-		if (items.count > 0) {
+		if (self.items.count > 0) {
 			myCell.nameLabel.text = items[indexPath.row]
 		} else {
 			myCell.nameLabel.text = ""

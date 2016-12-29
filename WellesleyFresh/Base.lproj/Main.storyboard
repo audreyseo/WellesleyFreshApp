@@ -162,69 +162,12 @@
                     <view key="view" contentMode="scaleToFill" id="Dif-Y6-Awj">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Mle-v9-IaK">
-                                <rect key="frame" x="128" y="286" width="120" height="30"/>
-                                <state key="normal" title="Bao Pao Lu Chow"/>
-                                <connections>
-                                    <action selector="bplcFeedback:" destination="muJ-OP-aTb" eventType="touchUpInside" id="drJ-eb-cho"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="T1N-sC-Phd">
-                                <rect key="frame" x="168" y="324" width="39" height="30"/>
-                                <state key="normal" title="Bates"/>
-                                <connections>
-                                    <action selector="batesFeedback:" destination="muJ-OP-aTb" eventType="touchUpInside" id="DC3-rt-7x0"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ePU-SF-VL6">
-                                <rect key="frame" x="147" y="362" width="82" height="30"/>
-                                <state key="normal" title="Stone Davis"/>
-                                <connections>
-                                    <action selector="stonedFeedback:" destination="muJ-OP-aTb" eventType="touchUpInside" id="kWA-p6-MOK"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KMP-gx-NkU">
-                                <rect key="frame" x="167" y="400" width="42" height="30"/>
-                                <state key="normal" title="Tower"/>
-                                <connections>
-                                    <action selector="towerFeedback:" destination="muJ-OP-aTb" eventType="touchUpInside" id="FgA-Ml-SRV"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kKy-Ef-8Ae">
-                                <rect key="frame" x="157" y="438" width="61" height="30"/>
-                                <state key="normal" title="Pomeroy"/>
-                                <connections>
-                                    <action selector="pomFeedback:" destination="muJ-OP-aTb" eventType="touchUpInside" id="PXJ-qy-hR5"/>
-                                </connections>
-                            </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Give your compliments to the chef:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="701-2W-piS">
-                                <rect key="frame" x="48" y="213" width="280" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                        </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        <constraints>
-                            <constraint firstItem="701-2W-piS" firstAttribute="centerX" secondItem="Dif-Y6-Awj" secondAttribute="centerX" id="13y-aw-kVg"/>
-                            <constraint firstItem="701-2W-piS" firstAttribute="top" secondItem="i44-8O-TNb" secondAttribute="bottom" constant="193" id="65Z-lc-fMm"/>
-                            <constraint firstItem="T1N-sC-Phd" firstAttribute="top" secondItem="i44-8O-TNb" secondAttribute="bottom" constant="260" id="KZU-nQ-Ru6"/>
-                            <constraint firstItem="T1N-sC-Phd" firstAttribute="centerX" secondItem="Dif-Y6-Awj" secondAttribute="centerX" id="Nco-az-YSR"/>
-                            <constraint firstItem="KMP-gx-NkU" firstAttribute="centerX" secondItem="Dif-Y6-Awj" secondAttribute="centerX" id="Qgl-Nf-Pog"/>
-                            <constraint firstItem="Mle-v9-IaK" firstAttribute="centerX" secondItem="Dif-Y6-Awj" secondAttribute="centerX" id="Rwz-ai-dhA"/>
-                            <constraint firstItem="KMP-gx-NkU" firstAttribute="top" secondItem="i44-8O-TNb" secondAttribute="bottom" constant="336" id="Vpb-Dq-9fj"/>
-                            <constraint firstItem="Mle-v9-IaK" firstAttribute="top" secondItem="i44-8O-TNb" secondAttribute="bottom" constant="222" id="ZUF-0a-Tml"/>
-                            <constraint firstItem="kKy-Ef-8Ae" firstAttribute="top" secondItem="i44-8O-TNb" secondAttribute="bottom" constant="374" id="fNJ-AE-N0I"/>
-                            <constraint firstItem="kKy-Ef-8Ae" firstAttribute="centerX" secondItem="Dif-Y6-Awj" secondAttribute="centerX" id="nR6-9H-Otg"/>
-                            <constraint firstItem="ePU-SF-VL6" firstAttribute="top" secondItem="i44-8O-TNb" secondAttribute="bottom" constant="298" id="rke-2o-wpF"/>
-                            <constraint firstItem="ePU-SF-VL6" firstAttribute="centerX" secondItem="Dif-Y6-Awj" secondAttribute="centerX" id="rxh-9k-60A"/>
-                        </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" systemItem="more" id="fWx-E8-Nsg"/>
                     <navigationItem key="navigationItem" id="EH3-fn-zgm"/>
                     <connections>
-                        <segue destination="dfw-ke-VLu" kind="custom" id="qAx-z9-rqM"/>
+                        <segue destination="dfw-ke-VLu" kind="modal" identifier="hallFeedbackSegue" id="qAx-z9-rqM"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="yqb-F3-or1" userLabel="First Responder" sceneMemberID="firstResponder"/>
