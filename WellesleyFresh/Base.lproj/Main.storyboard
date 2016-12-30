@@ -84,7 +84,7 @@
                             <constraint firstItem="zU2-7S-Dmt" firstAttribute="leading" secondItem="tsR-hK-woN" secondAttribute="leadingMargin" constant="4" id="rcP-yV-yLa"/>
                         </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Nearby" image="first" id="acW-dT-cKf"/>
+                    <tabBarItem key="tabBarItem" title="Nearby" image="custom-compass" id="acW-dT-cKf"/>
                     <connections>
                         <outlet property="closest1" destination="yWF-6L-6MP" id="5Jh-6h-p4m"/>
                         <outlet property="closest2" destination="zU2-7S-Dmt" id="KxE-9o-VD6"/>
@@ -336,9 +336,9 @@
         </scene>
     </scenes>
     <resources>
+        <image name="custom-compass" width="30" height="30"/>
         <image name="custom-hours" width="30" height="30"/>
         <image name="custom-menu" width="30" height="30"/>
-        <image name="first" width="30" height="30"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
