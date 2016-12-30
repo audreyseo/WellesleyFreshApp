@@ -121,7 +121,7 @@
         <scene sceneID="f7V-xy-zLX">
             <objects>
                 <navigationController id="xju-O5-TRH" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Menu" image="second" id="vik-Fq-ImD"/>
+                    <tabBarItem key="tabBarItem" title="Menu" image="custom-menu" id="vik-Fq-ImD"/>
                     <navigationItem key="navigationItem" id="rkW-2q-4dx"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="aky-Ad-zrz">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -337,8 +337,8 @@
     </scenes>
     <resources>
         <image name="custom-hours" width="30" height="30"/>
+        <image name="custom-menu" width="30" height="30"/>
         <image name="first" width="30" height="30"/>
-        <image name="second" width="30" height="30"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
