@@ -13,10 +13,10 @@ class ThirdViewController: UIViewController, MFMailComposeViewControllerDelegate
 	var tableview:UITableView = UITableView()
 	var units:String = "Preferred Units"
 	var unitOptions:[String] = ["m", "ft", "yd", "km", "mi"]
-	var items: [[String]] = [["Bates", "Lulu Chow Wang", "Pomeroy", "Stone-Davis", "Tower"], ["Bagged Lunch Form"], ["Preferred Units", "About"]]
+	var items: [[String]] = [["Bates", "Lulu Chow Wang", "Pomeroy", "Stone-Davis", "Tower"], ["Bagged Lunch Form"], ["Preferred Units", "Contact", "About"]]
 	var titles:[String] = ["Feedback", "Order", "Settings"]
 	
-	var disclosureCells:[String] = ["About", "Bagged Lunch Form"]
+	var disclosureCells:[String] = ["About", "Bagged Lunch Form", "Contact"]
 	
 	
 	override func viewDidLoad() {
@@ -103,6 +103,18 @@ class ThirdViewController: UIViewController, MFMailComposeViewControllerDelegate
 		}
 	}
 	
+	func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+		switch items[indexPath.section][indexPath.row] {
+		case "About":
+			break;
+		case "Contact":
+			self.contact()
+		default:
+			break;
+			
+		}
+	}
+	
 	func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
 		return titles[section]
 	}
@@ -123,13 +135,18 @@ class ThirdViewController: UIViewController, MFMailComposeViewControllerDelegate
 	// Mail
 	
 	
-	func configuredMailComposeViewController(_ targetHall:String) -> MFMailComposeViewController {
+	func configuredMailComposeViewController(_ target:String) -> MFMailComposeViewController {
 		let mailComposerVC = MFMailComposeViewController()
 		mailComposerVC.mailComposeDelegate = self
 		
-		mailComposerVC.setToRecipients(["\(targetHall)@somewhere.com"])
-		mailComposerVC.setSubject("Sending an in-app email")
-		mailComposerVC.setMessageBody("Start of an email!!\n", isHTML: false)
+		mailComposerVC.setToRecipients([target])
+		let nsObject: AnyObject? = Bundle.main.infoDictionary!["CFBundleShortVersionString"] as! String as AnyObject?
+		let version = nsObject as! String
+
+		//if version != nil {
+			mailComposerVC.setSubject("[WellesleyFreshApp - v\(version)]: ")
+			mailComposerVC.setMessageBody("", isHTML: false)
+		//}
 		
 		return mailComposerVC
 	}
@@ -144,6 +161,15 @@ class ThirdViewController: UIViewController, MFMailComposeViewControllerDelegate
 	
 	func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
 		controller.dismiss(animated: false, completion: nil)
+	}
+	
+	func contact() {
+		let contactor = configuredMailComposeViewController("aseo@wellesley.edu")
+		if MFMailComposeViewController.canSendMail() {
+			contactor.navigationItem.title = "Contact and Feedback"
+			self.present(contactor, animated: true, completion: nil)
+			//self.navigationController?.pushViewController(contactor, animated: true)
+		}
 	}
 	
 	
