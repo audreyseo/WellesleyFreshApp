@@ -106,6 +106,7 @@ class ThirdViewController: UIViewController, MFMailComposeViewControllerDelegate
 	func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 		switch items[indexPath.section][indexPath.row] {
 		case "About":
+			self.aboutPageSegue()
 			break;
 		case "Contact":
 			self.contact()
@@ -170,6 +171,12 @@ class ThirdViewController: UIViewController, MFMailComposeViewControllerDelegate
 			self.present(contactor, animated: true, completion: nil)
 			//self.navigationController?.pushViewController(contactor, animated: true)
 		}
+	}
+	
+	func aboutPageSegue() {
+		let next = self.storyboard?.instantiateViewController(withIdentifier: "aboutViewController")
+		next?.navigationItem.title = "About"
+		self.navigationController?.pushViewController(next!, animated: true)
 	}
 	
 	
