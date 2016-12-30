@@ -18,6 +18,8 @@ class ProgressCell: UITableViewCell {
 		return label
 	}()
 	
+	var mealText = ""
+	
 	let timeLabel: UILabel = {
 		let label = UILabel()
 		label.text = ""
@@ -47,8 +49,12 @@ class ProgressCell: UITableViewCell {
 		return label
 	}()
 	
-	let progress: UIProgressView = {
+	var progress: UIProgressView = {
 		let prog = UIProgressView(progressViewStyle: UIProgressViewStyle.default)
+		prog.layer.cornerRadius = 0.0
+		prog.layer.masksToBounds = true
+		prog.progressTintColor = UIColor.blue
+//		prog.layer.
 		prog.translatesAutoresizingMaskIntoConstraints = false
 		return prog
 	}()
@@ -58,12 +64,66 @@ class ProgressCell: UITableViewCell {
 		setupViews()
 	}
 	
-	func setProgress(_ num: Float) {
-		progress.setProgress(num, animated: false);
+	func absoluteValue(a:Float, b:Float) -> Float {
+		if a > b {
+			return a - b
+		} else {
+			return b - a
+		}
+	}
+	
+	func setProgressFloat(_ num: Float) {
+		print("Progress:", num)
+		if  absoluteValue(a: progress.progress, b: num) > 0.03 {
+//			print("Progress was wildly different.")
+//			progress = UIProgressView(progressViewStyle: .default)
+//			progress.layer.cornerRadius = 0.0
+//			progress.layer.masksToBounds = true
+			progress.progress = num
+
+//			setupViews()
+		} else {
+			progress.setProgress(num, animated: true)
+		}
 	}
 	
 	func setProgressDouble(_ num: Double) {
-		progress.setProgress(Float(num), animated: false)
+		setProgressFloat(Float(num))
+//		if abs(progress.progress - Float(num)) > 0.03 {
+//			print("Progress was wildly different.")
+//			progress = UIProgressView(progressViewStyle: .default)
+//			progress.layer.cornerRadius = 0.0
+//			progress.layer.masksToBounds = true
+//			progress.progress = Float(num)
+////			setupViews()
+//
+//		} else {
+//			progress.setProgress(Float(num), animated: true)
+//		}
+	}
+	
+	func compareColors(a:UIColor, b:UIColor) -> Bool {
+		let componentsA:[CGFloat] = a.cgColor.components!
+		let componentsB:[CGFloat] = b.cgColor.components!
+		var truth:Bool = true
+		for i in 0..<componentsA.count {
+			truth = truth && (absoluteValue(a: Float(componentsA[i]), b: Float(componentsB[i])) < 0.01)
+		}
+		return truth
+	}
+	
+	func setMealLabel(label:String) {
+		if !mealText.contains(label) {
+			mealText = label
+			mealLabel.text? = mealText
+			if mealText.contains("Closed") && !self.compareColors(a: self.progress.progressTintColor!, b: UIColor.red) {
+				self.progress.progressTintColor = UIColor.red
+			} else if mealText.contains("Next") && !self.compareColors(a: self.progress.progressTintColor!, b: UIColor.orange){
+				self.progress.progressTintColor = UIColor.orange
+			} else {
+				self.progress.progressTintColor = UIColor.blue
+			}
+		}
 	}
 	
 	required init?(coder aDecoder: NSCoder) {
