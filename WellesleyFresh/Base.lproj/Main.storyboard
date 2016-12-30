@@ -117,11 +117,11 @@
             </objects>
             <point key="canvasLocation" x="846" y="390"/>
         </scene>
-        <!--Hours-->
+        <!--Menu-->
         <scene sceneID="f7V-xy-zLX">
             <objects>
                 <navigationController id="xju-O5-TRH" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Hours" id="vik-Fq-ImD"/>
+                    <tabBarItem key="tabBarItem" title="Menu" image="second" id="vik-Fq-ImD"/>
                     <navigationItem key="navigationItem" id="rkW-2q-4dx"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="aky-Ad-zrz">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -320,8 +320,8 @@
         <!--Hours-->
         <scene sceneID="Ytb-AO-12f">
             <objects>
-                <navigationController id="0Wg-dp-s6O" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Hours" image="second" id="ITW-Ni-Vrm"/>
+                <navigationController id="0Wg-dp-s6O" userLabel="Hours" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Hours" image="custom-hours" id="ITW-Ni-Vrm"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="bHL-qo-VA3">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -336,6 +336,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="custom-hours" width="30" height="30"/>
         <image name="first" width="30" height="30"/>
         <image name="second" width="30" height="30"/>
     </resources>
