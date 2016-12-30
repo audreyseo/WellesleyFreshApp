@@ -157,9 +157,10 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UIPicker
 //		print(mapViewer.frame)
 	}
 	
-	// --------------------------------------------------------------------
+	// ====================================================================
 	// ------------------------DELEGATE METHODS----------------------------
-	// --------------------------------------------------------------------
+	// ====================================================================
+
 	
 	// ------------UITableView Delegate and Datasource Methods-------------
 	
@@ -270,8 +271,9 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UIPicker
 		print("Will start loading the map!")
 	}
 	
-	
+	// ======================================================================
 	// ------------------------------HELPERS---------------------------------
+	// ======================================================================
 	
 	// Retitles the header of the tableview
 	func retitleHeader() {
@@ -458,6 +460,17 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UIPicker
 		
 	}
 	
+	// Displays the user's location.
+	func displayLocation(_ location:CLLocation) {
+		mapViewer.setRegion(MKCoordinateRegion(center: CLLocationCoordinate2DMake(location.coordinate.latitude, location.coordinate.longitude), span: MKCoordinateSpanMake(0.05, 0.05)), animated: true)
+		currentLocation = location
+		print("\nLocation: (", location.coordinate.latitude, ", ", location.coordinate.longitude, ")")
+		
+		findDistances(location)
+		mapViewer.showAnnotations(diningHallAnnotations, animated: true)
+		coreLocationManager.stopUpdatingLocation()
+	}
+	
 	// -------------------------Get Web Data----------------------------
 	
 	// Downloads the data from the Wellesley Fresh site in an attempt to get the data.
@@ -473,9 +486,26 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UIPicker
 	
 	// --------------------Configure dining hall annotations------------------------
 	
+	// Creates a dining hall from a given index point for the names, longitudes, and latitudes array.
+	func displayDiningHall(_ index:Int) {
+		if (index < names.count) {
+			
+			let name = names[index]
+			let longitude = longitudes[index]
+			let latitude = latitudes[index]
+			let local = CLLocationCoordinate2DMake(latitude, longitude)
+			let pinCoordinate = CLLocationCoordinate2D(latitude: local.latitude, longitude: local.longitude)
+			let annotation = MKPointAnnotation()
+			annotation.coordinate = pinCoordinate
+			annotation.title = name
+			diningHallAnnotations += [annotation]
+			mapViewer.addAnnotation(annotation)
+		}
+	}
+	
 	// Create all of the dining hall annotations.
 	func displayDiningHallCenters() {
-		for i in 0...latitudes.count - 1 {
+		for i in 0..<latitudes.count {
 			displayDiningHall(i)
 		}
 		mapViewer.showAnnotations(diningHallAnnotations, animated: true)
@@ -494,6 +524,8 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UIPicker
 		}
 		findThreeSmallest(myDistances)
 	}
+	
+	
 	
 	// -----------------------Configure 3-Smallest Labels-----------------------------
 	
@@ -540,6 +572,7 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UIPicker
 			diningHallNamesShort[0] = diningHalls[i1]
 			diningHallNamesShort[1] = diningHalls[i2]
 			diningHallNamesShort[2] = diningHalls[i3]
+			hallPicker.reloadAllComponents()
 		} else {
 			print("Indices: ", i1, ":", i2, ":", i3)
 			closest1.text = "1. \(i1), \(i2), \(i3)"
@@ -548,34 +581,6 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UIPicker
 		
 	}
 	
-	
-	// Creates a dining hall from a given index point for the names, longitudes, and latitudes array.
-	func displayDiningHall(_ index:Int) {
-		if (index < names.count) {
-			
-			let name = names[index]
-			let longitude = longitudes[index]
-			let latitude = latitudes[index]
-			let local = CLLocationCoordinate2DMake(latitude, longitude)
-			let pinCoordinate = CLLocationCoordinate2D(latitude: local.latitude, longitude: local.longitude)
-			let annotation = MKPointAnnotation()
-			annotation.coordinate = pinCoordinate
-			annotation.title = name
-			diningHallAnnotations += [annotation]
-			mapViewer.addAnnotation(annotation)
-		}
-	}
-	
-	// Displays the user's location.
-	func displayLocation(_ location:CLLocation) {
-		mapViewer.setRegion(MKCoordinateRegion(center: CLLocationCoordinate2DMake(location.coordinate.latitude, location.coordinate.longitude), span: MKCoordinateSpanMake(0.05, 0.05)), animated: true)
-		currentLocation = location
-		print("\nLocation: (", location.coordinate.latitude, ", ", location.coordinate.longitude, ")")
-		
-		findDistances(location)
-		mapViewer.showAnnotations(diningHallAnnotations, animated: true)
-		coreLocationManager.stopUpdatingLocation()
-	}
 	
 	override func didReceiveMemoryWarning() {
 		super.didReceiveMemoryWarning()
