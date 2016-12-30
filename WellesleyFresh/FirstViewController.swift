@@ -29,6 +29,7 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UIPicker
 	let todaysDateKey = "todaysDateKey"
 	
 	var diningHallAnnotations:[MKPointAnnotation] = [MKPointAnnotation]();
+	var currentLocation:CLLocation = CLLocation()
 	
 	var hallPicker:UIPickerView = UIPickerView()
 	let hallToolBar:UIToolbar = UIToolbar()
@@ -86,7 +87,10 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UIPicker
 			storedData.set("m", forKey: "Preferred Units")
 		} else {
 			print("Getting initial location...")
+			first = false
 			self.getInitialLocation()
+			
+			displayDiningHallCenters()
 		}
 		
 		tableview.register(MyCell.self, forCellReuseIdentifier: "cellId")
@@ -254,6 +258,7 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UIPicker
 				displayDiningHallCenters()
 				getInitialLocation()
 			} else {
+				print("Well this is happening")
 				getLocation()
 			}
 		}
@@ -480,7 +485,8 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UIPicker
 	// then assigns this information to the subtitles of the dining halls.
 	func findDistances(_ myLocation:CLLocation) {
 		var myDistances: [Float] = [Float]()
-		for i in 0...diningHallAnnotations.count - 1 {
+		print("Dining Hall Anontations Count: ", diningHallAnnotations.count)
+		for i in 0..<diningHallAnnotations.count {
 			let dist = distance(myLocation, second: diningHallAnnotations[i].coordinate)
 			myDistances += [dist]
 			//let myUnits = meters ? "m" : "ft"
@@ -493,13 +499,14 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UIPicker
 	
 	// Finds the three smallest distances from a float array and then changes the information shown to the user.
 	func findThreeSmallest(_ myDistances: [Float]) {
-		var num1:Float = 10000.0
+		print("Fatal error?")
+		var num1:Float = 1000000000000000.0
 		var i1 = -1
-		var num2:Float = 10000.0
+		var num2:Float = 1000000000000000.0
 		var i2 = -1
-		var num3:Float = 10000.0
+		var num3:Float = 1000000000000000.0
 		var i3 = -1
-		
+		print("myDistances.count: ", myDistances.count)
 		for i in 0...myDistances.count - 1 {
 			if (myDistances[i] < num1) {
 				i1 = i;
@@ -518,19 +525,27 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UIPicker
 				num3 = myDistances[i]
 			}
 		}
+		print("Fatal error?")
 		//let myUnits = meters ? "m" : "ft"
 		
 		if (i1 >= 0 && i2 >= 0 && i3 >= 0) {
-			closest1.text = "1. \(names[i1]), \(num1) \(myUnits)"
-			closest2.text = "2. \(names[i2]), \(num2) \(myUnits)"
-			closest3.text = "3. \(names[i3]), \(num3) \(myUnits)"
+			let numformat = NumberFormatter()
+			numformat.numberStyle = NumberFormatter.Style.decimal
+			closest1.text = "1. \(names[i1]), \(numformat.string(from: NSNumber(value: num1))!) \(myUnits)"
+			closest2.text = "2. \(names[i2]), \(numformat.string(from: NSNumber(value: num2))!) \(myUnits)"
+			closest3.text = "3. \(names[i3]), \(numformat.string(from: NSNumber(value: num3))!) \(myUnits)"
 			diningHallNames[0] = names[i1]
 			diningHallNames[1] = names[i2]
 			diningHallNames[2] = names[i3]
 			diningHallNamesShort[0] = diningHalls[i1]
 			diningHallNamesShort[1] = diningHalls[i2]
 			diningHallNamesShort[2] = diningHalls[i3]
+		} else {
+			print("Indices: ", i1, ":", i2, ":", i3)
+			closest1.text = "1. \(i1), \(i2), \(i3)"
 		}
+		print("Fatal error?")
+		
 	}
 	
 	
@@ -554,9 +569,12 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UIPicker
 	// Displays the user's location.
 	func displayLocation(_ location:CLLocation) {
 		mapViewer.setRegion(MKCoordinateRegion(center: CLLocationCoordinate2DMake(location.coordinate.latitude, location.coordinate.longitude), span: MKCoordinateSpanMake(0.05, 0.05)), animated: true)
-
+		currentLocation = location
+		print("\nLocation: (", location.coordinate.latitude, ", ", location.coordinate.longitude, ")")
+		
 		findDistances(location)
 		mapViewer.showAnnotations(diningHallAnnotations, animated: true)
+		coreLocationManager.stopUpdatingLocation()
 	}
 	
 	override func didReceiveMemoryWarning() {
