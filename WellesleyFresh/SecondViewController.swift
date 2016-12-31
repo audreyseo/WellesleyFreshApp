@@ -170,13 +170,29 @@ class SecondViewController: UITableViewController, UIPickerViewDataSource, UIPic
 	
 	// TABLEVIEW DELEGATE FUNCTIONS
 	
+	override func numberOfSections(in tableView: UITableView) -> Int {
+		return 2
+	}
+	
+	override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+		if section == 0 {
+			return self.diningHall
+		} else {
+			return ""
+		}
+	}
+	
 	
 	override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 		tableView.deselectRow(at: indexPath, animated: true)
 	}
 	
 	override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		return items.count
+		if section == 0 {
+			return items.count
+		} else {
+			return 0
+		}
 	}
 	
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -188,8 +204,12 @@ class SecondViewController: UITableViewController, UIPickerViewDataSource, UIPic
 	
 	override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
 		let myHeader = tableView.dequeueReusableHeaderFooterView(withIdentifier: "headerId") as! Header
-		myHeader.nameLabel.text = self.diningHall
-		//		myHeader.myTableViewController = self
+		myHeader.contentView.backgroundColor = UIColor.groupTableViewBackground
+		if section == 0 {
+			
+			myHeader.nameLabel.text = self.diningHall
+			//		myHeader.myTableViewController = self
+		}
 		return myHeader
 	}
 	

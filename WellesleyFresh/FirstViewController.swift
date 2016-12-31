@@ -185,7 +185,7 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UIPicker
 	
 	func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
 		let myHeader = tableView.dequeueReusableHeaderFooterView(withIdentifier: "headerId") as! Header
-
+		myHeader.contentView.backgroundColor = UIColor.groupTableViewBackground
 		myHeader.nameLabel.text = "Choose a dining hall by clicking the button above."
 		myHeader.alpha = 1
 		print("Header being used!!!!!")

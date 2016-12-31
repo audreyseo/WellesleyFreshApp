@@ -11,8 +11,8 @@ import UIKit
 class HoursViewController: UITableViewController {
 	var hours:DiningHours = DiningHours()
 	var diningHallName:[String:String] = ["stonedavis":"Stone Davis", "bates":"Bates", "bplc":"Lulu", "tower":"Tower", "pomeroy":"Pomeroy", "emporium": "Emporium", "collins": "Collins Cafe", "beaker": "Leaky Beaker"]
-	var foodEstablishments:[[String]] = [["bplc", "bates", "tower", "stonedavis", "pomeroy"], ["emporium", "collins", "beaker"]]
-	var titles:[String] = ["Dining Halls", "Retail Centers"]
+	var foodEstablishments:[[String]] = [["bplc", "bates", "tower", "stonedavis", "pomeroy"], ["emporium", "collins", "beaker"], []]
+	var titles:[String] = ["Dining Halls", "Retail Centers", ""]
 	var timer: Timer = Timer()
 	
 	override func viewDidLoad() {
@@ -173,6 +173,7 @@ class HoursViewController: UITableViewController {
 	
 	override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
 		let myCell = tableView.dequeueReusableHeaderFooterView(withIdentifier: "headerId") as! GroupHeader
+		myCell.contentView.backgroundColor = UIColor.groupTableViewBackground
 		return myCell
 	}
 }
