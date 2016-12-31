@@ -256,7 +256,8 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UIPicker
 		print("Updated location")
 		let last = locations.count - 1
 		displayLocation(locations[last])
-		manager.stopUpdatingLocation()
+		displayDiningHallCenters()
+//		manager.stopUpdatingLocation()
 	}
 	
 	// Fires when the authorization status updates.
@@ -269,6 +270,7 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UIPicker
 			} else {
 				print("Well this is happening")
 				getLocation()
+				
 			}
 		}
 	}
@@ -513,7 +515,7 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UIPicker
 		
 		findDistances(location)
 		mapViewer.showAnnotations(diningHallAnnotations, animated: true)
-		coreLocationManager.stopUpdatingLocation()
+//		coreLocationManager.stopUpdatingLocation()
 	}
 	
 	// -------------------------Get Web Data----------------------------
@@ -550,6 +552,8 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UIPicker
 	
 	// Create all of the dining hall annotations.
 	func displayDiningHallCenters() {
+		mapViewer.removeAnnotations(diningHallAnnotations)
+		diningHallAnnotations = [MKPointAnnotation]()
 		for i in 0..<latitudes.count {
 			displayDiningHall(i)
 		}
