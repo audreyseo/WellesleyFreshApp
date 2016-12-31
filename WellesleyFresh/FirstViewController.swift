@@ -289,7 +289,9 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UIPicker
 		var mkpin = mapView.dequeueReusableAnnotationView(withIdentifier: "pinId") as? MKPinAnnotationView
 		if mkpin == nil {
 			mkpin = MKPinAnnotationView(annotation: annotation, reuseIdentifier: "pinId")
-			
+//			mkpin?.annotation = annotation
+			mkpin?.canShowCallout = true
+//			mkpin?.
 //			let colorPointAnnotation = annotation as! ColorPointAnnotation
 //			pinView?.pinTintColor = colorPointAnnotation.pinColor
 		} else {
@@ -300,7 +302,9 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UIPicker
 				if (annotation.title??.contains((diningHallAnnotations[i].title)!))! {
 					if #available(iOS 9, *) {
 						mkpin?.pinTintColor = pinColors[i]
-						print("A happens when", i, pinColors[i], annotation.title)
+//						mkpin?.annotation?.title = diningHallAnnotations[i].title
+//						mkpin.annotation?.subtitle = diningHallAnnotations[i].subtitle
+						print("A happens when", i, pinColors[i], annotation.title, annotation.subtitle)
 						break
 					} else if #available(iOS 10, *) {
 						print("B happens when", i)
@@ -504,7 +508,7 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UIPicker
 		print("Setting the initial location")
 		// Only available in iOS 9.0 or greater
 		coreLocationManager.startUpdatingLocation()
-		
+		coreLocationManager.startMonitoringSignificantLocationChanges()
 	}
 	
 	// Displays the user's location.
@@ -515,7 +519,7 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UIPicker
 		
 		findDistances(location)
 		mapViewer.showAnnotations(diningHallAnnotations, animated: true)
-//		coreLocationManager.stopUpdatingLocation()
+		coreLocationManager.stopUpdatingLocation()
 	}
 	
 	// -------------------------Get Web Data----------------------------
