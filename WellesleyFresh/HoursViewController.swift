@@ -113,6 +113,10 @@ class HoursViewController: UITableViewController {
 		return "\(h):\(minutesZero)\(minutes):\(secondsZero)\(seconds)"
 	}
 	
+	override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+		tableView.deselectRow(at: indexPath, animated: true)
+	}
+	
 	override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 		return foodEstablishments[section].count
 	}
