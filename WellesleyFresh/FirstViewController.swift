@@ -22,7 +22,8 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UIPicker
 	var latitudes:[Double] = [42.294580,42.291953,42.292747,42.291104,42.295818]
 	var longitudes:[Double] = [-71.308941,-71.300282,-71.308737,-71.302814,-71.307396]
 	
-	var pinColors:[UIColor] = Array(repeating: UIColor.red, count: 5)
+	var pinColors:[UIColor] = Array(repeating: UIColor.init(red: 1.0, green: 0.0, blue: 0.0, alpha: 1.0), count: 5)
+	var pinTitles:[String] = Array(repeating: "", count: 5)
 	
 	// Leaky beaker: 42.293866, -71.302857,
 	let diningHalls:[String] = ["bplc", "bates", "tower", "stonedavis", "pomeroy"]
@@ -277,6 +278,43 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UIPicker
 	func mapViewWillStartLoadingMap(_ mapView: MKMapView) {
 		print("Will start loading the map!")
 	}
+	
+	func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+		if annotation is MKUserLocation {
+			return nil
+		}
+		
+		var mkpin = mapView.dequeueReusableAnnotationView(withIdentifier: "pinId") as? MKPinAnnotationView
+		if mkpin == nil {
+			mkpin = MKPinAnnotationView(annotation: annotation, reuseIdentifier: "pinId")
+			
+//			let colorPointAnnotation = annotation as! ColorPointAnnotation
+//			pinView?.pinTintColor = colorPointAnnotation.pinColor
+		} else {
+			mkpin?.annotation = annotation
+		}
+		if annotation.title != nil {
+			for i in 0..<diningHallAnnotations.count {
+				if (annotation.title??.contains((diningHallAnnotations[i].title)!))! {
+					if #available(iOS 9, *) {
+						mkpin?.pinTintColor = pinColors[i]
+						print("A happens when", i, pinColors[i], annotation.title)
+						break
+					} else if #available(iOS 10, *) {
+						print("B happens when", i)
+						mkpin?.pinTintColor = pinColors[i]
+						break
+					} else {
+						print("C happens when", i)
+						mkpin?.pinColor = MKPinAnnotationColor.red
+						break
+					}
+				}
+			}
+		}
+		return mkpin
+	}
+	
 	
 	// ======================================================================
 	// ------------------------------HELPERS---------------------------------
