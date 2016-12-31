@@ -21,6 +21,9 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UIPicker
 	var first = true
 	var latitudes:[Double] = [42.294580,42.291953,42.292747,42.291104,42.295818]
 	var longitudes:[Double] = [-71.308941,-71.300282,-71.308737,-71.302814,-71.307396]
+	
+	var pinColors:[UIColor] = Array(repeating: UIColor.red, count: 5)
+	
 	// Leaky beaker: 42.293866, -71.302857,
 	let diningHalls:[String] = ["bplc", "bates", "tower", "stonedavis", "pomeroy"]
 	var names = ["Bao Pao Lu Chow", "Bates", "Tower", "Stone Davis", "Pomeroy"]
@@ -549,18 +552,43 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UIPicker
 				num1 = myDistances[i]
 			}
 		}
+		pinColors[i1] = UIColor.red
+		
 		for i in 0...myDistances.count - 1 {
 			if (myDistances[i] < num2 && myDistances[i] > num1) {
 				i2 = i;
 				num2 = myDistances[i]
 			}
 		}
+		pinColors[i2] = UIColor.orange
+		
 		for i in 0...myDistances.count - 1 {
 			if (myDistances[i] < num3 && myDistances[i] > num2) {
 				i3 = i;
 				num3 = myDistances[i]
 			}
 		}
+		pinColors[i3] = UIColor.green
+		
+		var i4 = -1
+		var num4:Float = 10000000000000000000.0
+		var num5:Float = 10000000000000000000.0
+		for i in 0..<myDistances.count {
+			if myDistances[i] < num4 && myDistances[i] > num3 {
+				i4 = i;
+				num4 = myDistances[i]
+			}
+		}
+		pinColors[i4] = UIColor.blue
+		
+		for i in 0..<myDistances.count {
+			if myDistances[i] < num5 && myDistances[i] > num4 {
+				i4 = i
+				num5 = myDistances[i]
+			}
+		}
+		pinColors[i4] = UIColor.purple
+		
 		print("Fatal error?")
 		//let myUnits = meters ? "m" : "ft"
 		
