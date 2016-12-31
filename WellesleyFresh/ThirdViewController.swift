@@ -114,6 +114,8 @@ class ThirdViewController: UIViewController, MFMailComposeViewControllerDelegate
 			break;
 			
 		}
+		
+		tableView.deselectRow(at: indexPath, animated: true)
 	}
 	
 	func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
