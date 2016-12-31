@@ -49,10 +49,10 @@ class ThirdViewController: UIViewController, MFMailComposeViewControllerDelegate
 		let tableH:CGFloat = (self.view.frame.size.height - tableY);
 		self.tableview.frame = CGRect(x: CGFloat(tableX), y: tableY, width: tableW, height: tableH)
 		
+		//print("(", UIColor.groupTableViewBackground.cgColor.components?[0], ",", UIColor.groupTableViewBackground.cgColor.components?[1], ",", UIColor.groupTableViewBackground.cgColor.components?[2], ")")
 		let footerView = GroupHeader(reuseIdentifier: "headerId")
 		footerView.nameLabel.text = ""
 		footerView.isOpaque = true
-		//print("(", UIColor.groupTableViewBackground.cgColor.components?[0], ",", UIColor.groupTableViewBackground.cgColor.components?[1], ",", UIColor.groupTableViewBackground.cgColor.components?[2], ")")
 		
 		// Need to delete either one of these but all I wanted is for the background to be normal hallelujah
 		self.tableview.backgroundColor = UIColor.groupTableViewBackground

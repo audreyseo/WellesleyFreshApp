@@ -124,6 +124,16 @@ class SecondViewController: UITableViewController, UIPickerViewDataSource, UIPic
 		//self.view.bringSubview(toFront: hallInputView)
 		//self.navigationController?.view.bringSubview(toFront: hallPicker)
 		
+		let footerView = GroupHeader(reuseIdentifier: "headerId")
+		footerView.nameLabel.text = ""
+		footerView.isOpaque = true
+		
+		// Need to delete either one of these but all I wanted is for the background to be normal hallelujah
+		self.tableView.backgroundColor = UIColor.groupTableViewBackground
+		self.view.backgroundColor = UIColor.groupTableViewBackground
+		self.tableView.tableFooterView = footerView
+		self.tableView.tableFooterView?.tintColor = UIColor.groupTableViewBackground
+		
 	}
 	
 	// --------------------------------------------------------------------

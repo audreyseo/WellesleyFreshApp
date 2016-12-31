@@ -30,6 +30,19 @@ class HoursViewController: UITableViewController {
 	}
 	
 	
+	override func viewWillAppear(_ animated: Bool) {
+		let footerView = GroupHeader(reuseIdentifier: "headerId")
+		footerView.nameLabel.text = ""
+		footerView.isOpaque = true
+		
+		// Need to delete either one of these but all I wanted is for the background to be normal hallelujah
+		self.tableView.backgroundColor = UIColor.groupTableViewBackground
+		self.view.backgroundColor = UIColor.groupTableViewBackground
+		self.tableView.tableFooterView = footerView
+		self.tableView.tableFooterView?.tintColor = UIColor.groupTableViewBackground
+	}
+	
+	
 	func update() {
 		for j in 0..<titles.count {
 			for i in 0..<foodEstablishments[j].count {
