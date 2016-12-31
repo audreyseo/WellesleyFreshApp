@@ -36,6 +36,8 @@ class ThirdViewController: UIViewController, MFMailComposeViewControllerDelegate
 		// ty to this tutorial for the following code for auto-height for cells: https://www.raywenderlich.com/129059/self-sizing-table-view-cells
 		self.tableview.estimatedRowHeight = 140
 		
+		
+		
 		self.view.addSubview(tableview)
 	}
 	
@@ -46,6 +48,19 @@ class ThirdViewController: UIViewController, MFMailComposeViewControllerDelegate
 		let tableW:CGFloat = self.view.frame.size.width * 1.0
 		let tableH:CGFloat = (self.view.frame.size.height - tableY);
 		self.tableview.frame = CGRect(x: CGFloat(tableX), y: tableY, width: tableW, height: tableH)
+		
+		let footerView = GroupHeader(reuseIdentifier: "headerId")
+		footerView.nameLabel.text = ""
+		footerView.isOpaque = true
+		//print("(", UIColor.groupTableViewBackground.cgColor.components?[0], ",", UIColor.groupTableViewBackground.cgColor.components?[1], ",", UIColor.groupTableViewBackground.cgColor.components?[2], ")")
+		
+		// Need to delete either one of these but all I wanted is for the background to be normal hallelujah
+		self.tableview.backgroundColor = UIColor.groupTableViewBackground
+		self.view.backgroundColor = UIColor.groupTableViewBackground
+		self.tableview.tableFooterView = footerView
+		self.tableview.tableFooterView?.tintColor = UIColor.groupTableViewBackground //UIColor.init(red: 53, green: 60, blue: 62, alpha: 255)
+		//footerView.frame = CGRect(x: 0.0, y: 0.0, width: self.view.frame.size.width, height: 30.0)
+		
 	}
 	
 	// ---------------------DELEGATE METHODS----------------------
@@ -124,15 +139,39 @@ class ThirdViewController: UIViewController, MFMailComposeViewControllerDelegate
 	
 	func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
 		let myHeader = tableView.dequeueReusableHeaderFooterView(withIdentifier: "headerId") as! GroupHeader
+		myHeader.contentView.backgroundColor = UIColor.groupTableViewBackground
 		return myHeader
+	}
+	
+	
+	
+	func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+		return 50
+		//if items.count > 0 {
+		//	if section < items.count {
+		//		return 50
+		//	} else {
+		//		print("This happened for section:", section)
+		//
+		//		//let myCell:MyCell = tableView.cellForRow(at: IndexPath(row: items[section - 1].count - 1, section: section - 1)) as! MyCell
+		//		return 40 // max(self.view.bounds.size.height + self.view.bounds.origin.y, 0.0) * 0.70
+		//	}
+		//} else {
+		//	return 0
+		//}
 	}
 	
 	func tableView(_ tableView: UITableView, estimatedHeightForHeaderInSection section: Int) -> CGFloat {
 		return 80
+		
 	}
 	
 	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		return items[section].count
+		if section < items.count {
+			return items[section].count
+		} else {
+			return 0
+		}
 	}
 	
 	// Mail
