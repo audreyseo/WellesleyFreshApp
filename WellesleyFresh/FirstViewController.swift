@@ -24,6 +24,7 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UIPicker
 	
 	var pinColors:[UIColor] = Array(repeating: UIColor.init(red: 1.0, green: 0.0, blue: 0.0, alpha: 1.0), count: 5)
 	var pinTitles:[String] = Array(repeating: "", count: 5)
+	var subtitles:[String] = Array(repeating: "", count: 5)
 	
 	// Leaky beaker: 42.293866, -71.302857,
 	let diningHalls:[String] = ["bplc", "bates", "tower", "stonedavis", "pomeroy"]
@@ -549,6 +550,7 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UIPicker
 			let annotation = MKPointAnnotation()
 			annotation.coordinate = pinCoordinate
 			annotation.title = name
+			annotation.subtitle = subtitles[index]
 			diningHallAnnotations += [annotation]
 			mapViewer.addAnnotation(annotation)
 		}
@@ -567,12 +569,14 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UIPicker
 	// Finds all of the distances between the location of the user and each of the dining halls,
 	// then assigns this information to the subtitles of the dining halls.
 	func findDistances(_ myLocation:CLLocation) {
+		print("Creating Subtitles for Dining Hall Anontations")
 		var myDistances: [Float] = [Float]()
 		print("Dining Hall Anontations Count: ", diningHallAnnotations.count)
 		for i in 0..<diningHallAnnotations.count {
 			let dist = distance(myLocation, second: diningHallAnnotations[i].coordinate)
 			myDistances += [dist]
 			//let myUnits = meters ? "m" : "ft"
+			subtitles[i] = "\(dist) \(myUnits) away"
 			diningHallAnnotations[i].subtitle = "\(dist) \(myUnits) away"
 		}
 		findThreeSmallest(myDistances)
