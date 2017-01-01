@@ -23,46 +23,14 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Lorem ipsum delores atehsaetuhtetetet.." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zU2-7S-Dmt">
-                                <rect key="frame" x="20" y="324" width="280" height="18"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Lorem ipsum delores atehsaetuhtetetet.." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yWF-6L-6MP">
-                                <rect key="frame" x="20" y="298" width="280" height="18"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Lorem ipsum delores atehsaetuhtetetet.." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3Zb-Wa-W7M">
-                                <rect key="frame" x="20" y="350" width="278" height="18"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Top Three Closest Dining Halls:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="B1t-DU-arj">
-                                <rect key="frame" x="20" y="266" width="280" height="24"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleAspectFit" mapType="standard" pitchEnabled="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Evc-q6-Zn8">
                                 <rect key="frame" x="-2" y="20" width="379" height="220"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="Evc-q6-Zn8" secondAttribute="height" multiplier="379:220" id="4tI-Dv-Qsf"/>
                                 </constraints>
                             </mapView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8Pm-wd-l4T">
-                                <rect key="frame" x="61" y="376" width="253" height="30"/>
-                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <state key="normal" title="Choose a dining hall to display below"/>
-                                <connections>
-                                    <action selector="showSelector" destination="9pv-A4-QxB" eventType="touchUpInside" id="OKP-ug-46h"/>
-                                </connections>
-                            </button>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="low-to-high.png" translatesAutoresizingMaskIntoConstraints="NO" id="NIk-5E-BBf">
-                                <rect key="frame" x="42" y="248" width="115" height="10"/>
+                                <rect key="frame" x="42" y="248" width="115" height="11"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="115" id="o1F-9S-IDD"/>
                                 </constraints>
@@ -79,34 +47,31 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8Pm-wd-l4T">
+                                <rect key="frame" x="61" y="267" width="253" height="30"/>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <state key="normal" title="Choose a dining hall to display below"/>
+                                <connections>
+                                    <action selector="showSelector" destination="9pv-A4-QxB" eventType="touchUpInside" id="OKP-ug-46h"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="3Zb-Wa-W7M" firstAttribute="top" secondItem="zU2-7S-Dmt" secondAttribute="bottom" constant="8" id="5O0-dK-lIG"/>
-                            <constraint firstItem="zU2-7S-Dmt" firstAttribute="top" secondItem="yWF-6L-6MP" secondAttribute="bottom" constant="8" id="656-D9-6TT"/>
-                            <constraint firstItem="yWF-6L-6MP" firstAttribute="top" secondItem="B1t-DU-arj" secondAttribute="bottom" constant="8" id="716-kH-zIy"/>
+                            <constraint firstItem="8Pm-wd-l4T" firstAttribute="top" secondItem="Evc-q6-Zn8" secondAttribute="bottom" constant="27" id="32d-5h-Fcc"/>
                             <constraint firstItem="Evc-q6-Zn8" firstAttribute="centerX" secondItem="tsR-hK-woN" secondAttribute="centerX" id="F8G-m6-vfd"/>
-                            <constraint firstItem="yWF-6L-6MP" firstAttribute="leading" secondItem="tsR-hK-woN" secondAttribute="leadingMargin" constant="4" id="KDM-tL-A6G"/>
                             <constraint firstItem="Evc-q6-Zn8" firstAttribute="leading" secondItem="tsR-hK-woN" secondAttribute="leadingMargin" constant="-18" id="Rz1-Hy-gWa"/>
-                            <constraint firstItem="B1t-DU-arj" firstAttribute="top" secondItem="Evc-q6-Zn8" secondAttribute="bottom" constant="26" id="SJC-aj-d2p"/>
                             <constraint firstItem="8Pm-wd-l4T" firstAttribute="centerX" secondItem="tsR-hK-woN" secondAttribute="centerX" id="Svl-80-LeB"/>
-                            <constraint firstItem="8Pm-wd-l4T" firstAttribute="top" secondItem="3Zb-Wa-W7M" secondAttribute="bottom" constant="8" id="Swx-MW-aW5"/>
-                            <constraint firstItem="3Zb-Wa-W7M" firstAttribute="leading" secondItem="tsR-hK-woN" secondAttribute="leadingMargin" constant="4" id="WKt-PZ-Za6"/>
                             <constraint firstItem="P5a-3Y-f7f" firstAttribute="top" secondItem="Evc-q6-Zn8" secondAttribute="bottom" constant="8" id="Yb0-4x-dav"/>
                             <constraint firstItem="NIk-5E-BBf" firstAttribute="top" secondItem="Evc-q6-Zn8" secondAttribute="bottom" constant="8" id="ZBi-Zt-mRa"/>
                             <constraint firstItem="fn2-UC-Hpv" firstAttribute="leading" secondItem="NIk-5E-BBf" secondAttribute="trailing" constant="4" id="ai1-2p-1Zs"/>
-                            <constraint firstItem="B1t-DU-arj" firstAttribute="leading" secondItem="tsR-hK-woN" secondAttribute="leadingMargin" constant="4" id="bYo-SQ-P16"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="zU2-7S-Dmt" secondAttribute="trailing" constant="59" id="bpH-xQ-cp5"/>
                             <constraint firstItem="Evc-q6-Zn8" firstAttribute="width" secondItem="tsR-hK-woN" secondAttribute="height" multiplier="379:667" id="dg8-AP-u4a"/>
                             <constraint firstAttribute="trailingMargin" secondItem="Evc-q6-Zn8" secondAttribute="trailing" constant="-18" id="hUv-o5-Cad"/>
                             <constraint firstItem="Evc-q6-Zn8" firstAttribute="top" secondItem="Ia1-K6-d13" secondAttribute="bottom" id="jMX-xu-cJ3"/>
                             <constraint firstItem="fn2-UC-Hpv" firstAttribute="top" secondItem="Evc-q6-Zn8" secondAttribute="bottom" constant="8" id="kjX-ao-Prp"/>
                             <constraint firstItem="NIk-5E-BBf" firstAttribute="leading" secondItem="P5a-3Y-f7f" secondAttribute="trailing" constant="5" id="m6V-pn-ZLG"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="3Zb-Wa-W7M" secondAttribute="trailing" constant="61" id="q8K-oY-uZB"/>
                             <constraint firstAttribute="leadingMargin" secondItem="P5a-3Y-f7f" secondAttribute="leading" id="r32-th-KeE"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="yWF-6L-6MP" secondAttribute="trailing" constant="59" id="rKl-bF-DR1"/>
-                            <constraint firstItem="zU2-7S-Dmt" firstAttribute="leading" secondItem="tsR-hK-woN" secondAttribute="leadingMargin" constant="4" id="rcP-yV-yLa"/>
-                            <constraint firstItem="B1t-DU-arj" firstAttribute="top" secondItem="NIk-5E-BBf" secondAttribute="bottom" constant="8" id="ssZ-y5-1Ui"/>
+                            <constraint firstItem="8Pm-wd-l4T" firstAttribute="top" secondItem="NIk-5E-BBf" secondAttribute="bottom" constant="8" id="uaQ-hV-lEe"/>
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="Nearby" image="custom-compass" id="acW-dT-cKf"/>
