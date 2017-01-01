@@ -57,6 +57,10 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UIPicker
 	var tableview:UITableView = UITableView()
 	var meters = true
 	
+	var headerTitle = "Choose a dining hall by clicking the button above."
+	
+	
+	
 	@IBOutlet weak var mapViewer: MKMapView!
 	@IBOutlet weak var pickerButton: UIButton!
 	
@@ -186,7 +190,7 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UIPicker
 	func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
 		let myHeader = tableView.dequeueReusableHeaderFooterView(withIdentifier: "headerId") as! Header
 		myHeader.contentView.backgroundColor = UIColor.groupTableViewBackground
-		myHeader.nameLabel.text = "Choose a dining hall by clicking the button above."
+		myHeader.nameLabel.text = self.headerTitle
 		myHeader.alpha = 1
 		print("Header being used!!!!!")
 		return myHeader
@@ -331,6 +335,7 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UIPicker
 	func retitleHeader() {
 		if (tableview.headerView(forSection: 0) != nil) {
 			(tableview.headerView(forSection: 0) as! Header).nameLabel.text = self.chosenDiningHall
+			headerTitle = self.chosenDiningHall
 		}
 	}
 	
