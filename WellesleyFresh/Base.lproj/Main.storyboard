@@ -111,10 +111,6 @@
                     </view>
                     <tabBarItem key="tabBarItem" title="Nearby" image="custom-compass" id="acW-dT-cKf"/>
                     <connections>
-                        <outlet property="closest1" destination="yWF-6L-6MP" id="5Jh-6h-p4m"/>
-                        <outlet property="closest2" destination="zU2-7S-Dmt" id="KxE-9o-VD6"/>
-                        <outlet property="closest3" destination="3Zb-Wa-W7M" id="XCN-TA-You"/>
-                        <outlet property="locationInfo" destination="B1t-DU-arj" id="led-jM-O96"/>
                         <outlet property="mapViewer" destination="Evc-q6-Zn8" id="3sl-5j-BJd"/>
                         <outlet property="pickerButton" destination="8Pm-wd-l4T" id="w5j-Js-MSd"/>
                     </connections>

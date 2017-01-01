@@ -60,7 +60,7 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UIPicker
 	@IBOutlet weak var mapViewer: MKMapView!
 	@IBOutlet weak var pickerButton: UIButton!
 	
-	@IBOutlet weak var locationInfo: UILabel!
+//	@IBOutlet weak var locationInfo: UILabel!
 	
 //	@IBOutlet weak var closest1: UILabel!
 //	@IBOutlet weak var showDiningHallName: UILabel!
@@ -514,13 +514,16 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UIPicker
 	
 	// Displays the user's location.
 	func displayLocation(_ location:CLLocation) {
-		mapViewer.setRegion(MKCoordinateRegion(center: CLLocationCoordinate2DMake(location.coordinate.latitude, location.coordinate.longitude), span: MKCoordinateSpanMake(0.05, 0.05)), animated: true)
-		currentLocation = location
-		print("\nLocation: (", location.coordinate.latitude, ", ", location.coordinate.longitude, ")")
+		if !currentLocation.isEqual(location) {
+			mapViewer.setRegion(MKCoordinateRegion(center: CLLocationCoordinate2DMake(location.coordinate.latitude, location.coordinate.longitude), span: MKCoordinateSpanMake(0.05, 0.05)), animated: true)
+			currentLocation = location
+			print("\nLocation: (", location.coordinate.latitude, ", ", location.coordinate.longitude, ")")
+			
+			findDistances(location)
+			mapViewer.showAnnotations(diningHallAnnotations, animated: true)
+			coreLocationManager.stopUpdatingLocation()
+		}
 		
-		findDistances(location)
-		mapViewer.showAnnotations(diningHallAnnotations, animated: true)
-		coreLocationManager.stopUpdatingLocation()
 	}
 	
 	// -------------------------Get Web Data----------------------------
