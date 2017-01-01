@@ -62,10 +62,10 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UIPicker
 	
 	@IBOutlet weak var locationInfo: UILabel!
 	
-	@IBOutlet weak var closest1: UILabel!
-	@IBOutlet weak var showDiningHallName: UILabel!
-	@IBOutlet weak var closest2: UILabel!
-	@IBOutlet weak var closest3: UILabel!
+//	@IBOutlet weak var closest1: UILabel!
+//	@IBOutlet weak var showDiningHallName: UILabel!
+//	@IBOutlet weak var closest2: UILabel!
+//	@IBOutlet weak var closest3: UILabel!
 	@IBAction func showSelector() {
 		hallInputView.isHidden = false;
 	}
@@ -571,13 +571,15 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UIPicker
 	func findDistances(_ myLocation:CLLocation) {
 		print("Creating Subtitles for Dining Hall Anontations")
 		var myDistances: [Float] = [Float]()
+		let numformat = NumberFormatter()
+		numformat.numberStyle = NumberFormatter.Style.decimal
 		print("Dining Hall Anontations Count: ", diningHallAnnotations.count)
 		for i in 0..<diningHallAnnotations.count {
 			let dist = distance(myLocation, second: diningHallAnnotations[i].coordinate)
 			myDistances += [dist]
 			//let myUnits = meters ? "m" : "ft"
-			subtitles[i] = "\(dist) \(myUnits) away"
-			diningHallAnnotations[i].subtitle = "\(dist) \(myUnits) away"
+			subtitles[i] = "\(numformat.string(from: NSNumber(value: dist))!) \(myUnits) away"
+			diningHallAnnotations[i].subtitle = subtitles[i] //"\(dist) \(myUnits) away"
 		}
 		findThreeSmallest(myDistances)
 	}
@@ -643,11 +645,11 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UIPicker
 		//let myUnits = meters ? "m" : "ft"
 		
 		if (i1 >= 0 && i2 >= 0 && i3 >= 0) {
-			let numformat = NumberFormatter()
-			numformat.numberStyle = NumberFormatter.Style.decimal
-			closest1.text = "1. \(names[i1]), \(numformat.string(from: NSNumber(value: num1))!) \(myUnits)"
-			closest2.text = "2. \(names[i2]), \(numformat.string(from: NSNumber(value: num2))!) \(myUnits)"
-			closest3.text = "3. \(names[i3]), \(numformat.string(from: NSNumber(value: num3))!) \(myUnits)"
+//			let numformat = NumberFormatter()
+//			numformat.numberStyle = NumberFormatter.Style.decimal
+//			closest1.text = "1. \(names[i1]), \(numformat.string(from: NSNumber(value: num1))!) \(myUnits)"
+//			closest2.text = "2. \(names[i2]), \(numformat.string(from: NSNumber(value: num2))!) \(myUnits)"
+//			closest3.text = "3. \(names[i3]), \(numformat.string(from: NSNumber(value: num3))!) \(myUnits)"
 			diningHallNames[0] = names[i1]
 			diningHallNames[1] = names[i2]
 			diningHallNames[2] = names[i3]
@@ -657,7 +659,7 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UIPicker
 			hallPicker.reloadAllComponents()
 		} else {
 			print("Indices: ", i1, ":", i2, ":", i3)
-			closest1.text = "1. \(i1), \(i2), \(i3)"
+//			closest1.text = "1. \(i1), \(i2), \(i3)"
 		}
 		print("Fatal error?")
 		
