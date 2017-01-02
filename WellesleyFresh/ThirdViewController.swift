@@ -10,7 +10,7 @@ import UIKit
 import MessageUI
 
 class ThirdViewController: UIViewController, MFMailComposeViewControllerDelegate, UITableViewDelegate, UITableViewDataSource {
-	var tableview:UITableView = UITableView()
+	var tableview:UITableView = UITableView(frame: CGRect(x: 0, y: 0, width: 100, height: 100), style: .grouped)
 	var units:String = "Preferred Units"
 	var unitOptions:[String] = ["m", "km", "ft", "yd", "mi"]
 	var items: [[String]] = [["Preferred Units", "Contact", "About"], []] //[["Bates", "Lulu Chow Wang", "Pomeroy", "Stone-Davis", "Tower"], ["Bagged Lunch Form"], ["Preferred Units", "Contact", "About"]]
@@ -35,7 +35,6 @@ class ThirdViewController: UIViewController, MFMailComposeViewControllerDelegate
 		
 		// ty to this tutorial for the following code for auto-height for cells: https://www.raywenderlich.com/129059/self-sizing-table-view-cells
 		self.tableview.estimatedRowHeight = 140
-		
 		
 		
 		self.view.addSubview(tableview)
