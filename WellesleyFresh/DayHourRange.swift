@@ -38,6 +38,8 @@ class DayHourRange:HourRange {
 		self.highDay = getDate(aDate: date2)
 		self.lowYear = getYear(aDate: date1)
 		self.highYear = getYear(aDate: date2)
+		
+//		print(lowDay, lowYear, highDay, highYear)
 	}
 	
 	init( lowHour:Double, highHour:Double, name:String, lowDay:Int, highDay:Int) {
@@ -110,7 +112,7 @@ class DayHourRange:HourRange {
 				return higherDay
 			}
 		} else {
-			if higherDay > self.lowDay {
+			if higherDay < self.lowDay {
 				return higherDay + 365
 			} else {
 				return higherDay
@@ -126,7 +128,7 @@ class DayHourRange:HourRange {
 				return self.highDay
 			}
 		} else {
-			if self.highDay > self.lowDay {
+			if self.highDay < self.lowDay {
 				return self.highDay + 365
 			} else {
 				return self.highDay
