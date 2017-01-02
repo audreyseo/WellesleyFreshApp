@@ -1,5 +1,5 @@
 //
-//  FirstViewController.swift
+//  NearbyViewController.swift
 //  WellesleyFresh
 //
 //	Provides the nearest dining halls to the user, and shows the dining halls as annotations on
@@ -14,7 +14,7 @@
 import UIKit
 import MapKit
 
-class FirstViewController: UIViewController, CLLocationManagerDelegate, UIPickerViewDataSource, UIPickerViewDelegate, UITableViewDelegate, UITableViewDataSource, MKMapViewDelegate {
+class NearbyViewController: UIViewController, CLLocationManagerDelegate, UIPickerViewDataSource, UIPickerViewDelegate, UITableViewDelegate, UITableViewDataSource, MKMapViewDelegate {
 	var coreLocationManager = CLLocationManager()
 	var chosenDiningHall = ""
 	var chosenShort = ""

@@ -1,5 +1,5 @@
 //
-//  ThirdViewController.swift
+//  SettingsViewController.swift
 //  WellesleyFresh
 //
 //  Created by Audrey Seo on 15/10/2016.
@@ -9,7 +9,7 @@
 import UIKit
 import MessageUI
 
-class ThirdViewController: UIViewController, MFMailComposeViewControllerDelegate, UITableViewDelegate, UITableViewDataSource {
+class SettingsViewController: UIViewController, MFMailComposeViewControllerDelegate, UITableViewDelegate, UITableViewDataSource {
 	var tableview:UITableView = UITableView(frame: CGRect(x: 0, y: 0, width: 100, height: 100), style: .grouped)
 	var units:String = "Preferred Units"
 	var unitOptions:[String] = ["m", "km", "ft", "yd", "mi"]

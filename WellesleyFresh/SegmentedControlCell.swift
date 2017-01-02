@@ -10,7 +10,7 @@ import UIKit
 
 
 class SegmentedControlCell: UITableViewCell {
-	var myTableViewController: ThirdViewController?
+	var myTableViewController: SettingsViewController?
 	var storedData:UserDefaults = UserDefaults()
 	var segmentItems:[String] = [""]
 	

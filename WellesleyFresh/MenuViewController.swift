@@ -1,5 +1,5 @@
 //
-//  SecondViewController.swift
+//  MenuViewController.swift
 //  WellesleyFresh
 //
 //  Created by Audrey Seo on 9/8/2016.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class SecondViewController: UITableViewController, UIPickerViewDataSource, UIPickerViewDelegate {
+class MenuViewController: UITableViewController, UIPickerViewDataSource, UIPickerViewDelegate {
 	let diningHalls:[String] = ["bplc", "bates", "tower", "stonedavis", "pomeroy"]
 	let diningHallFull:[String] = ["Bao Pao Lu Chow", "Bates", "Tower", "Stone Davis", "Pomeroy"]
 	var todayString:String = ""
@@ -85,7 +85,7 @@ class SecondViewController: UITableViewController, UIPickerViewDataSource, UIPic
 		// Assigns the class Header to the type of header cell that we use
 		tableView.register(Header.self, forHeaderFooterViewReuseIdentifier: "headerId")
 		
-		navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Choose Hall", style: .plain, target: self, action: #selector(SecondViewController.showPickerView))
+		navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Choose Hall", style: .plain, target: self, action: #selector(MenuViewController.showPickerView))
 		
 		tableView.sizeToFit()
 		
