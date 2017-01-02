@@ -244,9 +244,8 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="a3o-ct-o4d" firstAttribute="leading" secondItem="OAJ-1S-pAL" secondAttribute="leadingMargin" constant="18" id="34C-gZ-MJa"/>
+                            <constraint firstItem="IF5-I9-Gtj" firstAttribute="top" secondItem="RPZ-Ix-6Ka" secondAttribute="bottom" constant="40" id="3xv-UT-p4v"/>
                             <constraint firstItem="Jgy-60-eyW" firstAttribute="leading" secondItem="OAJ-1S-pAL" secondAttribute="leadingMargin" constant="32" id="5Ob-ol-40Z"/>
-                            <constraint firstItem="RPZ-Ix-6Ka" firstAttribute="top" secondItem="hT3-6w-JcL" secondAttribute="bottom" constant="73" id="9hO-5m-pWh"/>
-                            <constraint firstItem="CKf-l0-hcZ" firstAttribute="top" secondItem="hT3-6w-JcL" secondAttribute="bottom" constant="44" id="9uP-md-FMd"/>
                             <constraint firstAttribute="leadingMargin" secondItem="IF5-I9-Gtj" secondAttribute="leading" id="MNi-Vw-oC7"/>
                             <constraint firstItem="C4H-2X-2bf" firstAttribute="leading" secondItem="OAJ-1S-pAL" secondAttribute="leadingMargin" constant="32" id="Moj-8b-dYh"/>
                             <constraint firstItem="ClO-ml-6YT" firstAttribute="top" secondItem="RcI-Lf-z8L" secondAttribute="bottom" constant="4" id="Pha-fy-nXS"/>
@@ -254,17 +253,19 @@
                             <constraint firstAttribute="leadingMargin" secondItem="RPZ-Ix-6Ka" secondAttribute="leading" id="Tqe-6R-B3v"/>
                             <constraint firstItem="RcI-Lf-z8L" firstAttribute="top" secondItem="IF5-I9-Gtj" secondAttribute="bottom" constant="8" id="UZM-ar-r3T"/>
                             <constraint firstItem="C4H-2X-2bf" firstAttribute="top" secondItem="ClO-ml-6YT" secondAttribute="bottom" constant="4" id="X66-tZ-Pqk"/>
-                            <constraint firstItem="IF5-I9-Gtj" firstAttribute="top" secondItem="hT3-6w-JcL" secondAttribute="bottom" constant="130" id="YhL-dt-njZ"/>
                             <constraint firstAttribute="leadingMargin" secondItem="dOb-Ww-4fI" secondAttribute="leading" id="aom-Lb-BM4"/>
                             <constraint firstItem="CKf-l0-hcZ" firstAttribute="leading" secondItem="OAJ-1S-pAL" secondAttribute="leadingMargin" constant="18" id="cZK-wA-irN"/>
                             <constraint firstItem="Jgy-60-eyW" firstAttribute="top" secondItem="a3o-ct-o4d" secondAttribute="bottom" constant="4" id="eTd-zI-odw"/>
                             <constraint firstAttribute="leadingMargin" secondItem="RcI-Lf-z8L" secondAttribute="leading" id="jDn-WJ-UqV"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="dOb-Ww-4fI" secondAttribute="trailing" id="jRd-no-9wl"/>
                             <constraint firstItem="aPF-ky-ft1" firstAttribute="top" secondItem="C4H-2X-2bf" secondAttribute="bottom" constant="4" id="jfd-SB-qxx"/>
                             <constraint firstItem="NuB-55-Abk" firstAttribute="top" secondItem="aPF-ky-ft1" secondAttribute="bottom" constant="8" id="l2a-BJ-hJw"/>
                             <constraint firstItem="dOb-Ww-4fI" firstAttribute="top" secondItem="hT3-6w-JcL" secondAttribute="bottom" constant="15" id="lvB-go-6BP"/>
                             <constraint firstItem="ClO-ml-6YT" firstAttribute="leading" secondItem="OAJ-1S-pAL" secondAttribute="leadingMargin" constant="18" id="mOJ-Re-Sxf"/>
                             <constraint firstItem="aPF-ky-ft1" firstAttribute="leading" secondItem="OAJ-1S-pAL" secondAttribute="leadingMargin" constant="32" id="ntn-gM-xVU"/>
+                            <constraint firstItem="CKf-l0-hcZ" firstAttribute="top" secondItem="dOb-Ww-4fI" secondAttribute="bottom" id="pzM-1O-ulp"/>
                             <constraint firstItem="NuB-55-Abk" firstAttribute="leading" secondItem="OAJ-1S-pAL" secondAttribute="leadingMargin" id="t7x-HX-SCO"/>
+                            <constraint firstItem="RPZ-Ix-6Ka" firstAttribute="top" secondItem="CKf-l0-hcZ" secondAttribute="bottom" constant="8" id="zLb-HD-bep"/>
                         </constraints>
                     </view>
                 </viewController>
