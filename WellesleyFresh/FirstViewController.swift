@@ -186,7 +186,7 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UIPicker
 		myHeader.contentView.backgroundColor = UIColor.groupTableViewBackground
 		myHeader.nameLabel.text = self.headerTitle
 		myHeader.alpha = 1
-		print("Header being used!!!!!")
+//		print("Header being used!!!!!")
 		return myHeader
 	}
 	
@@ -288,11 +288,7 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UIPicker
 		var mkpin = mapView.dequeueReusableAnnotationView(withIdentifier: "pinId") as? MKPinAnnotationView
 		if mkpin == nil {
 			mkpin = MKPinAnnotationView(annotation: annotation, reuseIdentifier: "pinId")
-//			mkpin?.annotation = annotation
 			mkpin?.canShowCallout = true
-//			mkpin?.
-//			let colorPointAnnotation = annotation as! ColorPointAnnotation
-//			pinView?.pinTintColor = colorPointAnnotation.pinColor
 		} else {
 			mkpin?.annotation = annotation
 		}
@@ -301,16 +297,11 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UIPicker
 				if (annotation.title??.contains((diningHallAnnotations[i].title)!))! {
 					if #available(iOS 9, *) {
 						mkpin?.pinTintColor = pinColors[i]
-//						mkpin?.annotation?.title = diningHallAnnotations[i].title
-//						mkpin.annotation?.subtitle = diningHallAnnotations[i].subtitle
-						print("A happens when", i, pinColors[i], annotation.title, annotation.subtitle)
 						break
 					} else if #available(iOS 10, *) {
-						print("B happens when", i)
 						mkpin?.pinTintColor = pinColors[i]
 						break
 					} else {
-						print("C happens when", i)
 						mkpin?.pinColor = MKPinAnnotationColor.red
 						break
 					}
@@ -376,7 +367,7 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UIPicker
 			let originalSize:Int = items.count
 			let newSize:Int = normalArray.count
 			
-			print("Old Size, New Size: ", originalSize, ", ", newSize, separator: "")
+//			print("Old Size, New Size: ", originalSize, ", ", newSize, separator: "")
 			var indexPaths = [IndexPath]()
 			var originalPaths = [IndexPath]()
 			var bottomHalfIndexPaths = [IndexPath]()
@@ -571,11 +562,11 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UIPicker
 	// Finds all of the distances between the location of the user and each of the dining halls,
 	// then assigns this information to the subtitles of the dining halls.
 	func findDistances(_ myLocation:CLLocation) {
-		print("Creating Subtitles for Dining Hall Anontations")
+//		print("Creating Subtitles for Dining Hall Anontations")
 		var myDistances: [Float] = [Float]()
 		let numformat = NumberFormatter()
 		numformat.numberStyle = NumberFormatter.Style.decimal
-		print("Dining Hall Anontations Count: ", diningHallAnnotations.count)
+//		print("Dining Hall Anontations Count: ", diningHallAnnotations.count)
 		for i in 0..<diningHallAnnotations.count {
 			let dist = distance(myLocation, second: diningHallAnnotations[i].coordinate)
 			myDistances += [dist]
@@ -592,7 +583,6 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UIPicker
 	
 	// Finds the three smallest distances from a float array and then changes the information shown to the user.
 	func findThreeSmallest(_ myDistances: [Float]) {
-		print("Fatal error?")
 		var num1:Float = 1000000000000000.0
 		var i1 = -1
 		var num2:Float = 1000000000000000.0
@@ -643,7 +633,6 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UIPicker
 		}
 		pinColors[i4] = UIColor.purple
 		
-		print("Fatal error?")
 		//let myUnits = meters ? "m" : "ft"
 		
 		if (i1 >= 0 && i2 >= 0 && i3 >= 0) {
@@ -657,7 +646,6 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UIPicker
 		} else {
 			print("Indices: ", i1, ":", i2, ":", i3)
 		}
-		print("Fatal error?")
 		
 	}
 	
