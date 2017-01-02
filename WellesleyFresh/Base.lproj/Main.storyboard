@@ -205,7 +205,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Graphics" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="a3o-ct-o4d">
-                                <rect key="frame" x="34" y="285" width="62" height="18"/>
+                                <rect key="frame" x="34" y="304" width="62" height="18"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -217,7 +217,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Claire Seo" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Jgy-60-eyW">
-                                <rect key="frame" x="48" y="307" width="58" height="15"/>
+                                <rect key="frame" x="48" y="326" width="58" height="15"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -229,8 +229,14 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Consultants" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NuB-55-Abk">
-                                <rect key="frame" x="16" y="260" width="92" height="21"/>
+                                <rect key="frame" x="16" y="279" width="92" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Minnie Seo" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aPF-ky-ft1">
+                                <rect key="frame" x="48" y="256" width="63" height="15"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
@@ -239,7 +245,6 @@
                         <constraints>
                             <constraint firstItem="a3o-ct-o4d" firstAttribute="leading" secondItem="OAJ-1S-pAL" secondAttribute="leadingMargin" constant="18" id="34C-gZ-MJa"/>
                             <constraint firstItem="Jgy-60-eyW" firstAttribute="leading" secondItem="OAJ-1S-pAL" secondAttribute="leadingMargin" constant="32" id="5Ob-ol-40Z"/>
-                            <constraint firstItem="NuB-55-Abk" firstAttribute="top" secondItem="C4H-2X-2bf" secondAttribute="bottom" constant="8" id="6Vq-ps-GLI"/>
                             <constraint firstItem="RPZ-Ix-6Ka" firstAttribute="top" secondItem="hT3-6w-JcL" secondAttribute="bottom" constant="73" id="9hO-5m-pWh"/>
                             <constraint firstItem="CKf-l0-hcZ" firstAttribute="top" secondItem="hT3-6w-JcL" secondAttribute="bottom" constant="44" id="9uP-md-FMd"/>
                             <constraint firstAttribute="leadingMargin" secondItem="IF5-I9-Gtj" secondAttribute="leading" id="MNi-Vw-oC7"/>
@@ -254,8 +259,11 @@
                             <constraint firstItem="CKf-l0-hcZ" firstAttribute="leading" secondItem="OAJ-1S-pAL" secondAttribute="leadingMargin" constant="18" id="cZK-wA-irN"/>
                             <constraint firstItem="Jgy-60-eyW" firstAttribute="top" secondItem="a3o-ct-o4d" secondAttribute="bottom" constant="4" id="eTd-zI-odw"/>
                             <constraint firstAttribute="leadingMargin" secondItem="RcI-Lf-z8L" secondAttribute="leading" id="jDn-WJ-UqV"/>
+                            <constraint firstItem="aPF-ky-ft1" firstAttribute="top" secondItem="C4H-2X-2bf" secondAttribute="bottom" constant="4" id="jfd-SB-qxx"/>
+                            <constraint firstItem="NuB-55-Abk" firstAttribute="top" secondItem="aPF-ky-ft1" secondAttribute="bottom" constant="8" id="l2a-BJ-hJw"/>
                             <constraint firstItem="dOb-Ww-4fI" firstAttribute="top" secondItem="hT3-6w-JcL" secondAttribute="bottom" constant="15" id="lvB-go-6BP"/>
                             <constraint firstItem="ClO-ml-6YT" firstAttribute="leading" secondItem="OAJ-1S-pAL" secondAttribute="leadingMargin" constant="18" id="mOJ-Re-Sxf"/>
+                            <constraint firstItem="aPF-ky-ft1" firstAttribute="leading" secondItem="OAJ-1S-pAL" secondAttribute="leadingMargin" constant="32" id="ntn-gM-xVU"/>
                             <constraint firstItem="NuB-55-Abk" firstAttribute="leading" secondItem="OAJ-1S-pAL" secondAttribute="leadingMargin" id="t7x-HX-SCO"/>
                         </constraints>
                     </view>

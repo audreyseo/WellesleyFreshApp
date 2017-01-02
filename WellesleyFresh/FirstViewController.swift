@@ -64,12 +64,6 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UIPicker
 	@IBOutlet weak var mapViewer: MKMapView!
 	@IBOutlet weak var pickerButton: UIButton!
 	
-//	@IBOutlet weak var locationInfo: UILabel!
-	
-//	@IBOutlet weak var closest1: UILabel!
-//	@IBOutlet weak var showDiningHallName: UILabel!
-//	@IBOutlet weak var closest2: UILabel!
-//	@IBOutlet weak var closest3: UILabel!
 	@IBAction func showSelector() {
 		hallInputView.isHidden = false;
 	}
@@ -653,11 +647,6 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UIPicker
 		//let myUnits = meters ? "m" : "ft"
 		
 		if (i1 >= 0 && i2 >= 0 && i3 >= 0) {
-//			let numformat = NumberFormatter()
-//			numformat.numberStyle = NumberFormatter.Style.decimal
-//			closest1.text = "1. \(names[i1]), \(numformat.string(from: NSNumber(value: num1))!) \(myUnits)"
-//			closest2.text = "2. \(names[i2]), \(numformat.string(from: NSNumber(value: num2))!) \(myUnits)"
-//			closest3.text = "3. \(names[i3]), \(numformat.string(from: NSNumber(value: num3))!) \(myUnits)"
 			diningHallNames[0] = names[i1]
 			diningHallNames[1] = names[i2]
 			diningHallNames[2] = names[i3]
@@ -667,7 +656,6 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UIPicker
 			hallPicker.reloadAllComponents()
 		} else {
 			print("Indices: ", i1, ":", i2, ":", i3)
-//			closest1.text = "1. \(i1), \(i2), \(i3)"
 		}
 		print("Fatal error?")
 		
