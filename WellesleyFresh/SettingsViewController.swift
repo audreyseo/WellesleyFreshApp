@@ -216,10 +216,8 @@ class SettingsViewController: UIViewController, MFMailComposeViewControllerDeleg
 	}
 	
 	func sourceCode() {
-		let alert = UIAlertController(title: "Open Page in Safari", message: "Are you sure you want to open up Safari?", preferredStyle: .alert)
+		let alert = UIAlertController(title: "Open Page in Safari", message: "Are you sure you want to open up the GitHub source code in Safari?", preferredStyle: .alert)
 		alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { action in
-			//					print("Dropping last")
-//			self.tbc.data.popLast()
 			UIApplication.shared.openURL(URL(string: "https://github.com/audreyseo/WellesleyFreshApp")!)
 			return;
 		}))
