@@ -13,10 +13,10 @@ class SettingsViewController: UIViewController, MFMailComposeViewControllerDeleg
 	var tableview:UITableView = UITableView(frame: CGRect(x: 0, y: 0, width: 100, height: 100), style: .grouped)
 	var units:String = "Preferred Units"
 	var unitOptions:[String] = ["m", "km", "ft", "yd", "mi"]
-	var items: [[String]] = [["Preferred Units", "Contact", "Source Code on GitHub", "About"], []] //[["Bates", "Lulu Chow Wang", "Pomeroy", "Stone-Davis", "Tower"], ["Bagged Lunch Form"], ["Preferred Units", "Contact", "About"]]
+	var items: [[String]] = [["Preferred Units", "Contact and Support", "Source Code on GitHub", "Visit the Wellesley Fresh Website", "About"], []] //[["Bates", "Lulu Chow Wang", "Pomeroy", "Stone-Davis", "Tower"], ["Bagged Lunch Form"], ["Preferred Units", "Contact", "About"]]
 	var titles:[String] = ["", ""] //["Feedback", "Order", "Settings"]
 	
-	var disclosureCells:[String] = ["About", "Bagged Lunch Form", "Contact", "Source Code on GitHub"]
+	var disclosureCells:[String] = ["About", "Bagged Lunch Form", "Contact and Support", "Source Code on GitHub", "Visit the Wellesley Fresh Website"]
 	
 	
 	override func viewDidLoad() {
@@ -122,10 +122,12 @@ class SettingsViewController: UIViewController, MFMailComposeViewControllerDeleg
 		case "About":
 			self.aboutPageSegue()
 			break;
-		case "Contact":
+		case "Contact and Support":
 			self.contact()
 		case "Source Code on GitHub":
 			self.sourceCode()
+		case "Visit the Wellesley Fresh Website":
+			self.wellesleyFreshSite()
 		default:
 			break;
 			
@@ -204,6 +206,16 @@ class SettingsViewController: UIViewController, MFMailComposeViewControllerDeleg
 	
 	func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
 		controller.dismiss(animated: false, completion: nil)
+	}
+	
+	func wellesleyFreshSite() {
+		let alert = UIAlertController(title: "Open Page in Safari", message: "Are you sure you want to open up the Wellesley Fresh website in Safari?", preferredStyle: .alert)
+		alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { action in
+			UIApplication.shared.openURL(URL(string: "http://www.wellesleyfresh.com")!)
+			return;
+		}))
+		alert.addAction(UIAlertAction(title: "No", style: .cancel, handler: nil))
+		self.present(alert, animated: true, completion: nil)
 	}
 	
 	func contact() {
