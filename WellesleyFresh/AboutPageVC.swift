@@ -9,7 +9,6 @@
 import UIKit
 
 
-
 class AboutPageViewController:UIViewController {
 	@IBAction func githubSourceCode(_ sender: Any) {
 		let alert = UIAlertController(title: "Open Page in Safari", message: "Are you sure you want to open up the GitHub source code in Safari?", preferredStyle: .alert)
@@ -27,5 +26,9 @@ class AboutPageViewController:UIViewController {
 			self.present(contactor, animated: true, completion: nil)
 			//self.navigationController?.pushViewController(contactor, animated: true)
 		}
+	}
+	
+	func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
+		controller.dismiss(animated: false, completion: nil)
 	}
 }
