@@ -7,9 +7,10 @@
 //
 
 import UIKit
+import MessageUI
 
 
-class AboutPageViewController:UIViewController {
+class AboutPageViewController:UIViewController, MFMailComposeViewControllerDelegate {
 	@IBAction func githubSourceCode(_ sender: Any) {
 		let alert = UIAlertController(title: "Open Page in Safari", message: "Are you sure you want to open up the GitHub source code in Safari?", preferredStyle: .alert)
 		alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { action in
@@ -26,6 +27,22 @@ class AboutPageViewController:UIViewController {
 			self.present(contactor, animated: true, completion: nil)
 			//self.navigationController?.pushViewController(contactor, animated: true)
 		}
+	}
+	
+	func configuredMailComposeViewController(_ target:String) -> MFMailComposeViewController {
+		let mailComposerVC = MFMailComposeViewController()
+		mailComposerVC.mailComposeDelegate = self
+		
+		mailComposerVC.setToRecipients([target])
+		let nsObject: AnyObject? = Bundle.main.infoDictionary!["CFBundleShortVersionString"] as! String as AnyObject?
+		let version = nsObject as! String
+		
+		//if version != nil {
+		mailComposerVC.setSubject("[WellesleyFreshApp - v\(version)]: ")
+		mailComposerVC.setMessageBody("", isHTML: false)
+		//}
+		
+		return mailComposerVC
 	}
 	
 	func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
