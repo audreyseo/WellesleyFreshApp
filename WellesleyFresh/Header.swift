@@ -26,6 +26,7 @@ class Header: UITableViewHeaderFooterView {
 		label.text = ""
 		label.translatesAutoresizingMaskIntoConstraints = false
 		label.font = UIFont.boldSystemFont(ofSize: 14)
+		label.numberOfLines = 0
 		return label
 	}()
 	

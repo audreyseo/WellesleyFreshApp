@@ -11,7 +11,7 @@ import MessageUI
 
 
 class AboutPageViewController:UIViewController, MFMailComposeViewControllerDelegate {
-	@IBAction func githubSourceCode(_ sender: Any) {
+	@IBAction func gotoSourceCode(_ sender: Any) {
 		let alert = UIAlertController(title: "Open Page in Safari", message: "Are you sure you want to open up the GitHub source code in Safari?", preferredStyle: .alert)
 		alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { action in
 			UIApplication.shared.openURL(URL(string: "https://github.com/audreyseo/WellesleyFreshApp")!)
@@ -20,7 +20,8 @@ class AboutPageViewController:UIViewController, MFMailComposeViewControllerDeleg
 		alert.addAction(UIAlertAction(title: "No", style: .cancel, handler: nil))
 		self.present(alert, animated: true, completion: nil)
 	}
-	@IBAction func emailMe(_ sender: Any) {
+
+	@IBAction func contactMe(_ sender: Any) {
 		let contactor = configuredMailComposeViewController("aseo@wellesley.edu")
 		if MFMailComposeViewController.canSendMail() {
 			contactor.navigationItem.title = "Contact and Feedback"
@@ -28,7 +29,7 @@ class AboutPageViewController:UIViewController, MFMailComposeViewControllerDeleg
 			//self.navigationController?.pushViewController(contactor, animated: true)
 		}
 	}
-	
+
 	func configuredMailComposeViewController(_ target:String) -> MFMailComposeViewController {
 		let mailComposerVC = MFMailComposeViewController()
 		mailComposerVC.mailComposeDelegate = self

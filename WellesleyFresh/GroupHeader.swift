@@ -26,6 +26,7 @@ class GroupHeader: UITableViewHeaderFooterView {
 		//label.text = ""
 		label.translatesAutoresizingMaskIntoConstraints = false
 		label.font = UIFont.boldSystemFont(ofSize: 18)
+		label.numberOfLines = 0
 		return label
 	}()
 	
