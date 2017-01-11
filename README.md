@@ -18,12 +18,11 @@ This list is a summary of all of the app's current capabilities:
  - Map shows your own location
  - Can select preference either for feet, meters, yards, miles, and kilometers
  - Only fetches data from WellesleyFresh once per day - saves time on load
-
+ - Connect "about" page to the app "about" button
 
 ###Features in Development
 These are features planned for future releases:
  - Provide feedback to the dining hall
- - Connect "about" page to the app "about" button
  - Over the holidays/vacations, app should not say that the dining hall is open
  - Adapt bagged lunch form for mobile app - make it easy to order one from your phone
  - Show future menus for the coming days
