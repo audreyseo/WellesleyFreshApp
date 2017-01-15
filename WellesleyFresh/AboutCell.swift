@@ -45,11 +45,23 @@ class AboutCell:UITableViewCell {
 	}()
 	
 	func setLabel(labelString: String) {
+		actionButton.removeFromSuperview()
+		nameLabel.removeFromSuperview()
 		nameLabel.text = labelString
 	}
 	
 	func setButtonTitle(titleString: String) {
-		actionButton.setTitle(titleString, for: UIControlState())
+		nameLabel.removeFromSuperview()
+		actionButton.removeFromSuperview()
+		actionButton.autoresizingMask = .flexibleHeight
+		actionButton.setTitle(titleString, for: .normal)
+		actionButton.titleLabel?.numberOfLines = 0
+		
+//		actionButton.sizeThatFits((actionButton.titleLabel?.frame.size)!)
+		actionButton.sizeToFit()
+		print("Action button frame: \(actionButton.frame.size.height)")
+//		print("Action button: \((actionButton.titleLabel?.frame.size.height)! * 1.1)")
+//		actionButton.frame.size.height = (actionButton.titleLabel?.frame.size.height)! * 1.1
 	}
 	
 	func setStyle(newStyle: AboutCellStyle) {
@@ -118,7 +130,7 @@ class AboutCell:UITableViewCell {
 			addSubview(actionButton)
 			
 			addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-\(cellIndent)-[v0]-16-|", options: NSLayoutFormatOptions(), metrics: nil, views: ["v0": actionButton]))
-			addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-\(cellTop)-[v0]-\(cellBot)-|", options: NSLayoutFormatOptions(), metrics: nil, views: ["v0": actionButton]))
+			addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-\(cellTop)-[v0(>=40)]-\(cellBot)-|", options: NSLayoutFormatOptions(), metrics: nil, views: ["v0": actionButton]))
 		}
 	}
 }

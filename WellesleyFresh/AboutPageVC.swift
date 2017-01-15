@@ -17,7 +17,7 @@ class AboutPageViewController:UITableViewController, MFMailComposeViewController
 		"by Audrey Seo '20",
 		"",
 		"This app is officially associated with neither the Wellesley Fresh team nor Wellesley College, but is however programmed and designed by a Wellesley College student, Audrey Seo, for their fellow students.",
-		"Click here to contribute to the Wellesley Fresh App open-source project on GitHub.",
+		"Tap here to contribute to the Wellesley Fresh App open-source project on GitHub.",
 		"Credits",
 		"App Testers",
 		"Auriel Haack '20",
