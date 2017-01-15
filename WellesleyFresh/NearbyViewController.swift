@@ -74,27 +74,6 @@ class NearbyViewController: UIViewController, CLLocationManagerDelegate, UIPicke
 		
 		super.viewDidLoad()
 		
-		mapViewer.delegate = self
-		
-		coreLocationManager.delegate = self
-		
-		let authorizationCode = CLLocationManager.authorizationStatus()
-		
-		if authorizationCode == CLAuthorizationStatus.notDetermined && coreLocationManager.responds(to: #selector(CLLocationManager.requestWhenInUseAuthorization)){
-			print("Authorization not determined...")
-			if Bundle.main.object(forInfoDictionaryKey: "NSLocationWhenInUseUsageDescription") != nil {
-				coreLocationManager.requestWhenInUseAuthorization()
-			} else {
-				print("No description provided")
-			}
-			storedData.set("m", forKey: "Preferred Units")
-		} else {
-			print("Getting initial location...")
-			first = false
-			self.getInitialLocation()
-			
-			displayDiningHallCenters()
-		}
 		
 		tableview.register(MyCell.self, forCellReuseIdentifier: "cellId")
 		
@@ -129,35 +108,108 @@ class NearbyViewController: UIViewController, CLLocationManagerDelegate, UIPicke
 		hallInputView.backgroundColor = UIColor.white
 		self.view.addSubview(hallInputView)
 		
+		mapViewer.delegate = self
 		
-		myUnits = storedData.object(forKey: "Preferred Units") as! String
+		coreLocationManager.delegate = self
+		
+		let authorizationCode = CLLocationManager.authorizationStatus()
+		
+		if authorizationCode == CLAuthorizationStatus.notDetermined && coreLocationManager.responds(to: #selector(CLLocationManager.requestWhenInUseAuthorization)){
+			print("Authorization not determined...")
+			if Bundle.main.object(forInfoDictionaryKey: "NSLocationWhenInUseUsageDescription") != nil {
+				coreLocationManager.requestWhenInUseAuthorization()
+			} else {
+				print("No description provided")
+			}
+			storedData.set("m", forKey: "Preferred Units")
+		} else {
+			print("Getting initial location...")
+			first = false
+			self.getInitialLocation()
+			
+			displayDiningHallCenters()
+		}
+		
+		myUnits = checkUnits()
+		
+	}
+	
+	func checkNetworkStatus() -> Bool {
+		let reachability: Reachability = Reachability.forInternetConnection()
+		let networkStatus = reachability.currentReachabilityStatus().rawValue;
+		var isAvailable  = false;
+		
+		switch networkStatus {
+		case (NotReachable.rawValue):
+			isAvailable = false;
+			break;
+		case (ReachableViaWiFi.rawValue):
+			isAvailable = true;
+			break;
+		case (ReachableViaWWAN.rawValue):
+			isAvailable = true;
+			break;
+		default:
+			isAvailable = false;
+			break;
+		}
+		return isAvailable;
 	}
 	
 	override func viewWillAppear(_ animated: Bool) {
 		print("FirstViewController will appear.")
-		let height = self.view.frame.origin.y + self.view.frame.size.height
-		hallPicker.frame = CGRect(x: 0, y: 40, width: self.view.frame.size.width, height: 400)
-		hallInputView.frame = CGRect(x: 0, y: self.view.frame.origin.y + self.view.frame.size.height - 440, width: self.view.frame.size.width, height: 440)
-		hallToolBar.frame = CGRect(x: 0, y: 0, width: self.view.frame.size.width, height: 40)
-//		let hLimit = showDiningHallName.frame.origin.y + 30;
 		
-		let tableX = 0.0
-		let tableY = pickerButton.frame.origin.y + pickerButton.frame.size.height*2;
-		let tableW = self.view.frame.size.width * 0.95
-		let tableH = (height - tableY);
-		tableview.frame = CGRect(x: CGFloat(tableX), y: tableY, width: tableW, height: tableH)
-		
-		
-		if CLLocationManager.authorizationStatus() == .authorizedWhenInUse {
-			mapViewer.showsUserLocation = true
+		if !checkNetworkStatus() {
+			print("No network.")
+			let alert = UIAlertController(title: "Cannot Access Network", message: "Internet access is required to use this application. Please turn on wifi.", preferredStyle: .alert)
+			let a = UIAlertAction(title: "Go to Settings", style: .default, handler: { action in
+				UIApplication.shared.openURL(NSURL(string: UIApplicationOpenSettingsURLString) as! URL)
+			})
+			
+			let b = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+			
+			alert.addAction(a)
+			alert.addAction(b)
+			
+			self.navigationController?.present(alert, animated: true, completion: nil)
+		} else {
+			
+			
+			
+			let height = self.view.frame.origin.y + self.view.frame.size.height
+			hallPicker.frame = CGRect(x: 0, y: 40, width: self.view.frame.size.width, height: 400)
+			hallInputView.frame = CGRect(x: 0, y: self.view.frame.origin.y + self.view.frame.size.height - 440, width: self.view.frame.size.width, height: 440)
+			hallToolBar.frame = CGRect(x: 0, y: 0, width: self.view.frame.size.width, height: 40)
+			//		let hLimit = showDiningHallName.frame.origin.y + 30;
+			
+			let tableX = 0.0
+			let tableY = pickerButton.frame.origin.y + pickerButton.frame.size.height*2;
+			let tableW = self.view.frame.size.width
+			let tableH = (height - tableY);
+			tableview.frame = CGRect(x: CGFloat(tableX), y: tableY, width: tableW, height: tableH)
+			
+			
+			if CLLocationManager.authorizationStatus() == .authorizedWhenInUse {
+				mapViewer.showsUserLocation = true
+			}
+			let oldUnits:String = myUnits
+			myUnits = checkUnits()
+			if (!myUnits.contains(oldUnits)) {
+				meters = false
+				findDistances(mapViewer.userLocation.location!)
+			}
 		}
-		let oldUnits:String = myUnits
-		myUnits = storedData.object(forKey: "Preferred Units") as! String
-		if (!myUnits.contains(oldUnits)) {
-			meters = false
-			findDistances(mapViewer.userLocation.location!)
-		}
+		
+		
 //		print(mapViewer.frame)
+	}
+	
+	func checkUnits() -> String {
+		if storedData.object(forKey: "Preferred Units") != nil {
+			return storedData.object(forKey: "Preferred Units") as! String
+		} else {
+			return "ft"
+		}
 	}
 	
 	// ====================================================================

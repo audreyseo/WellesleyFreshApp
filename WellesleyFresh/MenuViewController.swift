@@ -55,7 +55,11 @@ class MenuViewController: UITableViewController, UIPickerViewDataSource, UIPicke
 		todayString = MyDateFormatter.string(from: today)
 		
 		print(todayString)
-		//		todayString = "1004"
+		
+		
+		// Use the following two lines for debugging purposes.
+//		todayString = "1003"
+//		storedData.set("1004", forKey: todaysDateKey)
 		
 		if storedData.string(forKey: todaysDateKey) != nil {
 			if (storedData.string(forKey: todaysDateKey) == todayString) {
@@ -505,10 +509,29 @@ class MenuViewController: UITableViewController, UIPickerViewDataSource, UIPicke
 		URLSession.shared.dataTask(with: url) { (data, response, error) in
 			// Strings are Windows 1252 encoded for some reason
 			let mystring:String! = String(data: data!, encoding: .windowsCP1252)
+			print("My string: \n\(mystring)")
 			
 			let bodyString:String = self.regexHelper.extractInformationString(mystring as String)
 			print("\n\n\n\n\nDigest string:\n|", bodyString, "|\nEnd of string", separator: "")
 			self.normalArray = bodyString.components(separatedBy: "\n")
+			for i in 0..<self.normalArray.count {
+				self.normalArray[i] = self.normalArray[i].trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
+			}
+			
+			var indexer = 0
+			for _ in 0..<self.normalArray.count {
+				
+				if self.normalArray[indexer] == "" {
+					print("|\(self.normalArray[indexer])|")
+					self.normalArray.remove(at: indexer)
+					indexer -= 1
+				}
+				indexer += 1
+				
+				if indexer == self.normalArray.count {
+					break
+				}
+			}
 			self.diningHallArrays[hall] = self.normalArray
 			self.storedData.set(self.diningHallArrays, forKey: self.diningHallDictionaryKey)
 			for i in 0...(self.storedData.dictionary(forKey: self.diningHallDictionaryKey) as! [String: [String]])[hall]!.count - 1 {

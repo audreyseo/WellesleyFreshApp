@@ -49,9 +49,17 @@ class SegmentedControlCell: UITableViewCell {
 		control.removeAllSegments()
 		for i in 0...items.count - 1 {
 			control.insertSegment(withTitle: items[i], at: i, animated: false)
-			if items[i].hasPrefix(storedData.object(forKey: nameLabel.text!) as! String) {
+			if items[i].hasPrefix(getLastSelection()) {
 				control.selectedSegmentIndex = i
 			}
+		}
+	}
+	
+	func getLastSelection() -> String {
+		if storedData.object(forKey: nameLabel.text!) != nil {
+			return storedData.object(forKey: nameLabel.text!) as! String
+		} else {
+			return self.segmentItems[0]
 		}
 	}
 	

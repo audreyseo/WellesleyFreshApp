@@ -59,7 +59,7 @@ class AboutCell:UITableViewCell {
 		
 //		actionButton.sizeThatFits((actionButton.titleLabel?.frame.size)!)
 		actionButton.sizeToFit()
-		print("Action button frame: \(actionButton.frame.size.height)")
+//		print("Action button frame: \(actionButton.frame.size.height)")
 //		print("Action button: \((actionButton.titleLabel?.frame.size.height)! * 1.1)")
 //		actionButton.frame.size.height = (actionButton.titleLabel?.frame.size.height)! * 1.1
 	}

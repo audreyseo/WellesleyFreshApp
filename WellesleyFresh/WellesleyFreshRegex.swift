@@ -16,6 +16,7 @@ class WellesleyFreshRegex {
 	var bodyExtraction:String = ".*<div[^>]+>((.(?!<\\/div>))*).*"
 	var spanDeletionPattern:String = "<\\/?span[^>]*>"
 	var allElementDeletion:String = "<[^>]*>"
+	var otherElementDeletion:String = "<\\/[^>]*>"
 	var deleteBreaks:String = "&nbsp;"
 	var deleteLines:String = "[\n\r]{3,400}"
 	let deleteForwardSlashes:String = "\\/"
@@ -64,6 +65,14 @@ class WellesleyFreshRegex {
 		return try! NSRegularExpression(pattern: "[\n\r]{2,10000}", options: [])
 	}
 	
+	var cutOutBoday:NSRegularExpression? {
+		return try! NSRegularExpression(pattern: ".*<body[^>]+>(.*)", options: NSRegularExpression.Options.dotMatchesLineSeparators)
+	}
+	
+	var cutEnds:NSRegularExpression? {
+		return try! NSRegularExpression(pattern: otherElementDeletion, options: NSRegularExpression.Options.dotMatchesLineSeparators)
+	}
+	
 	init() {
 		// hello there
 	}
@@ -73,7 +82,16 @@ class WellesleyFreshRegex {
 	}
 	
 	func extractInformationString(_ input:String) -> String {
-		var bodyString:String = self.extractString(input as String, regex: self.bodyRegex!, regexTemplate: "$1")
+		
+		var helpString = self.extractString(input, regex: self.cutOutBoday!, regexTemplate: "$1")
+		helpString = self.extractString(helpString, regex: elementDeleterRegex!, regexTemplate: "")
+		helpString = self.extractString(helpString, regex: self.deleteLineBreaksRegex!, regexTemplate: "\u{0020}")
+		helpString = self.extractString(helpString, regex: self.brDeleteRegex!, regexTemplate: "")
+		helpString = self.extractString(helpString, regex: self.cutEnds!, regexTemplate: "")
+		print("Result:\n<|\(helpString)|>")
+		
+		var bodyString:String = self.extractString(input as String, regex: self.cutOutBoday!, regexTemplate: "$1")
+//		var bodyString:String = self.extractString(input as String, regex: self.bodyRegex!, regexTemplate: "$1")
 		bodyString = self.extractString(bodyString, regex: self.deleteLineBreaksRegex!, regexTemplate: "\u{0020}")
 //		bodyString = self.extractString(bodyString, regex: self.mealRegex!, regexTemplate: "|$1|[|]$2[|]")
 		bodyString = self.extractString(bodyString, regex: self.reductionRegex!, regexTemplate: "$1")
@@ -92,6 +110,8 @@ class WellesleyFreshRegex {
 		bodyString = self.extractString(bodyString, regex: self.replaceAmpersandsRegex!, regexTemplate: "&")
 		bodyString = self.extractString(bodyString, regex: self.replaceDoubleCarriageReturns!, regexTemplate: "\n")
 		bodyString = bodyString.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
+		
+		
 		return bodyString
 	}
 }
