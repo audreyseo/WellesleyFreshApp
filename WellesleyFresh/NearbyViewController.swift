@@ -299,9 +299,6 @@ class NearbyViewController: UIViewController, CLLocationManagerDelegate, UIPicke
 					if #available(iOS 9, *) {
 						mkpin?.pinTintColor = pinColors[i]
 						break
-					} else if #available(iOS 10, *) {
-						mkpin?.pinTintColor = pinColors[i]
-						break
 					} else {
 						mkpin?.pinColor = MKPinAnnotationColor.red
 						break
