@@ -280,26 +280,26 @@ class MenuViewController: UITableViewController, UIPickerViewDataSource, UIPicke
 		//if !loadingHall {
 		print("Hey there!!!!!!!!")
 		retitleHeader()
-			if previousDiningHall != diningHall {
-				
-				if (diningHallArrays[diningHall] != nil) {
-					normalArray = diningHallArrays[diningHall]!
-				}
-				newCellsInsertion()
-			} else if headerTitle() != "" {
-				if headerTitle() != diningHallName {
-					retitleHeader()
-					if (diningHallArrays[diningHall] != nil) {
-						normalArray = diningHallArrays[diningHall]!
-					}
-					newCellsInsertion()
-				}
-			} else {
+		if previousDiningHall != diningHall {
+			
+			if (diningHallArrays[diningHall] != nil) {
+				normalArray = diningHallArrays[diningHall]!
+			}
+			newCellsInsertion()
+		} else if headerTitle() != "" {
+			if headerTitle() != diningHallName {
+				retitleHeader()
 				if (diningHallArrays[diningHall] != nil) {
 					normalArray = diningHallArrays[diningHall]!
 				}
 				newCellsInsertion()
 			}
+		} else {
+			if (diningHallArrays[diningHall] != nil) {
+				normalArray = diningHallArrays[diningHall]!
+			}
+			newCellsInsertion()
+		}
 		//}
 	}
 	
@@ -329,22 +329,22 @@ class MenuViewController: UITableViewController, UIPickerViewDataSource, UIPicke
 		}
 	}
 	
-	func insertBatch() {
-		var indexPaths = [IndexPath]()
-		for i in items.count...items.count + 5 {
-			items.append("Item \(i + 1)")
-			indexPaths.append(IndexPath(row: i, section: 0))
-		}
-		
-		var bottomHalfIndexPaths = [IndexPath]()
-		for _ in 0...indexPaths.count / 2 - 1 {
-			bottomHalfIndexPaths.append(indexPaths.removeLast())
-		}
-		tableView.beginUpdates()
-		tableView.insertRows(at: indexPaths, with: .right)
-		tableView.insertRows(at: bottomHalfIndexPaths, with: .left)
-		tableView.endUpdates()
-	}
+//	func insertBatch() {
+//		var indexPaths = [IndexPath]()
+//		for i in items.count...items.count + 5 {
+//			items.append("Item \(i + 1)")
+//			indexPaths.append(IndexPath(row: i, section: 0))
+//		}
+//		
+//		var bottomHalfIndexPaths = [IndexPath]()
+//		for _ in 0...indexPaths.count / 2 - 1 {
+//			bottomHalfIndexPaths.append(indexPaths.removeLast())
+//		}
+//		tableView.beginUpdates()
+//		tableView.insertRows(at: indexPaths, with: .right)
+//		tableView.insertRows(at: bottomHalfIndexPaths, with: .left)
+//		tableView.endUpdates()
+//	}
 	
 	func newCellsInsertion() {
 		if (normalArray.count >= 1) {
@@ -357,7 +357,7 @@ class MenuViewController: UITableViewController, UIPickerViewDataSource, UIPicke
 			var bottomHalfIndexPaths = [IndexPath]()
 			if (newSize >= originalSize) {
 				let isAbsoluteDiffGreaterThanOne:Bool = newSize - originalSize > 1
-				for i in 0...normalArray.count - 1 {
+				for i in 0..<normalArray.count {
 					if (i < normalArray.count) {
 						if (i < originalSize) {
 							items[i] = normalArray[i]
@@ -373,7 +373,7 @@ class MenuViewController: UITableViewController, UIPickerViewDataSource, UIPicke
 				}
 				
 				if (isAbsoluteDiffGreaterThanOne) {
-					for _ in 0...indexPaths.count / 2 - 1 {
+					for _ in 0..<indexPaths.count / 2 {
 						bottomHalfIndexPaths.append(indexPaths.removeLast())
 					}
 				}
@@ -388,7 +388,7 @@ class MenuViewController: UITableViewController, UIPickerViewDataSource, UIPicke
 				}
 				tableView.endUpdates()
 			} else if (newSize < originalSize) {
-				for i in 0...originalSize - 1 {
+				for i in 0..<originalSize {
 					
 					if (i < newSize) {
 						items[i] = normalArray[i]
@@ -404,7 +404,7 @@ class MenuViewController: UITableViewController, UIPickerViewDataSource, UIPicke
 				}
 				
 				if indexPaths.count > 2 {
-					for _ in 0...indexPaths.count / 2 - 1 {
+					for _ in 0..<indexPaths.count / 2 {
 						bottomHalfIndexPaths.append(indexPaths.removeLast())
 					}
 					
@@ -423,77 +423,73 @@ class MenuViewController: UITableViewController, UIPickerViewDataSource, UIPicke
 		}
 	}
 	
-	func batchInsertion(_ newStrings: [String]) {
-		let originalSize:Int = items.count
-		print(originalSize)
-		let newSize:Int = newStrings.count
-		print(originalSize, ", ", newSize, separator: "")
-		if (newSize > originalSize) {
-			var indexPaths = [IndexPath]()
-			for i in 0...newStrings.count - 1 {
-				if (i < newStrings.count) {
-					if (i < items.count) {
-						items[i] = newStrings[i]
-					} else {
-						items.append(newStrings[i])
-					}
-					if (i >= originalSize) {
-						indexPaths.append(IndexPath(row: i, section: 0))
-					}
-				}
-			}
-			
-			var bottomHalfIndexPaths = [IndexPath]()
-			for _ in 0...indexPaths.count / 2 - 1 {
-				bottomHalfIndexPaths.append(indexPaths.removeLast())
-			}
-			
-			tableView.beginUpdates()
-			tableView.insertRows(at: indexPaths, with: .right)
-			tableView.insertRows(at: bottomHalfIndexPaths, with: .left)
-			tableView.endUpdates()
-		} else if (newSize < originalSize) {
-			var indexPaths = [IndexPath]()
-			for i in 0...originalSize - 1 {
-				if (i < newSize) {
-					if (i < items.count) {
-						items[i] = newStrings[i]
-					} else {
-						items.removeLast()
-					}
-					if (i >= newSize) {
-						indexPaths.append(IndexPath(row: i, section: 0))
-					}
-				}
-			}
-			
-			if ((originalSize - newSize) >= 2) {
-				var bottomHalfIndexPaths = [IndexPath]()
-				for _ in 0...indexPaths.count / 2 - 1 {
-					bottomHalfIndexPaths.append(indexPaths.removeLast())
-				}
-				
-				tableView.beginUpdates()
-				tableView.deleteRows(at: indexPaths, with: .right)
-				tableView.deleteRows(at: bottomHalfIndexPaths, with: .left)
-				tableView.endUpdates()
-			} else {
-				tableView.beginUpdates()
-				tableView.deleteRows(at: indexPaths, with: .right)
-				tableView.endUpdates()
-			}
-		}
-	}
+//	func batchInsertion(_ newStrings: [String]) {
+//		let originalSize:Int = items.count
+//		print(originalSize)
+//		let newSize:Int = newStrings.count
+//		print(originalSize, ", ", newSize, separator: "")
+//		if (newSize > originalSize) {
+//			var indexPaths = [IndexPath]()
+//			for i in 0...newStrings.count - 1 {
+//				if (i < newStrings.count) {
+//					if (i < items.count) {
+//						items[i] = newStrings[i]
+//					} else {
+//						items.append(newStrings[i])
+//					}
+//					if (i >= originalSize) {
+//						indexPaths.append(IndexPath(row: i, section: 0))
+//					}
+//				}
+//			}
+//			
+//			var bottomHalfIndexPaths = [IndexPath]()
+//			for _ in 0...indexPaths.count / 2 - 1 {
+//				bottomHalfIndexPaths.append(indexPaths.removeLast())
+//			}
+//			
+//			tableView.beginUpdates()
+//			tableView.insertRows(at: indexPaths, with: .right)
+//			tableView.insertRows(at: bottomHalfIndexPaths, with: .left)
+//			tableView.endUpdates()
+//		} else if (newSize < originalSize) {
+//			var indexPaths = [IndexPath]()
+//			for i in 0...originalSize - 1 {
+//				if (i < newSize) {
+//					if (i < items.count) {
+//						items[i] = newStrings[i]
+//					} else {
+//						items.removeLast()
+//					}
+//					if (i >= newSize) {
+//						indexPaths.append(IndexPath(row: i, section: 0))
+//					}
+//				}
+//			}
+//			
+//			if ((originalSize - newSize) >= 2) {
+//				var bottomHalfIndexPaths = [IndexPath]()
+//				for _ in 0...indexPaths.count / 2 - 1 {
+//					bottomHalfIndexPaths.append(indexPaths.removeLast())
+//				}
+//				
+//				tableView.beginUpdates()
+//				tableView.deleteRows(at: indexPaths, with: .right)
+//				tableView.deleteRows(at: bottomHalfIndexPaths, with: .left)
+//				tableView.endUpdates()
+//			} else {
+//				tableView.beginUpdates()
+//				tableView.deleteRows(at: indexPaths, with: .right)
+//				tableView.endUpdates()
+//			}
+//		}
+//	}
 	
-	func insert() {
-		items.append("Item \(items.count + 1)")
-		let insertionIndexPath = IndexPath(row: items.count - 1, section: 0)
-		tableView.insertRows(at: [insertionIndexPath], with: .automatic)
-	}
-	
-	func extractString(_ inputString:String, regex:NSRegularExpression, regexTemplate:String) -> String {
-		return regex.stringByReplacingMatches(in: inputString, options: [], range: NSRange(location: 0, length: inputString.characters.count), withTemplate: regexTemplate)
-	}
+//	func insert() {
+//		items.append("Item \(items.count + 1)")
+//		let insertionIndexPath = IndexPath(row: items.count - 1, section: 0)
+//		tableView.insertRows(at: [insertionIndexPath], with: .automatic)
+//	}
 	
 	// Load the information from a specific dining hall
 	func load(_ hall:String) {
@@ -505,14 +501,13 @@ class MenuViewController: UITableViewController, UIPickerViewDataSource, UIPicke
 		let url = URLRequest(url: URL(string: urlString)!)
 		
 		// Create the task + the completion handler for the url session
-		//let task = URLSession.shared.dataTask(da
 		URLSession.shared.dataTask(with: url) { (data, response, error) in
 			// Strings are Windows 1252 encoded for some reason
 			let mystring:String! = String(data: data!, encoding: .windowsCP1252)
-			print("My string: \n\(mystring)")
+//			print("My string: \n\(mystring)")
 			
 			let bodyString:String = self.regexHelper.extractInformationString(mystring as String)
-			print("\n\n\n\n\nDigest string:\n|", bodyString, "|\nEnd of string", separator: "")
+//			print("\n\n\n\n\nDigest string:\n|", bodyString, "|\nEnd of string", separator: "")
 			self.normalArray = bodyString.components(separatedBy: "\n")
 			for i in 0..<self.normalArray.count {
 				self.normalArray[i] = self.normalArray[i].trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
