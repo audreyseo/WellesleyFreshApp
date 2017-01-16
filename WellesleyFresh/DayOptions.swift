@@ -21,6 +21,12 @@ class DayOptions {
 		formatter.dateFormat = "EEEEEE"
 	}
 	
+	convenience init(initialDays: [String], format: DateFormatter) {
+		self.init(initialDays: initialDays)
+		days = initialDays
+		formatter = format
+	}
+	
 	func hasToday()-> Bool {
 		let today:Date
 		today = Date.init()

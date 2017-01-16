@@ -13,7 +13,7 @@
         <!--Nearby-->
         <scene sceneID="hNz-n2-bh7">
             <objects>
-                <viewController id="9pv-A4-QxB" customClass="NearbyViewController" customModule="WellesleyFresh" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="nearbyVC" useStoryboardIdentifierAsRestorationIdentifier="YES" id="9pv-A4-QxB" customClass="NearbyViewController" customModule="WellesleyFresh" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Ia1-K6-d13"/>
                         <viewControllerLayoutGuide type="bottom" id="4ug-Mw-9AY"/>
@@ -86,7 +86,7 @@
         <!--Root View Controller-->
         <scene sceneID="DvH-V1-uDI">
             <objects>
-                <tableViewController id="mPj-3H-ccV" customClass="MenuViewController" customModule="WellesleyFresh" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="menuVC" useStoryboardIdentifierAsRestorationIdentifier="YES" id="mPj-3H-ccV" customClass="MenuViewController" customModule="WellesleyFresh" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="JeB-YT-Ib9">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -140,7 +140,7 @@
         <!--Settings View Controller-->
         <scene sceneID="UWB-c1-SlP">
             <objects>
-                <viewController id="muJ-OP-aTb" customClass="SettingsViewController" customModule="WellesleyFresh" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="settingsVC" useStoryboardIdentifierAsRestorationIdentifier="YES" id="muJ-OP-aTb" customClass="SettingsViewController" customModule="WellesleyFresh" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="i44-8O-TNb"/>
                         <viewControllerLayoutGuide type="bottom" id="e7A-df-V02"/>
@@ -269,7 +269,7 @@
         <!--Root View Controller-->
         <scene sceneID="0rO-tt-hSf">
             <objects>
-                <tableViewController id="jaP-UK-VcM" customClass="HoursViewController" customModule="WellesleyFresh" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController restorationIdentifier="hoursVC" storyboardIdentifier="hoursVC" id="jaP-UK-VcM" customClass="HoursViewController" customModule="WellesleyFresh" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="NkB-8O-05m">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
