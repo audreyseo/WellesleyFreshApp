@@ -8,29 +8,14 @@
 
 import UIKit
 
-class GroupHeader: Header {
-	//	var myTableViewController: SecondViewController?
-	
+class GroupHeader: Header {	
 	override init(reuseIdentifier: String?) {
 		super.init(reuseIdentifier: reuseIdentifier)
-//		setupViews()
 	}
 	
 	required init?(coder aDecoder: NSCoder) {
 		fatalError("init(coder:) has not been implemented")
 	}
-	
-//	let nameLabel: UILabel = {
-//		let label = UILabel()
-//		//		label.text = "My Header"
-//		//label.text = ""
-//		label.translatesAutoresizingMaskIntoConstraints = false
-//		label.font = UIFont.boldSystemFont(ofSize: 18)
-//		label.numberOfLines = 0
-//		return label
-//	}()
-	
-	
 	
 	override func setupViews() {
 		addSubview(nameLabel)

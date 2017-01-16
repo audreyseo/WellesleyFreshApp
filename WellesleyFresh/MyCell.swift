@@ -9,9 +9,6 @@
 import UIKit
 
 class MyCell: UITableViewCell {
-	
-//	var myTableViewController: SecondViewController?
-	
 	override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
 		super.init(style: style, reuseIdentifier: reuseIdentifier)
 		setupViews()

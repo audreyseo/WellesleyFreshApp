@@ -9,14 +9,6 @@
 import UIKit
 
 class ProgressCell: MyCell {
-//	let nameLabel: UILabel = {
-//		let label = UILabel()
-//		label.text = "Sample Item"
-//		label.translatesAutoresizingMaskIntoConstraints = false
-//		label.font = UIFont.systemFont(ofSize: 14)
-//		label.numberOfLines = 0
-//		return label
-//	}()
 	
 	var mealText = ""
 	
@@ -54,14 +46,12 @@ class ProgressCell: MyCell {
 		prog.layer.cornerRadius = 2.0
 		prog.layer.masksToBounds = true
 		prog.progressTintColor = UIColor.blue
-//		prog.layer.
 		prog.translatesAutoresizingMaskIntoConstraints = false
 		return prog
 	}()
 	
 	override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
 		super.init(style: style, reuseIdentifier: reuseIdentifier)
-//		setupViews()
 	}
 	
 	func absoluteValue(a:Float, b:Float) -> Float {
@@ -89,17 +79,6 @@ class ProgressCell: MyCell {
 	
 	func setProgressDouble(_ num: Double) {
 		setProgressFloat(Float(num))
-//		if abs(progress.progress - Float(num)) > 0.03 {
-//			print("Progress was wildly different.")
-//			progress = UIProgressView(progressViewStyle: .default)
-//			progress.layer.cornerRadius = 0.0
-//			progress.layer.masksToBounds = true
-//			progress.progress = Float(num)
-////			setupViews()
-//
-//		} else {
-//			progress.setProgress(Float(num), animated: true)
-//		}
 	}
 	
 	func compareColors(a:UIColor, b:UIColor) -> Bool {

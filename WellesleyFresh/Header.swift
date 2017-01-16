@@ -8,9 +8,7 @@
 
 import UIKit
 
-class Header: UITableViewHeaderFooterView {
-//	var myTableViewController: SecondViewController?
-	
+class Header: UITableViewHeaderFooterView {	
 	override init(reuseIdentifier: String?) {
 		super.init(reuseIdentifier: reuseIdentifier)
 		setupViews()
@@ -22,7 +20,6 @@ class Header: UITableViewHeaderFooterView {
 	
 	let nameLabel: UILabel = {
 		let label = UILabel()
-//		label.text = "My Header"
 		label.text = ""
 		label.translatesAutoresizingMaskIntoConstraints = false
 		label.font = UIFont.boldSystemFont(ofSize: 14)
