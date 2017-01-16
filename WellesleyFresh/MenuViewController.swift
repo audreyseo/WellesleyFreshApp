@@ -424,6 +424,8 @@ class MenuViewController: UITableViewController, UIPickerViewDataSource, UIPicke
 	func updateTableViewRows(oldPaths: [IndexPath], newPaths: inout [IndexPath], newSize: Int, oldSize: Int, delete: Bool) {
 		var bottomHalfIndexPaths = [IndexPath]()
 		let isAbsoluteDiffGreaterThanOne = absDiffInt(val1: newSize, val2: oldSize) > 1
+		print("newPaths count: \(newPaths.count)")
+		print("absolute diff: \(isAbsoluteDiffGreaterThanOne)")
 		
 		if (isAbsoluteDiffGreaterThanOne) {
 			bottomHalfIndexPaths = lastHalfOfIndexPaths(indexPaths: &newPaths)
