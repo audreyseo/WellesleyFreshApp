@@ -336,49 +336,54 @@ class MenuViewController: UITableViewController, UIPickerViewDataSource, UIPicke
 		if (normalArray.count >= 1) {
 			let originalSize:Int = items.count
 			let newSize:Int = normalArray.count
+			let delete = newSize < originalSize
 			
 			print(originalSize, ", ", newSize, separator: "")
 			var indexPaths = [IndexPath]()
 			var originalPaths = [IndexPath]()
-			if (newSize >= originalSize) {
-				for i in 0..<normalArray.count {
-//					if (i < normalArray.count) {
-						if (i < originalSize) {
-							items[i] = normalArray[i]
-							originalPaths.append(IndexPath(row: i, section: 0))
-						} else {
-							items.append(normalArray[i])
-							indexPaths.append(IndexPath(row: i, section: 0))
-						}
-//					}
-//					if (i >= originalSize) {
-//						indexPaths.append(IndexPath(row: i, section: 0))
-//					} else {
-//						originalPaths.append(IndexPath(row: i, section: 0))
-//					}
-				}
-				
-				updateTableViewRows(oldPaths: originalPaths, newPaths: &indexPaths, newSize: newSize, oldSize: originalSize, delete: false)
-			} else if (newSize < originalSize) {
-				for i in 0..<originalSize {
-					
-					if (i < newSize) {
-						items[i] = normalArray[i]
-						originalPaths.append(IndexPath(row: i, section: 0))
-					} else {
+			
+			let larger = max(newSize, originalSize)
+			let smaller = min(newSize, originalSize)
+			
+			for i in 0..<larger {
+				if i < smaller {
+					items[i] = normalArray[i]
+					originalPaths.append(IndexPath(row: i, section: 0))
+				} else {
+					if delete {
 						items.removeLast()
-						indexPaths.append(IndexPath(row: i, section: 0))
+					} else {
+						items.append(normalArray[i])
 					}
-					
-//					if (i >= newSize) {
-//						indexPaths.append(IndexPath(row: i, section: 0))
-//					} else {
-//						originalPaths.append(IndexPath(row: i, section: 0))
-//					}
+					indexPaths.append(IndexPath(row: i, section: 0))
 				}
-				
-				updateTableViewRows(oldPaths: originalPaths, newPaths: &indexPaths, newSize: newSize, oldSize: originalSize, delete: true)
 			}
+			
+			
+			
+			
+//			if (newSize >= originalSize) {
+//				for i in 0..<normalArray.count {
+//					if (i < originalSize) {
+//						items[i] = normalArray[i]
+//						originalPaths.append(IndexPath(row: i, section: 0))
+//					} else {
+//						items.append(normalArray[i])
+//						indexPaths.append(IndexPath(row: i, section: 0))
+//					}
+//				}
+//			} else if (newSize < originalSize) {
+//				for i in 0..<originalSize {
+//					if (i < newSize) {
+//						items[i] = normalArray[i]
+//						originalPaths.append(IndexPath(row: i, section: 0))
+//					} else {
+//						items.removeLast()
+//						indexPaths.append(IndexPath(row: i, section: 0))
+//					}
+//				}
+//			}
+			updateTableViewRows(oldPaths: originalPaths, newPaths: &indexPaths, newSize: newSize, oldSize: originalSize, delete: delete)
 		}
 	}
 	
