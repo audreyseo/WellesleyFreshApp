@@ -65,7 +65,7 @@ class AboutPageViewController:UITableViewController, MFMailComposeViewController
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		let c = tableView.dequeueReusableCell(withIdentifier: "aboutCell") as! AboutCell
 		c.setStyle(newStyle: types[indexPath.row])
-		
+		c.selectionStyle = .none
 		if types[indexPath.row] == .version {
 			items[indexPath.row] = "Version: \(getAppVersion())"
 		}
