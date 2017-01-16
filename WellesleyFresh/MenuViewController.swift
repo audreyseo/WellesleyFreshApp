@@ -340,79 +340,44 @@ class MenuViewController: UITableViewController, UIPickerViewDataSource, UIPicke
 			print(originalSize, ", ", newSize, separator: "")
 			var indexPaths = [IndexPath]()
 			var originalPaths = [IndexPath]()
-			var bottomHalfIndexPaths = [IndexPath]()
 			if (newSize >= originalSize) {
-				let isAbsoluteDiffGreaterThanOne:Bool = newSize - originalSize > 1
 				for i in 0..<normalArray.count {
-					if (i < normalArray.count) {
+//					if (i < normalArray.count) {
 						if (i < originalSize) {
 							items[i] = normalArray[i]
+							originalPaths.append(IndexPath(row: i, section: 0))
 						} else {
 							items.append(normalArray[i])
+							indexPaths.append(IndexPath(row: i, section: 0))
 						}
-					}
-					if (i >= originalSize) {
-						indexPaths.append(IndexPath(row: i, section: 0))
-					} else {
-						originalPaths.append(IndexPath(row: i, section: 0))
-					}
+//					}
+//					if (i >= originalSize) {
+//						indexPaths.append(IndexPath(row: i, section: 0))
+//					} else {
+//						originalPaths.append(IndexPath(row: i, section: 0))
+//					}
 				}
 				
 				updateTableViewRows(oldPaths: originalPaths, newPaths: &indexPaths, newSize: newSize, oldSize: originalSize, delete: false)
-				
-//				if (isAbsoluteDiffGreaterThanOne) {
-//					bottomHalfIndexPaths = lastHalfOfIndexPaths(indexPaths: &indexPaths)
-////					for _ in 0..<indexPaths.count / 2 {
-////						bottomHalfIndexPaths.append(indexPaths.removeLast())
-////					}
-//				}
-//				
-//				tableView.beginUpdates()
-//				tableView.reloadRows(at: originalPaths, with: .fade)
-//				if (isAbsoluteDiffGreaterThanOne) {
-//					tableView.insertRows(at: indexPaths, with: .right)
-//					tableView.insertRows(at: bottomHalfIndexPaths, with: .left)
-//				} else if (newSize - originalSize == 1) {
-//					tableView.insertRows(at: indexPaths, with: .right)
-//				}
-//				tableView.endUpdates()
 			} else if (newSize < originalSize) {
 				for i in 0..<originalSize {
 					
 					if (i < newSize) {
 						items[i] = normalArray[i]
+						originalPaths.append(IndexPath(row: i, section: 0))
 					} else {
 						items.removeLast()
+						indexPaths.append(IndexPath(row: i, section: 0))
 					}
 					
-					if (i >= newSize) {
-						indexPaths.append(IndexPath(row: i, section: 0))
-					} else {
-						originalPaths.append(IndexPath(row: i, section: 0))
-					}
+//					if (i >= newSize) {
+//						indexPaths.append(IndexPath(row: i, section: 0))
+//					} else {
+//						originalPaths.append(IndexPath(row: i, section: 0))
+//					}
 				}
 				
 				updateTableViewRows(oldPaths: originalPaths, newPaths: &indexPaths, newSize: newSize, oldSize: originalSize, delete: true)
-				
-				
-//				if indexPaths.count > 2 {
-////					for _ in 0..<indexPaths.count / 2 {
-////						bottomHalfIndexPaths.append(indexPaths.removeLast())
-////					}
-//					
-//					bottomHalfIndexPaths = lastHalfOfIndexPaths(indexPaths: &indexPaths)
-//					
-//					tableView.beginUpdates()
-//					tableView.reloadRows(at: originalPaths, with: .fade)
-//					tableView.deleteRows(at: indexPaths, with: .right)
-//					tableView.deleteRows(at: bottomHalfIndexPaths, with: .left)
-//					tableView.endUpdates()
-//				} else {
-//					tableView.beginUpdates()
-//					tableView.reloadRows(at: originalPaths, with: .fade)
-//					tableView.deleteRows(at: indexPaths, with: .right)
-//					tableView.endUpdates()
-//				}
 			}
 		}
 	}
@@ -429,9 +394,6 @@ class MenuViewController: UITableViewController, UIPickerViewDataSource, UIPicke
 		
 		if (isAbsoluteDiffGreaterThanOne) {
 			bottomHalfIndexPaths = lastHalfOfIndexPaths(indexPaths: &newPaths)
-			//					for _ in 0..<indexPaths.count / 2 {
-			//						bottomHalfIndexPaths.append(indexPaths.removeLast())
-			//					}
 		}
 		
 		tableView.beginUpdates()
