@@ -51,13 +51,15 @@ class MenuViewController: UITableViewController, UIPickerViewDataSource, UIPicke
 		let MyDateFormatter = DateFormatter()
 		MyDateFormatter.locale = Locale(identifier: "en_US_POSIX")
 		MyDateFormatter.dateFormat = "MMdd"
-		// Now make a date that represents today - we use this to retrieve the menu for the day
+		
+		// Now make a date that represents today - we use this to retrieve the menu for today
 		todayString = MyDateFormatter.string(from: today)
 		
 		print(todayString)
 		
 		
-		// Use the following two lines for debugging purposes.
+		// Use the following two lines for debugging purposes, specifically for debugging the regex parsing
+		// and string manipulation.
 //		todayString = "1003"
 //		storedData.set("1004", forKey: todaysDateKey)
 		
@@ -329,22 +331,6 @@ class MenuViewController: UITableViewController, UIPickerViewDataSource, UIPicke
 		}
 	}
 	
-//	func insertBatch() {
-//		var indexPaths = [IndexPath]()
-//		for i in items.count...items.count + 5 {
-//			items.append("Item \(i + 1)")
-//			indexPaths.append(IndexPath(row: i, section: 0))
-//		}
-//		
-//		var bottomHalfIndexPaths = [IndexPath]()
-//		for _ in 0...indexPaths.count / 2 - 1 {
-//			bottomHalfIndexPaths.append(indexPaths.removeLast())
-//		}
-//		tableView.beginUpdates()
-//		tableView.insertRows(at: indexPaths, with: .right)
-//		tableView.insertRows(at: bottomHalfIndexPaths, with: .left)
-//		tableView.endUpdates()
-//	}
 	
 	func newCellsInsertion() {
 		if (normalArray.count >= 1) {
@@ -423,73 +409,34 @@ class MenuViewController: UITableViewController, UIPickerViewDataSource, UIPicke
 		}
 	}
 	
-//	func batchInsertion(_ newStrings: [String]) {
-//		let originalSize:Int = items.count
-//		print(originalSize)
-//		let newSize:Int = newStrings.count
-//		print(originalSize, ", ", newSize, separator: "")
-//		if (newSize > originalSize) {
-//			var indexPaths = [IndexPath]()
-//			for i in 0...newStrings.count - 1 {
-//				if (i < newStrings.count) {
-//					if (i < items.count) {
-//						items[i] = newStrings[i]
-//					} else {
-//						items.append(newStrings[i])
-//					}
-//					if (i >= originalSize) {
-//						indexPaths.append(IndexPath(row: i, section: 0))
-//					}
-//				}
-//			}
-//			
-//			var bottomHalfIndexPaths = [IndexPath]()
-//			for _ in 0...indexPaths.count / 2 - 1 {
-//				bottomHalfIndexPaths.append(indexPaths.removeLast())
-//			}
-//			
-//			tableView.beginUpdates()
-//			tableView.insertRows(at: indexPaths, with: .right)
-//			tableView.insertRows(at: bottomHalfIndexPaths, with: .left)
-//			tableView.endUpdates()
-//		} else if (newSize < originalSize) {
-//			var indexPaths = [IndexPath]()
-//			for i in 0...originalSize - 1 {
-//				if (i < newSize) {
-//					if (i < items.count) {
-//						items[i] = newStrings[i]
-//					} else {
-//						items.removeLast()
-//					}
-//					if (i >= newSize) {
-//						indexPaths.append(IndexPath(row: i, section: 0))
-//					}
-//				}
-//			}
-//			
-//			if ((originalSize - newSize) >= 2) {
-//				var bottomHalfIndexPaths = [IndexPath]()
-//				for _ in 0...indexPaths.count / 2 - 1 {
-//					bottomHalfIndexPaths.append(indexPaths.removeLast())
-//				}
-//				
-//				tableView.beginUpdates()
-//				tableView.deleteRows(at: indexPaths, with: .right)
-//				tableView.deleteRows(at: bottomHalfIndexPaths, with: .left)
-//				tableView.endUpdates()
-//			} else {
-//				tableView.beginUpdates()
-//				tableView.deleteRows(at: indexPaths, with: .right)
-//				tableView.endUpdates()
-//			}
-//		}
-//	}
+	func trimNormalArray() {
+		for i in 0..<self.normalArray.count {
+			self.normalArray[i] = self.normalArray[i].trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
+		}
+		
+		var indexer = 0
+		for _ in 0..<self.normalArray.count {
+			
+			if self.normalArray[indexer] == "" {
+				print("|\(self.normalArray[indexer])|")
+				self.normalArray.remove(at: indexer)
+				indexer -= 1
+			}
+			indexer += 1
+			
+			if indexer == self.normalArray.count {
+				break
+			}
+		}
+	}
 	
-//	func insert() {
-//		items.append("Item \(items.count + 1)")
-//		let insertionIndexPath = IndexPath(row: items.count - 1, section: 0)
-//		tableView.insertRows(at: [insertionIndexPath], with: .automatic)
-//	}
+	func saveDiningHallArrays(_ hall: String) {
+		self.storedData.set(self.diningHallArrays, forKey: self.diningHallDictionaryKey)
+		for i in 0...(self.storedData.dictionary(forKey: self.diningHallDictionaryKey) as! [String: [String]])[hall]!.count - 1 {
+			print("The new string: ", (self.storedData.dictionary(forKey: self.diningHallDictionaryKey) as! [String: [String]])[hall]![i], separator: "")
+		}
+	}
+
 	
 	// Load the information from a specific dining hall
 	func load(_ hall:String) {
@@ -509,29 +456,35 @@ class MenuViewController: UITableViewController, UIPickerViewDataSource, UIPicke
 			let bodyString:String = self.regexHelper.extractInformationString(mystring as String)
 //			print("\n\n\n\n\nDigest string:\n|", bodyString, "|\nEnd of string", separator: "")
 			self.normalArray = bodyString.components(separatedBy: "\n")
-			for i in 0..<self.normalArray.count {
-				self.normalArray[i] = self.normalArray[i].trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
-			}
 			
-			var indexer = 0
-			for _ in 0..<self.normalArray.count {
-				
-				if self.normalArray[indexer] == "" {
-					print("|\(self.normalArray[indexer])|")
-					self.normalArray.remove(at: indexer)
-					indexer -= 1
-				}
-				indexer += 1
-				
-				if indexer == self.normalArray.count {
-					break
-				}
-			}
+			self.trimNormalArray()
+			
+//			for i in 0..<self.normalArray.count {
+//				self.normalArray[i] = self.normalArray[i].trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
+//			}
+//			
+//			var indexer = 0
+//			for _ in 0..<self.normalArray.count {
+//				
+//				if self.normalArray[indexer] == "" {
+//					print("|\(self.normalArray[indexer])|")
+//					self.normalArray.remove(at: indexer)
+//					indexer -= 1
+//				}
+//				indexer += 1
+//				
+//				if indexer == self.normalArray.count {
+//					break
+//				}
+//			}
 			self.diningHallArrays[hall] = self.normalArray
-			self.storedData.set(self.diningHallArrays, forKey: self.diningHallDictionaryKey)
-			for i in 0...(self.storedData.dictionary(forKey: self.diningHallDictionaryKey) as! [String: [String]])[hall]!.count - 1 {
-				print("The new string: ", (self.storedData.dictionary(forKey: self.diningHallDictionaryKey) as! [String: [String]])[hall]![i], separator: "")
-			}
+			
+			self.saveDiningHallArrays(hall)
+			
+//			self.storedData.set(self.diningHallArrays, forKey: self.diningHallDictionaryKey)
+//			for i in 0...(self.storedData.dictionary(forKey: self.diningHallDictionaryKey) as! [String: [String]])[hall]!.count - 1 {
+//				print("The new string: ", (self.storedData.dictionary(forKey: self.diningHallDictionaryKey) as! [String: [String]])[hall]![i], separator: "")
+//			}
 			self.loadingHall = false;
 			
 		}.resume()
