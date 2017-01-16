@@ -56,14 +56,6 @@ class HoursViewController: UITableViewController {
 				cell?.setProgressDouble(hours.percentDone(j, index: i) / 100.0)
 				cell?.progress.progressViewStyle = .default
 				cell?.progress.layer.cornerRadius = 3.0
-//				cell?.progress.pr
-//				if meal.contains("Closed") {
-//					cell?.progress.progressTintColor = UIColor.red
-//				} else if meal.contains("Next") {
-//					cell?.progress.progressTintColor = UIColor.orange
-//				} else {
-//					cell?.progress.progressTintColor = UIColor.blue
-//				}
 			}
 		}
 	}
@@ -143,18 +135,9 @@ class HoursViewController: UITableViewController {
 		myCell.nameLabel.text = diningHallName[hours.halls[indexPath.section * 5 + indexPath.row]]
 		let meal:String = hours.meal(indexPath.section, index: indexPath.row)
 		myCell.setMealLabel(label: meal)
-//		myCell.mealLabel.text = meal
-//		if meal.contains("Closed") {
-//			myCell.progress.progressTintColor = UIColor.red
-//		} else if meal.contains("Next") {
-//			myCell.progress.progressTintColor = UIColor.orange
-//		} else {
-//			myCell.progress.progressTintColor = UIColor.blue
-//		}
 		myCell.timeLabel.text = formattedTime(indexPath.section, index: indexPath.row)
 		myCell.timeLeft.text = formattedTimeLeft(indexPath.section, index: indexPath.row)
 		myCell.setProgressDouble(hours.percentDone(indexPath.section, index: indexPath.row) / 100.0)
-		//		myCell.myTableViewController = self
 		return myCell
 	}
 	

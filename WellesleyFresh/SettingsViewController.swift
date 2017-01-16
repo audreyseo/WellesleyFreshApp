@@ -57,9 +57,7 @@ class SettingsViewController: UIViewController, MFMailComposeViewControllerDeleg
 		self.tableview.backgroundColor = UIColor.groupTableViewBackground
 		self.view.backgroundColor = UIColor.groupTableViewBackground
 		self.tableview.tableFooterView = footerView
-		self.tableview.tableFooterView?.tintColor = UIColor.groupTableViewBackground //UIColor.init(red: 53, green: 60, blue: 62, alpha: 255)
-		//footerView.frame = CGRect(x: 0.0, y: 0.0, width: self.view.frame.size.width, height: 30.0)
-		
+		self.tableview.tableFooterView?.tintColor = UIColor.groupTableViewBackground //UIColor.init(red: 53, green: 60, blue: 62, alpha: 255)		
 	}
 	
 	// ---------------------DELEGATE METHODS----------------------
@@ -150,18 +148,6 @@ class SettingsViewController: UIViewController, MFMailComposeViewControllerDeleg
 	
 	func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
 		return 50
-		//if items.count > 0 {
-		//	if section < items.count {
-		//		return 50
-		//	} else {
-		//		print("This happened for section:", section)
-		//
-		//		//let myCell:MyCell = tableView.cellForRow(at: IndexPath(row: items[section - 1].count - 1, section: section - 1)) as! MyCell
-		//		return 40 // max(self.view.bounds.size.height + self.view.bounds.origin.y, 0.0) * 0.70
-		//	}
-		//} else {
-		//	return 0
-		//}
 	}
 	
 	func tableView(_ tableView: UITableView, estimatedHeightForHeaderInSection section: Int) -> CGFloat {

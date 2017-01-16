@@ -308,8 +308,6 @@ class NearbyViewController: UIViewController, CLLocationManagerDelegate, UIPicke
 		let last = locations.count - 1
 		displayLocation(locations[last])
 		displayDiningHallCenters()
-//		manager.startUpdatingLocation()
-//		manager.stopUpdatingLocation()
 	}
 	
 	// Fires when the authorization status updates.
@@ -523,12 +521,6 @@ class NearbyViewController: UIViewController, CLLocationManagerDelegate, UIPicke
 		}
 		
 		return d
-		//if (meters) {
-		//	return d;
-		//} else {
-		//	return d * 3.28084
-		//}
-		
 	}
 	
 	// Helper function that converts degrees (latitude, longitude) to radians
@@ -663,70 +655,6 @@ class NearbyViewController: UIViewController, CLLocationManagerDelegate, UIPicke
 			}
 		}
 		hallPicker.reloadAllComponents()
-//		var num1:Float = 1000000000000000.0
-//		var i1 = -1
-//		var num2:Float = 1000000000000000.0
-//		var i2 = -1
-//		var num3:Float = 1000000000000000.0
-//		var i3 = -1
-//		print("myDistances.count: ", myDistances.count)
-//		for i in 0...myDistances.count - 1 {
-//			if (myDistances[i] < num1) {
-//				i1 = i;
-//				num1 = myDistances[i]
-//			}
-//		}
-//		pinColors[i1] = UIColor.red
-//		
-//		for i in 0...myDistances.count - 1 {
-//			if (myDistances[i] < num2 && myDistances[i] > num1) {
-//				i2 = i;
-//				num2 = myDistances[i]
-//			}
-//		}
-//		pinColors[i2] = UIColor.orange
-//		
-//		for i in 0...myDistances.count - 1 {
-//			if (myDistances[i] < num3 && myDistances[i] > num2) {
-//				i3 = i;
-//				num3 = myDistances[i]
-//			}
-//		}
-//		pinColors[i3] = UIColor.green
-//		
-//		var i4 = -1
-//		var num4:Float = 10000000000000000000.0
-//		var num5:Float = 10000000000000000000.0
-//		for i in 0..<myDistances.count {
-//			if myDistances[i] < num4 && myDistances[i] > num3 {
-//				i4 = i;
-//				num4 = myDistances[i]
-//			}
-//		}
-//		pinColors[i4] = UIColor.blue
-//		
-//		for i in 0..<myDistances.count {
-//			if myDistances[i] < num5 && myDistances[i] > num4 {
-//				i4 = i
-//				num5 = myDistances[i]
-//			}
-//		}
-//		pinColors[i4] = UIColor.purple
-//		
-//		//let myUnits = meters ? "m" : "ft"
-//		
-//		if (i1 >= 0 && i2 >= 0 && i3 >= 0) {
-//			diningHallNames[0] = names[i1]
-//			diningHallNames[1] = names[i2]
-//			diningHallNames[2] = names[i3]
-//			diningHallNamesShort[0] = diningHalls[i1]
-//			diningHallNamesShort[1] = diningHalls[i2]
-//			diningHallNamesShort[2] = diningHalls[i3]
-//			hallPicker.reloadAllComponents()
-//		} else {
-//			print("Indices: ", i1, ":", i2, ":", i3)
-//		}
-		
 	}
 	
 	
