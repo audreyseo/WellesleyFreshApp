@@ -83,12 +83,12 @@ class WellesleyFreshRegex {
 	
 	func extractInformationString(_ input:String) -> String {
 		
-		var helpString = self.extractString(input, regex: self.cutOutBoday!, regexTemplate: "$1")
-		helpString = self.extractString(helpString, regex: elementDeleterRegex!, regexTemplate: "")
-		helpString = self.extractString(helpString, regex: self.deleteLineBreaksRegex!, regexTemplate: "\u{0020}")
-		helpString = self.extractString(helpString, regex: self.brDeleteRegex!, regexTemplate: "")
-		helpString = self.extractString(helpString, regex: self.cutEnds!, regexTemplate: "")
-		print("Result:\n<|\(helpString)|>")
+//		var helpString = self.extractString(input, regex: self.cutOutBoday!, regexTemplate: "$1")
+//		helpString = self.extractString(helpString, regex: elementDeleterRegex!, regexTemplate: "")
+//		helpString = self.extractString(helpString, regex: self.deleteLineBreaksRegex!, regexTemplate: "\u{0020}")
+//		helpString = self.extractString(helpString, regex: self.brDeleteRegex!, regexTemplate: "")
+//		helpString = self.extractString(helpString, regex: self.cutEnds!, regexTemplate: "")
+//		print("Result:\n<|\(helpString)|>")
 		
 		var bodyString:String = self.extractString(input as String, regex: self.cutOutBoday!, regexTemplate: "$1")
 //		var bodyString:String = self.extractString(input as String, regex: self.bodyRegex!, regexTemplate: "$1")
