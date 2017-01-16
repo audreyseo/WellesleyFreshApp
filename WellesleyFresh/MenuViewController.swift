@@ -60,8 +60,8 @@ class MenuViewController: UITableViewController, UIPickerViewDataSource, UIPicke
 		
 		// Use the following two lines for debugging purposes, specifically for debugging the regex parsing
 		// and string manipulation.
-		todayString = "1003"
-		storedData.set("1004", forKey: todaysDateKey)
+//		todayString = "1003"
+//		storedData.set("1004", forKey: todaysDateKey)
 		
 		if storedData.string(forKey: todaysDateKey) != nil {
 			if (storedData.string(forKey: todaysDateKey) == todayString) {
@@ -256,13 +256,11 @@ class MenuViewController: UITableViewController, UIPickerViewDataSource, UIPicke
 	}
 	
 	
-	
 	func preload() {
 		for i in 0...diningHalls.count - 1 {
 			load(diningHalls[i])
 		}
 	}
-
 	
 	func retitleHeader() {
 		if (tableView.headerView(forSection: 0) != nil) {
@@ -280,7 +278,7 @@ class MenuViewController: UITableViewController, UIPickerViewDataSource, UIPicke
 	
 	func choose() {
 		//if !loadingHall {
-		print("Hey there!!!!!!!!")
+//		print("Hey there!!!!!!!!")
 		retitleHeader()
 		if previousDiningHall != diningHall {
 			
@@ -358,31 +356,7 @@ class MenuViewController: UITableViewController, UIPickerViewDataSource, UIPicke
 					indexPaths.append(IndexPath(row: i, section: 0))
 				}
 			}
-			
-			
-			
-			
-//			if (newSize >= originalSize) {
-//				for i in 0..<normalArray.count {
-//					if (i < originalSize) {
-//						items[i] = normalArray[i]
-//						originalPaths.append(IndexPath(row: i, section: 0))
-//					} else {
-//						items.append(normalArray[i])
-//						indexPaths.append(IndexPath(row: i, section: 0))
-//					}
-//				}
-//			} else if (newSize < originalSize) {
-//				for i in 0..<originalSize {
-//					if (i < newSize) {
-//						items[i] = normalArray[i]
-//						originalPaths.append(IndexPath(row: i, section: 0))
-//					} else {
-//						items.removeLast()
-//						indexPaths.append(IndexPath(row: i, section: 0))
-//					}
-//				}
-//			}
+
 			updateTableViewRows(oldPaths: originalPaths, newPaths: &indexPaths, newSize: newSize, oldSize: originalSize, delete: delete)
 		}
 	}
