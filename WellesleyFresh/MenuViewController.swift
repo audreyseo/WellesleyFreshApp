@@ -225,19 +225,19 @@ class MenuViewController: UITableViewController, UIPickerViewDataSource, UIPicke
 			tableView.deleteRows(at: [deletionIndexPath], with: .automatic)
 		}
 	}
-	override func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-		adjustHeightOfTableview()
-	}
+//	override func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+////		adjustHeightOfTableview()
+//	}
 	
 	// TABLE VIEW DELEGATE HELPERS
 	
-	func adjustHeightOfTableview() {
-		let height:CGFloat = CGFloat(items.count * cellHeight);
-		
-		if tableView.contentSize.height != height {
-			tableView.contentSize = CGSize(width: tableView.contentSize.width, height: height)
-		}
-	}
+//	func adjustHeightOfTableview() {
+//		let height:CGFloat = CGFloat(items.count * cellHeight);
+//		
+//		if tableView.contentSize.height != height {
+//			tableView.contentSize = CGSize(width: tableView.contentSize.width, height: height)
+//		}
+//	}
 	
 	// -------------------------------------------------------------
 	// --------------------------HELPERS----------------------------
