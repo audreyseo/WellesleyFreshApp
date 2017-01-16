@@ -60,8 +60,8 @@ class MenuViewController: UITableViewController, UIPickerViewDataSource, UIPicke
 		
 		// Use the following two lines for debugging purposes, specifically for debugging the regex parsing
 		// and string manipulation.
-//		todayString = "1003"
-//		storedData.set("1004", forKey: todaysDateKey)
+		todayString = "1003"
+		storedData.set("1004", forKey: todaysDateKey)
 		
 		if storedData.string(forKey: todaysDateKey) != nil {
 			if (storedData.string(forKey: todaysDateKey) == todayString) {
@@ -436,6 +436,11 @@ class MenuViewController: UITableViewController, UIPickerViewDataSource, UIPicke
 			print("The new string: ", (self.storedData.dictionary(forKey: self.diningHallDictionaryKey) as! [String: [String]])[hall]![i], separator: "")
 		}
 	}
+	
+	func getDiningHallUrlRequest(_ hall: String) -> URLRequest {
+		let urlString = "http://www.wellesleyfresh.com/menus/" + hall + "/menu_" + todayString + ".htm"
+		return URLRequest(url: URL(string: urlString)!)
+	}
 
 	
 	// Load the information from a specific dining hall
@@ -444,47 +449,25 @@ class MenuViewController: UITableViewController, UIPickerViewDataSource, UIPicke
 		print("loading hall ", hall)
 		
 		// Get the url for the specific menu
-		let urlString = "http://www.wellesleyfresh.com/menus/" + hall + "/menu_" + todayString + ".htm"
-		let url = URLRequest(url: URL(string: urlString)!)
+//		let urlString = "http://www.wellesleyfresh.com/menus/" + hall + "/menu_" + todayString + ".htm"
+//		let url = URLRequest(url: URL(string: urlString)!)
+		let request = getDiningHallUrlRequest(hall)
 		
 		// Create the task + the completion handler for the url session
-		URLSession.shared.dataTask(with: url) { (data, response, error) in
+		URLSession.shared.dataTask(with: request) { (data, response, error) in
 			// Strings are Windows 1252 encoded for some reason
 			let mystring:String! = String(data: data!, encoding: .windowsCP1252)
 //			print("My string: \n\(mystring)")
 			
 			let bodyString:String = self.regexHelper.extractInformationString(mystring as String)
 //			print("\n\n\n\n\nDigest string:\n|", bodyString, "|\nEnd of string", separator: "")
-			self.normalArray = bodyString.components(separatedBy: "\n")
 			
+			self.normalArray = bodyString.components(separatedBy: "\n")
 			self.trimNormalArray()
 			
-//			for i in 0..<self.normalArray.count {
-//				self.normalArray[i] = self.normalArray[i].trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
-//			}
-//			
-//			var indexer = 0
-//			for _ in 0..<self.normalArray.count {
-//				
-//				if self.normalArray[indexer] == "" {
-//					print("|\(self.normalArray[indexer])|")
-//					self.normalArray.remove(at: indexer)
-//					indexer -= 1
-//				}
-//				indexer += 1
-//				
-//				if indexer == self.normalArray.count {
-//					break
-//				}
-//			}
 			self.diningHallArrays[hall] = self.normalArray
-			
 			self.saveDiningHallArrays(hall)
 			
-//			self.storedData.set(self.diningHallArrays, forKey: self.diningHallDictionaryKey)
-//			for i in 0...(self.storedData.dictionary(forKey: self.diningHallDictionaryKey) as! [String: [String]])[hall]!.count - 1 {
-//				print("The new string: ", (self.storedData.dictionary(forKey: self.diningHallDictionaryKey) as! [String: [String]])[hall]![i], separator: "")
-//			}
 			self.loadingHall = false;
 			
 		}.resume()
