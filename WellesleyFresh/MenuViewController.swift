@@ -358,21 +358,24 @@ class MenuViewController: UITableViewController, UIPickerViewDataSource, UIPicke
 					}
 				}
 				
-				if (isAbsoluteDiffGreaterThanOne) {
-					for _ in 0..<indexPaths.count / 2 {
-						bottomHalfIndexPaths.append(indexPaths.removeLast())
-					}
-				}
+				updateTableViewRows(oldPaths: originalPaths, newPaths: &indexPaths, newSize: newSize, oldSize: originalSize, delete: false)
 				
-				tableView.beginUpdates()
-				tableView.reloadRows(at: originalPaths, with: .fade)
-				if (isAbsoluteDiffGreaterThanOne) {
-					tableView.insertRows(at: indexPaths, with: .right)
-					tableView.insertRows(at: bottomHalfIndexPaths, with: .left)
-				} else if (newSize - originalSize == 1) {
-					tableView.insertRows(at: indexPaths, with: .right)
-				}
-				tableView.endUpdates()
+//				if (isAbsoluteDiffGreaterThanOne) {
+//					bottomHalfIndexPaths = lastHalfOfIndexPaths(indexPaths: &indexPaths)
+////					for _ in 0..<indexPaths.count / 2 {
+////						bottomHalfIndexPaths.append(indexPaths.removeLast())
+////					}
+//				}
+//				
+//				tableView.beginUpdates()
+//				tableView.reloadRows(at: originalPaths, with: .fade)
+//				if (isAbsoluteDiffGreaterThanOne) {
+//					tableView.insertRows(at: indexPaths, with: .right)
+//					tableView.insertRows(at: bottomHalfIndexPaths, with: .left)
+//				} else if (newSize - originalSize == 1) {
+//					tableView.insertRows(at: indexPaths, with: .right)
+//				}
+//				tableView.endUpdates()
 			} else if (newSize < originalSize) {
 				for i in 0..<originalSize {
 					
@@ -389,24 +392,72 @@ class MenuViewController: UITableViewController, UIPickerViewDataSource, UIPicke
 					}
 				}
 				
-				if indexPaths.count > 2 {
-					for _ in 0..<indexPaths.count / 2 {
-						bottomHalfIndexPaths.append(indexPaths.removeLast())
-					}
-					
-					tableView.beginUpdates()
-					tableView.reloadRows(at: originalPaths, with: .fade)
-					tableView.deleteRows(at: indexPaths, with: .right)
-					tableView.deleteRows(at: bottomHalfIndexPaths, with: .left)
-					tableView.endUpdates()
-				} else {
-					tableView.beginUpdates()
-					tableView.reloadRows(at: originalPaths, with: .fade)
-					tableView.deleteRows(at: indexPaths, with: .right)
-					tableView.endUpdates()
-				}
+				updateTableViewRows(oldPaths: originalPaths, newPaths: &indexPaths, newSize: newSize, oldSize: originalSize, delete: true)
+				
+				
+//				if indexPaths.count > 2 {
+////					for _ in 0..<indexPaths.count / 2 {
+////						bottomHalfIndexPaths.append(indexPaths.removeLast())
+////					}
+//					
+//					bottomHalfIndexPaths = lastHalfOfIndexPaths(indexPaths: &indexPaths)
+//					
+//					tableView.beginUpdates()
+//					tableView.reloadRows(at: originalPaths, with: .fade)
+//					tableView.deleteRows(at: indexPaths, with: .right)
+//					tableView.deleteRows(at: bottomHalfIndexPaths, with: .left)
+//					tableView.endUpdates()
+//				} else {
+//					tableView.beginUpdates()
+//					tableView.reloadRows(at: originalPaths, with: .fade)
+//					tableView.deleteRows(at: indexPaths, with: .right)
+//					tableView.endUpdates()
+//				}
 			}
 		}
+	}
+	
+	func absDiffInt(val1: Int, val2: Int) -> Int {
+		return Int(abs(val1 - val2))
+	}
+	
+	func updateTableViewRows(oldPaths: [IndexPath], newPaths: inout [IndexPath], newSize: Int, oldSize: Int, delete: Bool) {
+		var bottomHalfIndexPaths = [IndexPath]()
+		let isAbsoluteDiffGreaterThanOne = absDiffInt(val1: newSize, val2: oldSize) > 1
+		
+		if (isAbsoluteDiffGreaterThanOne) {
+			bottomHalfIndexPaths = lastHalfOfIndexPaths(indexPaths: &newPaths)
+			//					for _ in 0..<indexPaths.count / 2 {
+			//						bottomHalfIndexPaths.append(indexPaths.removeLast())
+			//					}
+		}
+		
+		tableView.beginUpdates()
+		tableView.reloadRows(at: oldPaths, with: .fade)
+		if delete {
+			if isAbsoluteDiffGreaterThanOne {
+				tableView.deleteRows(at: newPaths, with: .right)
+				tableView.deleteRows(at: bottomHalfIndexPaths, with: .left)
+			} else if newPaths.count > 0 {
+				tableView.deleteRows(at: newPaths, with: .right)
+			}
+		} else {
+			if (isAbsoluteDiffGreaterThanOne) {
+				tableView.insertRows(at: newPaths, with: .right)
+				tableView.insertRows(at: bottomHalfIndexPaths, with: .left)
+			} else if newPaths.count > 0 {
+				tableView.insertRows(at: newPaths, with: .right)
+			}
+		}
+		tableView.endUpdates()
+	}
+	
+	func lastHalfOfIndexPaths(indexPaths: inout [IndexPath]) -> [IndexPath] {
+		var bottomHalfIndexPaths = [IndexPath]()
+		for _ in 0..<indexPaths.count / 2 {
+			bottomHalfIndexPaths.append(indexPaths.removeLast())
+		}
+		return bottomHalfIndexPaths
 	}
 	
 	func trimNormalArray() {
@@ -448,9 +499,7 @@ class MenuViewController: UITableViewController, UIPickerViewDataSource, UIPicke
 		self.loadingHall = true
 		print("loading hall ", hall)
 		
-		// Get the url for the specific menu
-//		let urlString = "http://www.wellesleyfresh.com/menus/" + hall + "/menu_" + todayString + ".htm"
-//		let url = URLRequest(url: URL(string: urlString)!)
+		// Get the url for the specific dining hall
 		let request = getDiningHallUrlRequest(hall)
 		
 		// Create the task + the completion handler for the url session
