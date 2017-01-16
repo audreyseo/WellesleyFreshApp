@@ -9,27 +9,27 @@
 import UIKit
 
 
-class SegmentedControlCell: UITableViewCell {
+class SegmentedControlCell: MyCell {
 	var myTableViewController: SettingsViewController?
 	var storedData:UserDefaults = UserDefaults()
 	var segmentItems:[String] = [""]
 	
 	override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
 		super.init(style: style, reuseIdentifier: reuseIdentifier)
-		setupViews()
+//		setupViews()
 	}
 	required init?(coder aDecoder: NSCoder) {
 		fatalError("init(coder:) has not been implemented")
 	}
 	
-	let nameLabel: UILabel = {
-		let label = UILabel()
-		label.text = "Sample Item"
-		label.translatesAutoresizingMaskIntoConstraints = false
-		label.font = UIFont.systemFont(ofSize: 14)
-		label.numberOfLines = 0
-		return label
-	}()
+//	let nameLabel: UILabel = {
+//		let label = UILabel()
+//		label.text = "Sample Item"
+//		label.translatesAutoresizingMaskIntoConstraints = false
+//		label.font = UIFont.systemFont(ofSize: 14)
+//		label.numberOfLines = 0
+//		return label
+//	}()
 	
 	let control: UISegmentedControl = {
 		let c = UISegmentedControl(items: ["Hi", "Hi"])
@@ -37,12 +37,12 @@ class SegmentedControlCell: UITableViewCell {
 		return c
 	}()
 	
-	let actionButton: UIButton = {
-		let button = UIButton(type: .system)
-		button.setTitle("Delete", for: UIControlState())
-		button.translatesAutoresizingMaskIntoConstraints = false
-		return button
-	}()
+//	let actionButton: UIButton = {
+//		let button = UIButton(type: .system)
+//		button.setTitle("Delete", for: UIControlState())
+//		button.translatesAutoresizingMaskIntoConstraints = false
+//		return button
+//	}()
 	
 	func setupSegmentedControl(items: [String]) {
 		self.segmentItems = items
@@ -69,7 +69,7 @@ class SegmentedControlCell: UITableViewCell {
 		print(segmentItems[control.selectedSegmentIndex])
 	}
 	
-	func setupViews() {
+	override func setupViews() {
 		addSubview(nameLabel)
 		addSubview(control)
 		

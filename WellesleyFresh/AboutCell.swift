@@ -13,7 +13,7 @@ enum AboutCellStyle {
 }
 
 
-class AboutCell:UITableViewCell {
+class AboutCell:MyCell {
 	var cellStyle: AboutCellStyle = .title
 	var cellIndent: Int = 0
 	var cellTop: Int = 0
@@ -28,21 +28,21 @@ class AboutCell:UITableViewCell {
 		fatalError("init(coder:) has not been implemented")
 	}
 	
-	let nameLabel: UILabel = {
-		let label = UILabel()
-		label.text = "Sample Item"
-		label.translatesAutoresizingMaskIntoConstraints = false
-		label.font = UIFont.systemFont(ofSize: 14)
-		label.numberOfLines = 0
-		return label
-	}()
-	
-	let actionButton: UIButton = {
-		let button = UIButton(type: .system)
-		button.setTitle("Delete", for: UIControlState())
-		button.translatesAutoresizingMaskIntoConstraints = false
-		return button
-	}()
+//	let nameLabel: UILabel = {
+//		let label = UILabel()
+//		label.text = "Sample Item"
+//		label.translatesAutoresizingMaskIntoConstraints = false
+//		label.font = UIFont.systemFont(ofSize: 14)
+//		label.numberOfLines = 0
+//		return label
+//	}()
+//	
+//	let actionButton: UIButton = {
+//		let button = UIButton(type: .system)
+//		button.setTitle("Delete", for: UIControlState())
+//		button.translatesAutoresizingMaskIntoConstraints = false
+//		return button
+//	}()
 	
 	func setLabel(labelString: String) {
 		actionButton.removeFromSuperview()
@@ -120,7 +120,7 @@ class AboutCell:UITableViewCell {
 		self.nameLabel.font = UIFont.systemFont(ofSize: CGFloat(fsize))
 	}
 	
-	func setupViews() {
+	override func setupViews() {
 		if cellStyle != .button {
 			addSubview(nameLabel)
 			

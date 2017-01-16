@@ -9,30 +9,30 @@
 import UIKit
 
 
-class CustomButtonCell:UITableViewCell {
+class CustomButtonCell:MyCell {
 	
 	//	var myTableViewController: SecondViewController?
 	
 	override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
 		super.init(style: style, reuseIdentifier: reuseIdentifier)
-		setupViews()
+//		setupViews()
 	}
 	required init?(coder aDecoder: NSCoder) {
 		fatalError("init(coder:) has not been implemented")
 	}
 	
-	let actionButton: UIButton = {
-		let button = UIButton(type: .system)
-		button.setTitle("Delete", for: UIControlState())
-		button.translatesAutoresizingMaskIntoConstraints = false
-		return button
-	}()
+//	let actionButton: UIButton = {
+//		let button = UIButton(type: .system)
+//		button.setTitle("Delete", for: UIControlState())
+//		button.translatesAutoresizingMaskIntoConstraints = false
+//		return button
+//	}()
 	
 	func nameButton(newName:String) {
 		actionButton.setTitle(newName, for: UIControlState())
 	}
 	
-	func setupViews() {
+	override func setupViews() {
 		addSubview(actionButton)
 
 		addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-16-[v0]-|", options: NSLayoutFormatOptions(), metrics: nil, views: ["v0": actionButton]))

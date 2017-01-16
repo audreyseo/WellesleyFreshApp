@@ -8,15 +8,15 @@
 
 import UIKit
 
-class ProgressCell: UITableViewCell {
-	let nameLabel: UILabel = {
-		let label = UILabel()
-		label.text = "Sample Item"
-		label.translatesAutoresizingMaskIntoConstraints = false
-		label.font = UIFont.systemFont(ofSize: 14)
-		label.numberOfLines = 0
-		return label
-	}()
+class ProgressCell: MyCell {
+//	let nameLabel: UILabel = {
+//		let label = UILabel()
+//		label.text = "Sample Item"
+//		label.translatesAutoresizingMaskIntoConstraints = false
+//		label.font = UIFont.systemFont(ofSize: 14)
+//		label.numberOfLines = 0
+//		return label
+//	}()
 	
 	var mealText = ""
 	
@@ -61,7 +61,7 @@ class ProgressCell: UITableViewCell {
 	
 	override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
 		super.init(style: style, reuseIdentifier: reuseIdentifier)
-		setupViews()
+//		setupViews()
 	}
 	
 	func absoluteValue(a:Float, b:Float) -> Float {
@@ -130,7 +130,7 @@ class ProgressCell: UITableViewCell {
 		fatalError("init(coder:) has not been implemented")
 	}
 	
-	func setupViews() {
+	override func setupViews() {
 		addSubview(nameLabel)
 		addSubview(mealLabel)
 		addSubview(timeLabel)
