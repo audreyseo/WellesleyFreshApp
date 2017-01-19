@@ -151,6 +151,9 @@ class NearbyViewController: UIViewController, CLLocationManagerDelegate, UIPicke
 		super.viewDidAppear(animated)
 		if tableScrollsToNextMeal {
 			print("Table Scrolls To Next Meal.")
+			
+			
+			
 			//			tableView.scro
 		} else {
 			print("Table does not scroll to Next Meal.")
@@ -432,9 +435,28 @@ class NearbyViewController: UIViewController, CLLocationManagerDelegate, UIPicke
 				menus = storedData.dictionary(forKey: diningHallDictionaryKey) as! [String:[String]]
 				newCellsInsertion()
 				retitleHeader()
+			scrollToNextMeal()
 //			}
 		}
 		
+	}
+	
+	func scrollToNextMeal() {
+		if tableScrollsToNextMeal {
+			let nextMeal = hours.nextMeal(chosenShort)
+			
+			print("\nscrollToNextMeal()")
+			print("Next meal: \(nextMeal)")
+			let array:[String] = menus[chosenShort]!
+			let ind = array.index(of: nextMeal)
+			if ind != nil {
+				print("Index: \(ind)")
+				print("\n")
+				let ip = IndexPath(row: ind!, section: 0)
+//				tableview.scrollToRow(at: ip, at: .middle, animated: true)
+				tableview.scrollToRow(at: ip, at: .middle, animated: false)
+			}
+		}
 	}
 	
 	// ------------------Functions for Showing New Data-------------------

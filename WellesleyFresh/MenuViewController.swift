@@ -453,7 +453,7 @@ class MenuViewController: UITableViewController, UIPickerViewDataSource, UIPicke
 	func saveDiningHallArrays(_ hall: String) {
 		self.storedData.set(self.diningHallArrays, forKey: self.diningHallDictionaryKey)
 		for i in 0...(self.storedData.dictionary(forKey: self.diningHallDictionaryKey) as! [String: [String]])[hall]!.count - 1 {
-			print("The new string: ", (self.storedData.dictionary(forKey: self.diningHallDictionaryKey) as! [String: [String]])[hall]![i], separator: "")
+			print("The new string: |\((self.storedData.dictionary(forKey: self.diningHallDictionaryKey) as! [String: [String]])[hall]![i])|")
 		}
 	}
 	
