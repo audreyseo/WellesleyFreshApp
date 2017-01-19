@@ -132,6 +132,14 @@ class NearbyViewController: UIViewController, CLLocationManagerDelegate, UIPicke
 		
 		myUnits = checkUnits()
 		
+		
+		if self.tabBarController != nil {
+			if (self.tabBarController?.viewControllers?.count)! > 1 {
+				let nc = self.tabBarController?.viewControllers?[1] as! UINavigationController
+				let mvc = nc.topViewController as! MenuViewController
+				mvc.loadData()
+			}
+		}
 	}
 	
 	func checkNetworkStatus() -> Bool {
@@ -182,10 +190,17 @@ class NearbyViewController: UIViewController, CLLocationManagerDelegate, UIPicke
 			hallToolBar.frame = CGRect(x: 0, y: 0, width: self.view.frame.size.width, height: 40)
 			//		let hLimit = showDiningHallName.frame.origin.y + 30;
 			
+			let tabBarH = (tabBarController?.tabBar.frame.size.height)!
+			print("\nTab Bar Height: \(tabBarH)\n")
+			
+			print("\nHeight: \(height)\n")
+			
 			let tableX = 0.0
 			let tableY = pickerButton.frame.origin.y + pickerButton.frame.size.height*2;
 			let tableW = self.view.frame.size.width
-			let tableH = (height - tableY);
+			let tableH = (height - tableY - tabBarH);
+			
+			print("\nTable Height: \(tableH)\n")
 			tableview.frame = CGRect(x: CGFloat(tableX), y: tableY, width: tableW, height: tableH)
 			
 			
@@ -250,20 +265,24 @@ class NearbyViewController: UIViewController, CLLocationManagerDelegate, UIPicke
 		return 50
 	}
 	
+	func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
+		return 140
+	}
+	
 	
 	func adjustHeightOfTableview() {
-		var height:CGFloat = 0;
-		
-		for i in 0...items.count - 1 {
-			if (tableview.cellForRow(at: IndexPath(row: i, section: 0)) != nil) {
-				let cell:MyCell = tableview.cellForRow(at: IndexPath(row: i, section: 0)) as! MyCell
-				height = height + cell.frame.height;
-			}
-		}
-		
-		if tableview.contentSize.height != height {
-			tableview.contentSize = CGSize(width: tableview.contentSize.width, height: height)
-		}
+//		var height:CGFloat = 0;
+//		
+//		for i in 0...items.count - 1 {
+//			if (tableview.cellForRow(at: IndexPath(row: i, section: 0)) != nil) {
+//				let cell:MyCell = tableview.cellForRow(at: IndexPath(row: i, section: 0)) as! MyCell
+//				height = height + cell.frame.height;
+//			}
+//		}
+//		
+//		if tableview.contentSize.height != height {
+//			tableview.contentSize = CGSize(width: tableview.contentSize.width, height: height)
+//		}
 	}
 	
 	
@@ -392,11 +411,11 @@ class NearbyViewController: UIViewController, CLLocationManagerDelegate, UIPicke
 			let todayString:String = MyDateFormatter.string(from: today)
 			print(storedDateKey, "vs", todayString)
 			
-			if (storedDateKey == todayString) {
+//			if (storedDateKey == todayString) {
 				menus = storedData.dictionary(forKey: diningHallDictionaryKey) as! [String:[String]]
 				newCellsInsertion()
 				retitleHeader()
-			}
+//			}
 		}
 		
 	}

@@ -39,10 +39,14 @@ class MenuViewController: UITableViewController, UIPickerViewDataSource, UIPicke
 	
 	let cellHeight:Int = 60
 	
+	var data: DataLoader!
+	
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		
-		// Get an NSDate object
+		data = DataLoader(diningHalls: diningHalls, menuViewController: self)
+		
+		/*// Get an NSDate object
 		var today:Date
 		today = Date.init()
 		
@@ -55,7 +59,7 @@ class MenuViewController: UITableViewController, UIPickerViewDataSource, UIPicke
 		// Now make a date that represents today - we use this to retrieve the menu for today
 		todayString = MyDateFormatter.string(from: today)
 		
-		print(todayString)
+		print(todayString)*/
 		
 		
 		// Use the following two lines for debugging purposes, specifically for debugging the regex parsing
@@ -63,7 +67,7 @@ class MenuViewController: UITableViewController, UIPickerViewDataSource, UIPicke
 //		todayString = "1003"
 //		storedData.set("1004", forKey: todaysDateKey)
 		
-		if storedData.string(forKey: todaysDateKey) != nil {
+		/*if storedData.string(forKey: todaysDateKey) != nil {
 			if (storedData.string(forKey: todaysDateKey) == todayString) {
 				print("Already got data today.")
 				diningHallArrays = storedData.dictionary(forKey: diningHallDictionaryKey) as! [String:[String]]
@@ -77,7 +81,7 @@ class MenuViewController: UITableViewController, UIPickerViewDataSource, UIPicke
 			storedData.setValue(todayString, forKey: todaysDateKey)
 			preload()
 			refresh()
-		}
+		}*/
 		
 		
 		
@@ -117,6 +121,10 @@ class MenuViewController: UITableViewController, UIPickerViewDataSource, UIPicke
 		hallInputView.isHidden = false
 		hallInputView.backgroundColor = UIColor.white
 		self.navigationController?.view.addSubview(hallInputView)
+	}
+	
+	func loadData() {
+		data = DataLoader(diningHalls: diningHalls, menuViewController: self)
 	}
 	
 	override func viewWillAppear(_ animated: Bool) {
