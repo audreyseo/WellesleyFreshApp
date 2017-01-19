@@ -49,8 +49,8 @@ class DataLoader {
 		
 		// Use the following two lines for debugging purposes, specifically for debugging the regex parsing
 		// and string manipulation.
-//				todayString = "1003"
-//				storedData.set("1004", forKey: todaysDateKey)
+				todayString = "1003"
+				storedData.set("1004", forKey: todaysDateKey)
 		
 		if hasRunAppBefore() && hasAlreadyDownloadedDataToday() {
 //			if hasAlreadyDownloadedDataToday() {

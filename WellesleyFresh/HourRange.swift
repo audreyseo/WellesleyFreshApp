@@ -187,11 +187,11 @@ class HourRange {
 		return false
 	}
 	
-	func isBefore() -> Bool {
+	func hasNotHappened() -> Bool {
 		return self.currentHour() < self.lowHour
 	}
 	
-	func isAfter() -> Bool {
+	func hasAlreadyHappened() -> Bool {
 		return self.currentHour() > self.highHour
 	}
 	

@@ -143,16 +143,18 @@ class DiningHall {
 	}
 	
 	func nextName(option: Int) -> String {
-		
 		for i in 1..<hours[option].count {
-			if hours[option][i - 1].isAfter() {
-				if hours[option][i].isBefore() {
+			if hours[option][i - 1].hasAlreadyHappened() {
+				if hours[option][i].hasNotHappened() || hours[option][i].withinRange() {
 					return hours[option][i].name()
 				}
 			}
 		}
-		
 		return ""
+	}
+	
+	func nextName() -> String {
+		return nextName(option: self.days.getOption())
 	}
 	
 	func findRange(option:Int) -> HourRange {

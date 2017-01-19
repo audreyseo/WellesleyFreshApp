@@ -86,6 +86,14 @@ class DiningHours {
 		return ""
 	}
 	
+	func nextMeal(_ diningHallName:String) -> String {
+		if halls.contains(diningHallName) {
+			return diningHalls[diningHallName]!.nextName()
+		}
+		
+		return ""
+	}
+	
 	func percentDone(_ section:Int, index:Int) -> Double {
 		//		print("Percent left: ", diningHalls[halls[index]]!.percentLeft())
 		if (diningHalls[halls[(section * 5) + index]]?.isClosed())! {

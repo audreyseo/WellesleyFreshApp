@@ -59,7 +59,7 @@ class NearbyViewController: UIViewController, CLLocationManagerDelegate, UIPicke
 	
 	var headerTitle = "Choose a dining hall by clicking the button above."
 	
-	
+	var hours = DiningHours()
 	
 	@IBOutlet weak var mapViewer: MKMapView!
 	@IBOutlet weak var pickerButton: UIButton!
@@ -67,6 +67,11 @@ class NearbyViewController: UIViewController, CLLocationManagerDelegate, UIPicke
 	@IBAction func showSelector() {
 		hallInputView.isHidden = false;
 	}
+	
+	
+	var tableScrollsToNextMeal = false
+	
+	let tableScrollsToNextMealKey = "tableScrollsToNextMealKey"
 	
 	var myUnits:String = ""
 	
@@ -142,6 +147,16 @@ class NearbyViewController: UIViewController, CLLocationManagerDelegate, UIPicke
 		}
 	}
 	
+	override func viewDidAppear(_ animated: Bool) {
+		super.viewDidAppear(animated)
+		if tableScrollsToNextMeal {
+			print("Table Scrolls To Next Meal.")
+			//			tableView.scro
+		} else {
+			print("Table does not scroll to Next Meal.")
+		}
+	}
+	
 	func checkNetworkStatus() -> Bool {
 		let reachability: Reachability = Reachability.forInternetConnection()
 		let networkStatus = reachability.currentReachabilityStatus().rawValue;
@@ -213,6 +228,8 @@ class NearbyViewController: UIViewController, CLLocationManagerDelegate, UIPicke
 				meters = false
 				findDistances(mapViewer.userLocation.location!)
 			}
+			
+			tableScrollsToNextMeal = storedData.bool(forKey: tableScrollsToNextMealKey)
 		}
 		
 		

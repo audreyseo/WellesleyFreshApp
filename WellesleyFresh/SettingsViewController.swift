@@ -19,6 +19,7 @@ class SettingsViewController: UIViewController, MFMailComposeViewControllerDeleg
 	var disclosureCells:[String] = ["About", "Bagged Lunch Form", "Contact and Support", "Source Code on GitHub", "Visit the Wellesley Fresh Website"]
 	var switchCells:[String] = ["Table Scrolls to Closest Meal"]
 	var switchSelectors:[Selector]!
+	var switchKeys:[String] = ["tableScrollsToNextMealKey"]
 	
 	
 	override func viewDidLoad() {
@@ -90,6 +91,7 @@ class SettingsViewController: UIViewController, MFMailComposeViewControllerDeleg
 			myCell.nameLabel.text = items[indexPath.section][indexPath.row]
 			let ind = switchCells.index(of: items[indexPath.section][indexPath.row])
 			myCell.switchView.addTarget(self, action: switchSelectors[ind!], for: .valueChanged)
+			myCell.switchView.isOn = UserDefaults().bool(forKey: switchKeys[ind!])
 			return myCell
 		} else if titles[indexPath.section].contains("Feedback") {
 			let myCell = tableView.dequeueReusableCell(withIdentifier: "buttonCellId", for: indexPath) as! CustomButtonCell
