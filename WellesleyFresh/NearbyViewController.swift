@@ -435,7 +435,7 @@ class NearbyViewController: UIViewController, CLLocationManagerDelegate, UIPicke
 				menus = storedData.dictionary(forKey: diningHallDictionaryKey) as! [String:[String]]
 				newCellsInsertion()
 				retitleHeader()
-			scrollToNextMeal()
+				scrollToNextMeal()
 //			}
 		}
 		

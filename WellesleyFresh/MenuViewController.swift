@@ -312,6 +312,7 @@ class MenuViewController: UITableViewController, UIPickerViewDataSource, UIPicke
 				normalArray = diningHallArrays[diningHall]!
 			}
 			newCellsInsertion()
+			scrollToNextMeal()
 		} else if headerTitle() != "" {
 			if headerTitle() != diningHallName {
 				retitleHeader()
@@ -319,6 +320,7 @@ class MenuViewController: UITableViewController, UIPickerViewDataSource, UIPicke
 					normalArray = diningHallArrays[diningHall]!
 				}
 				newCellsInsertion()
+				scrollToNextMeal()
 			}
 		} else {
 			if (diningHallArrays[diningHall] != nil) {
@@ -327,6 +329,26 @@ class MenuViewController: UITableViewController, UIPickerViewDataSource, UIPicke
 			newCellsInsertion()
 		}
 		//}
+	}
+	
+	func scrollToNextMeal() {
+		if tableScrollsToNextMeal {
+			let hours = DiningHours()
+			let nextMeal = hours.nextMeal(diningHall)
+			
+			print("\nscrollToNextMeal()")
+			print("Next meal: \(nextMeal)")
+			let array:[String] = diningHallArrays[diningHall]!
+			let ind = array.index(of: nextMeal)
+			if ind != nil {
+				print("Index: \(ind)")
+				print("\n")
+				let ip = IndexPath(row: ind!, section: 0)
+				//				tableview.scrollToRow(at: ip, at: .middle, animated: true)
+//				tableView.scrollToRow(at: ip, at: .middle, animated: false)
+				tableView.selectRow(at: ip, animated: true, scrollPosition: .middle)
+			}
+		}
 	}
 	
 	func refresh() {
