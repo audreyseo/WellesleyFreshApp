@@ -13,17 +13,23 @@ class SettingsViewController: UIViewController, MFMailComposeViewControllerDeleg
 	var tableview:UITableView = UITableView(frame: CGRect(x: 0, y: 0, width: 100, height: 100), style: .grouped)
 	var units:String = "Preferred Units"
 	var unitOptions:[String] = ["m", "km", "ft", "yd", "mi"]
-	var items: [[String]] = [["Preferred Units", "Contact and Support", "Source Code on GitHub", "Visit the Wellesley Fresh Website", "About"], []] //[["Bates", "Lulu Chow Wang", "Pomeroy", "Stone-Davis", "Tower"], ["Bagged Lunch Form"], ["Preferred Units", "Contact", "About"]]
-	var titles:[String] = ["", ""] //["Feedback", "Order", "Settings"]
+	var items: [[String]] = [["Preferred Units", "Table Scrolls to Closest Meal"], ["Contact and Support", "Source Code on GitHub", "Visit the Wellesley Fresh Website", "About"], []] //[["Bates", "Lulu Chow Wang", "Pomeroy", "Stone-Davis", "Tower"], ["Bagged Lunch Form"], ["Preferred Units", "Contact", "About"]]
+	var titles:[String] = ["", "", ""] //["Feedback", "Order", "Settings"]
 	
 	var disclosureCells:[String] = ["About", "Bagged Lunch Form", "Contact and Support", "Source Code on GitHub", "Visit the Wellesley Fresh Website"]
+	var switchCells:[String] = ["Table Scrolls to Closest Meal"]
+	var switchSelectors:[Selector]!
 	
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
+		
+		switchSelectors = [#selector(self.scrollToNextMeal)]
+		
 		self.tableview.register(MyCell.self, forCellReuseIdentifier: "cellId")
 		self.tableview.register(SegmentedControlCell.self, forCellReuseIdentifier: "segmentedCellId")
 		self.tableview.register(CustomButtonCell.self, forCellReuseIdentifier: "buttonCellId")
+		self.tableview.register(SwitchCell.self, forCellReuseIdentifier: "switchCellId")
 		
 		// Assigns the class Header to the type of header cell that we use
 		self.tableview.register(GroupHeader.self, forHeaderFooterViewReuseIdentifier: "headerId")
@@ -78,6 +84,12 @@ class SettingsViewController: UIViewController, MFMailComposeViewControllerDeleg
 				myCell.nameLabel.text = ""
 			}
 			myCell.setupSegmentedControl(items: unitOptions)
+			return myCell
+		} else if switchCells.contains(items[indexPath.section][indexPath.row]) {
+			let myCell = tableView.dequeueReusableCell(withIdentifier: "switchCellId", for: indexPath) as! SwitchCell
+			myCell.nameLabel.text = items[indexPath.section][indexPath.row]
+			let ind = switchCells.index(of: items[indexPath.section][indexPath.row])
+			myCell.switchView.addTarget(self, action: switchSelectors[ind!], for: .valueChanged)
 			return myCell
 		} else if titles[indexPath.section].contains("Feedback") {
 			let myCell = tableView.dequeueReusableCell(withIdentifier: "buttonCellId", for: indexPath) as! CustomButtonCell
@@ -147,11 +159,11 @@ class SettingsViewController: UIViewController, MFMailComposeViewControllerDeleg
 	
 	
 	func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-		return 50
+		return 40
 	}
 	
 	func tableView(_ tableView: UITableView, estimatedHeightForHeaderInSection section: Int) -> CGFloat {
-		return 80
+		return 40
 		
 	}
 	
@@ -255,6 +267,12 @@ class SettingsViewController: UIViewController, MFMailComposeViewControllerDeleg
 		let nextViewController = self.storyboard?.instantiateViewController(withIdentifier: "pomFeedbackView")
 		nextViewController?.navigationItem.title = "Review Lulu"
 		self.navigationController?.pushViewController(nextViewController!, animated:true)
+	}
+	
+	func scrollToNextMeal(_ sender: UISwitch) {
+		print("Scrolling to next meal?: \(sender.isOn)")
+		let userdefs = UserDefaults()
+		userdefs.set(sender.isOn, forKey: "tableScrollsToNextMealKey")
 	}
 	
 }

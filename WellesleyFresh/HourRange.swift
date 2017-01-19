@@ -186,4 +186,22 @@ class HourRange {
 		}
 		return false
 	}
+	
+	func isBefore() -> Bool {
+		return self.currentHour() < self.lowHour
+	}
+	
+	func isAfter() -> Bool {
+		return self.currentHour() > self.highHour
+	}
+	
+	func inBetween(other: HourRange) -> HourRange {
+		let isHigher = self.highHour > other.highHour
+		let next = isHigher ? "Next: \(self.name())" : "Next: \(other.name())"
+		if isHigher {
+			return HourRange(low: other.highHour, high: self.lowHour, name: next)
+		} else {
+			return HourRange(low: self.highHour, high: other.lowHour, name: next)
+		}
+	}
 }

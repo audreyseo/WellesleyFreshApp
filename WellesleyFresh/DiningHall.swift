@@ -130,11 +130,29 @@ class DiningHall {
 		return currentHours().name()
 	}
 	
+	func isInBetween(_ a: HourRange, b: HourRange) -> Bool {
+		let btwn = a.inBetween(other: b)
+		return btwn.withinRange()
+	}
+	
 	func inBetween(_ a:HourRange, b:HourRange) {
 		let currentTime = a.currentHour()
 		if currentTime >= a.highHour && currentTime <= b.lowHour {
 			in_between = HourRange(low: a.highHour, high: b.lowHour, name: "Next: \(b.name())")
 		}
+	}
+	
+	func nextName(option: Int) -> String {
+		
+		for i in 1..<hours[option].count {
+			if hours[option][i - 1].isAfter() {
+				if hours[option][i].isBefore() {
+					return hours[option][i].name()
+				}
+			}
+		}
+		
+		return ""
 	}
 	
 	func findRange(option:Int) -> HourRange {

@@ -17,7 +17,12 @@ class MenuViewController: UITableViewController, UIPickerViewDataSource, UIPicke
 	var previousDiningHall:String = ""
 	var items = [String]()
 	var normalArray = [String]()
+	
 	var loadingHall:Bool = false
+	var tableScrollsToNextMeal = false
+	
+	let tableScrollsToNextMealKey = "tableScrollsToNextMealKey"
+	
 	var diningHallArrays:[String:[String]] = [:]
 	var hallPicker:UIPickerView = UIPickerView()
 	let hallToolBar:UIToolbar = UIToolbar()
@@ -83,6 +88,7 @@ class MenuViewController: UITableViewController, UIPickerViewDataSource, UIPicke
 			refresh()
 		}*/
 		
+		tableScrollsToNextMeal = storedData.bool(forKey: tableScrollsToNextMealKey)
 		
 		
 		tableView.sectionHeaderHeight = 40
@@ -128,6 +134,7 @@ class MenuViewController: UITableViewController, UIPickerViewDataSource, UIPicke
 	}
 	
 	override func viewWillAppear(_ animated: Bool) {
+		super.viewWillAppear(animated)
 		let height = self.tableView.frame.origin.y + self.tableView.frame.size.height
 		//print("superview:", self.tableView.superview?)
 		//print("Height:", self.tableView.superview!.frame.size.height - 400.0)
@@ -148,6 +155,17 @@ class MenuViewController: UITableViewController, UIPickerViewDataSource, UIPicke
 		self.tableView.tableFooterView = footerView
 		self.tableView.tableFooterView?.tintColor = UIColor.groupTableViewBackground
 		
+		tableScrollsToNextMeal = storedData.bool(forKey: tableScrollsToNextMealKey)
+	}
+	
+	override func viewDidAppear(_ animated: Bool) {
+		super.viewDidAppear(animated)
+		if tableScrollsToNextMeal {
+			print("Table Scrolls To Next Meal.")
+//			tableView.scro
+		} else {
+			print("Table does not scroll to Next Meal.")
+		}
 	}
 	
 	// --------------------------------------------------------------------
