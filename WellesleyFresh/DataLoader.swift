@@ -13,12 +13,14 @@ class DataLoader {
 	var dataArray: [String]
 	var regexHelper: WellesleyFreshRegex
 	var todayString: String
+	var otherTodayString: String
 	var storedData: UserDefaults
 	let diningHallDictionaryKey:String = "diningHallDictionaryKey"
 	let todaysDateKey:String = "todaysDateKey"
-	var diningHallArrays: [String: [String]] = [String: [String]]()
+//	var diningHallArrays: [String: [String]] = [String: [String]]()
 	var diningHall: String = ""
 	var menuVC: MenuViewController
+//	let hours = DiningHours()
 	
 	init(diningHalls: [String], menuViewController: MenuViewController) {
 		// Init
@@ -44,19 +46,25 @@ class DataLoader {
 		
 		print(todayString)
 		
+		MyDateFormatter.dateFormat = "YYYY/M/d"
+		
+		otherTodayString = MyDateFormatter.string(from: today)
+		print(otherTodayString)
+		otherTodayString = "2017/1/27"
+		
 		menuVC.todayString = todayString
 		
 		
 		// Use the following two lines for debugging purposes, specifically for debugging the regex parsing
 		// and string manipulation.
-//				todayString = "1003"
-//				storedData.set("1004", forKey: todaysDateKey)
+				todayString = "1003"
+				storedData.set("1004", forKey: todaysDateKey)
 		
 		if hasRunAppBefore() && hasAlreadyDownloadedDataToday() {
 //			if hasAlreadyDownloadedDataToday() {
 				print("DataLoader Already got data today.")
-				diningHallArrays = storedData.dictionary(forKey: diningHallDictionaryKey) as! [String:[String]]
-				menuVC.diningHallArrays = diningHallArrays
+				menuVC.diningHallArrays = storedData.dictionary(forKey: diningHallDictionaryKey) as! [String:[String]]
+//				menuVC.diningHallArrays = diningHallArrays
 //			} else {
 //				print("DataLoader Needed to get data for today.")
 //				storedData.setValue(todayString, forKey: todaysDateKey)
@@ -103,7 +111,7 @@ class DataLoader {
 		for _ in 0..<self.dataArray.count {
 			
 			if self.dataArray[indexer] == "" {
-				print("\n\nDataLoader\n|\(self.dataArray[indexer])|\nDataLoader\n\n")
+//				print("\n\nDataLoader\n|\(self.dataArray[indexer])|\nDataLoader\n\n")
 				self.dataArray.remove(at: indexer)
 				indexer -= 1
 			}
@@ -126,20 +134,20 @@ class DataLoader {
 		
 			let chosenDiningHall = Int(arc4random_uniform(UInt32(diningHalls.count)))
 			menuVC.retitleHeader()
-			if (diningHallArrays[diningHall] != nil) {
-				dataArray = diningHallArrays[diningHall]!
+			if (menuVC.diningHallArrays[diningHall] != nil) {
+				dataArray = menuVC.diningHallArrays[diningHall]!
 			}
 			menuVC.newCellsInsertion()
 			if (menuVC.previousDiningHall != menuVC.diningHall) {
 				menuVC.diningHall = diningHalls[chosenDiningHall]
 			}
 			
-			if diningHallArrays.count > 0 {
-				let keyExists = diningHallArrays[diningHall] != nil
+			if menuVC.diningHallArrays.count > 0 {
+				let keyExists = menuVC.diningHallArrays[diningHall] != nil
 				if (!keyExists) {
 					load(diningHall)
 				} else {
-					dataArray = diningHallArrays[diningHall]!
+					dataArray = menuVC.diningHallArrays[diningHall]!
 				}
 			} else {
 				load(diningHall)
@@ -156,6 +164,11 @@ class DataLoader {
 	
 	func getDiningHallUrlRequest(_ hall: String) -> URLRequest {
 		let urlString = "http://www.wellesleyfresh.com/menus/" + hall + "/menu_" + todayString + ".htm"
+		return URLRequest(url: URL(string: urlString)!)
+	}
+	
+	func makeRestApiDiningHallUrlRequest(_ hall: String) -> URLRequest {
+		let urlString = "http://wellesleyfresh.nutrislice.com/menu/api/digest/school/\(hall)/menu-type/breakfast/date/\(otherTodayString)"
 		return URLRequest(url: URL(string: urlString)!)
 	}
 	
@@ -186,5 +199,24 @@ class DataLoader {
 			self.menuVC.loadingHall = false;
 			
 			}.resume()
+		
+		let hours = DiningHours()
+		
+		let rq = makeRestApiDiningHallUrlRequest(hall)
+		
+		URLSession.shared.dataTask(with: rq) { (data, response, error) in
+			let mystring: String! = String(data: data!, encoding: .utf8)
+			print("\n\nNew Version: |\(mystring)|\n\n")
+			do {
+				let json = try JSONSerialization.jsonObject(with: data!, options: [])
+				let dictionary = json as! [String: Any]
+				print("Succeeded.")
+				for (k, v) in dictionary {
+					print("New Version: \(k): \(v)")
+				}
+			} catch {
+				print("Error occurred.")
+			}
+		}.resume()
 	}
 }

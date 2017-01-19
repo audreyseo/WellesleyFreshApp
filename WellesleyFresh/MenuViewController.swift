@@ -40,7 +40,7 @@ class MenuViewController: UITableViewController, UIPickerViewDataSource, UIPicke
 	}
 	var hallInputView:UIInputView = UIInputView()
 	
-	var regexHelper:WellesleyFreshRegex = WellesleyFreshRegex()
+//	var regexHelper:WellesleyFreshRegex = WellesleyFreshRegex()
 	
 	let cellHeight:Int = 60
 	
@@ -282,11 +282,11 @@ class MenuViewController: UITableViewController, UIPickerViewDataSource, UIPicke
 	}
 	
 	
-	func preload() {
-		for i in 0...diningHalls.count - 1 {
-			load(diningHalls[i])
-		}
-	}
+//	func preload() {
+//		for i in 0...diningHalls.count - 1 {
+//			load(diningHalls[i])
+//		}
+//	}
 	
 	func retitleHeader() {
 		if (tableView.headerView(forSection: 0) != nil) {
@@ -367,12 +367,12 @@ class MenuViewController: UITableViewController, UIPickerViewDataSource, UIPicke
 			if diningHallArrays.count > 0 {
 				let keyExists = diningHallArrays[diningHall] != nil
 				if (!keyExists) {
-					load(diningHall)
+//					load(diningHall)
 				} else {
 					normalArray = diningHallArrays[diningHall]!
 				}
 			} else {
-				load(diningHall)
+//				load(diningHall)
 			}
 		}
 	}
@@ -451,7 +451,7 @@ class MenuViewController: UITableViewController, UIPickerViewDataSource, UIPicke
 		return bottomHalfIndexPaths
 	}
 	
-	func trimNormalArray() {
+	/*func trimNormalArray() {
 		for i in 0..<self.normalArray.count {
 			self.normalArray[i] = self.normalArray[i].trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
 		}
@@ -470,7 +470,7 @@ class MenuViewController: UITableViewController, UIPickerViewDataSource, UIPicke
 				break
 			}
 		}
-	}
+	}*/
 	
 	func saveDiningHallArrays(_ hall: String) {
 		self.storedData.set(self.diningHallArrays, forKey: self.diningHallDictionaryKey)
@@ -479,14 +479,14 @@ class MenuViewController: UITableViewController, UIPickerViewDataSource, UIPicke
 		}
 	}
 	
-	func getDiningHallUrlRequest(_ hall: String) -> URLRequest {
+	/*func getDiningHallUrlRequest(_ hall: String) -> URLRequest {
 		let urlString = "http://www.wellesleyfresh.com/menus/" + hall + "/menu_" + todayString + ".htm"
 		return URLRequest(url: URL(string: urlString)!)
-	}
+	}*/
 
 	
 	// Load the information from a specific dining hall
-	func load(_ hall:String) {
+	/*func load(_ hall:String) {
 		self.loadingHall = true
 		print("loading hall ", hall)
 		
@@ -511,5 +511,5 @@ class MenuViewController: UITableViewController, UIPickerViewDataSource, UIPicke
 			self.loadingHall = false;
 			
 		}.resume()
-	}
+	}*/
 }

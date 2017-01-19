@@ -23,7 +23,10 @@ class DiningHall {
 		"Su":"Sa", "Sa":"Fr", "Fr":"Th", "Th":"We", "We":"Tu", "Tu":"Mo", "Mo":"Su"
 	]
 	
+	var meals: [[String]]
+	
 	init(newDays: [String], newHours: [[[Double]]], meals: [[String]]) {
+		self.meals = meals
 		hours = [[HourRange]]()
 		for i in 0...newHours.count - 1 {
 			hours.append([HourRange]())
@@ -155,6 +158,10 @@ class DiningHall {
 	
 	func nextName() -> String {
 		return nextName(option: self.days.getOption())
+	}
+	
+	func todaysMeals() -> [String] {
+		return self.meals[self.days.getOption()]
 	}
 	
 	func findRange(option:Int) -> HourRange {

@@ -1,9 +1,6 @@
-Are you tired of straining to figure out what's for lunch today at Wellesley's multiple dining halls? Wouldn't you rather have all of that Wellesley Fresh information in the palm of your hand, because after all, you always have your phone, so why would you want to access Wellesley Fresh on your laptop? Or perhaps you're the kind of person who always just wants to know what's for lunch - and if you had an app that organized all of the information from the Wellesley Fresh website, you'd be all set.
-
-If you relate to any of the above, this may be the app for you. Cue the Wellesley Fresh app, programmed by a Wellesley student for Wellesley students. With this app, you can do the following:
-
-1. Look up the menus of the closest dining halls
-2. If you're curious, also look at the menus of all five dining halls
+Features:
+1. Quickly look-up the menus of the three closest dining halls
+2. Access to all five menus in a format native to an iPhone's screen
 3. Check the hours of operation for not only Bates, Lulu, Pomeroy, Stone-Davis, and Tower, but also the Emporium, Collin's Cafe, and the Leaky Beaker
 4. See how far away each of the dining halls in question is - and you can pick the units you're most comfortable with: feet, yards, and miles or meters and kilometers
 

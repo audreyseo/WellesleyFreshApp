@@ -86,6 +86,12 @@ class DiningHours {
 		return ""
 	}
 	
+//	func meals(_ index: Int) -> String {
+//		if index < halls.count {
+//			return diningHalls[halls[index]]?.todaysMeals()
+//		}
+//	}
+	
 	func nextMeal(_ diningHallName:String) -> String {
 		if halls.contains(diningHallName) {
 			return diningHalls[diningHallName]!.nextName()
