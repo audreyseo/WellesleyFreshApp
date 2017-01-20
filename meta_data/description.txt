@@ -1,7 +1,8 @@
 Features:
-1. Quickly look-up the menus of the three closest dining halls
-2. Access to all five menus in a format native to an iPhone's screen
-3. Check the hours of operation for not only Bates, Lulu, Pomeroy, Stone-Davis, and Tower, but also the Emporium, Collin's Cafe, and the Leaky Beaker
-4. See how far away each of the dining halls in question is - and you can pick the units you're most comfortable with: feet, yards, and miles or meters and kilometers
-
-This app makes checking Wellesley Fresh not only convenient, but natural. Plus, the app only ever looks at the Wellesley Fresh website once per day, so you never have to worry about accidentally incurring data charges after you've checked the app already.
+1. Smart download - never downloads the menu for the same day twice
+2. Quickly look up the menus of the three closest dining halls
+3. Access to all five menus in a format native to an iPhone's screen
+4. Check the hours of operation for not only Bates, Lulu, Pomeroy, Stone-Davis, and Tower, but also the Emporium, Collin's Cafe, and the Leaky Beaker
+5. Compare the three closest dining halls
+6. Pick the units you're most comfortable with: feet, yards, and miles or meters and kilometers
+7. Automatically shows you the meal that is coming up next

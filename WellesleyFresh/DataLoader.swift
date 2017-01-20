@@ -10,10 +10,12 @@ import Foundation
 
 class DataLoader {
 	var diningHalls: [String]
+	var newDiningHalls = ["bae-pao-lu-chow", "bates", "tower", "stone-davis", "pomeroy"]
 	var dataArray: [String]
 	var regexHelper: WellesleyFreshRegex
 	var todayString: String
 	var otherTodayString: String
+	var thirdTodayString: String
 	var storedData: UserDefaults
 	let diningHallDictionaryKey:String = "diningHallDictionaryKey"
 	let todaysDateKey:String = "todaysDateKey"
@@ -49,8 +51,13 @@ class DataLoader {
 		MyDateFormatter.dateFormat = "YYYY/M/d"
 		
 		otherTodayString = MyDateFormatter.string(from: today)
-		print(otherTodayString)
+		
+		MyDateFormatter.dateFormat = "YYYY-MM-d"
+		thirdTodayString = MyDateFormatter.string(from: today)
+		
+		print(otherTodayString, thirdTodayString)
 		otherTodayString = "2017/1/27"
+		thirdTodayString = "2017-01-27"
 		
 		menuVC.todayString = todayString
 		
@@ -126,6 +133,7 @@ class DataLoader {
 	func preload() {
 		for i in 0...diningHalls.count - 1 {
 			load(diningHalls[i])
+			loadNew(newDiningHalls[i])
 		}
 	}
 	
@@ -172,6 +180,40 @@ class DataLoader {
 		return URLRequest(url: URL(string: urlString)!)
 	}
 	
+	func makeRestApiDiningHallUrlRequest(_ hall: String, type: String) -> URLRequest {
+		var hallNum = ""
+		var typeNum = ""
+		switch hall {
+		case "bae-pao-lu-chow":
+			hallNum = "43"
+		case "bates":
+			hallNum = "44"
+		case "pomeroy":
+			hallNum = "45"
+		case "stone-davis":
+			hallNum = "46"
+		case "tower":
+			hallNum = "47"
+		default:
+			break
+		}
+		
+		switch type {
+		case "breakfast":
+			typeNum = "34"
+		case "lunch":
+			typeNum = "35"
+		case "dinner":
+			typeNum = "36"
+		default:
+			break
+		}
+		
+		let urlString = "http://wellesleyfresh.nutrislice.com/menu/api/weeks/school/\(hallNum)/menu-type/\(typeNum)/\(otherTodayString)/"
+		//"http://wellesleyfresh.nutrislice.com/menu/api/digest/school/\(hall)/menu-type/\(type)/date/\(otherTodayString)"
+		return URLRequest(url: URL(string: urlString)!)
+	}
+	
 	
 	// Load the information from a specific dining hall
 	func load(_ hall:String) {
@@ -200,23 +242,121 @@ class DataLoader {
 			
 			}.resume()
 		
-		let hours = DiningHours()
 		
-		let rq = makeRestApiDiningHallUrlRequest(hall)
+//		let rq = makeRestApiDiningHallUrlRequest(hall)
+//		
+//		URLSession.shared.dataTask(with: rq) { (data, response, error) in
+//			let mystring: String! = String(data: data!, encoding: .utf8)
+//			print("\n\nNew Version: |\(mystring)|\n\n")
+//			do {
+//				let json = try JSONSerialization.jsonObject(with: data!, options: [])
+//				let dictionary = json as! [String: Any]
+//				print("Succeeded.")
+//				for (k, v) in dictionary {
+//					print("New Version: \(k): \(v)")
+//				}
+//			} catch {
+//				print("Error occurred.")
+//			}
+//		}.resume()
+	}
+	
+	func loadNew(_ hall: String) {
+		let types = ["breakfast", "lunch", "dinner"]
+		var reqs = [URLRequest]()
+		for i in 0..<types.count {
+			reqs.append(makeRestApiDiningHallUrlRequest(hall, type: types[i]))
+		}
 		
-		URLSession.shared.dataTask(with: rq) { (data, response, error) in
-			let mystring: String! = String(data: data!, encoding: .utf8)
-			print("\n\nNew Version: |\(mystring)|\n\n")
-			do {
-				let json = try JSONSerialization.jsonObject(with: data!, options: [])
-				let dictionary = json as! [String: Any]
-				print("Succeeded.")
-				for (k, v) in dictionary {
-					print("New Version: \(k): \(v)")
+		var lastStation = "Breakfast"
+		
+		for i in 0..<types.count {
+			URLSession.shared.dataTask(with: reqs[i]) { (data, response, error) in
+				let mystring: String! = String(data: data!, encoding: .utf8)
+//				print("\n\nNew Version: |\(mystring)|\n\n")
+				do {
+					let json = try JSONSerialization.jsonObject(with: data!, options: [])
+					print("\(hall) \(types[i]): Succeeded.")
+					let dictionary = json as! [String: Any]
+					let daysArray = dictionary["days"] as! [[String: Any]]
+					
+					var id = 0
+					
+					
+					var meal = [String: String]()
+					for d in 0..<daysArray.count {
+						let dict = daysArray[d] //as! [String: Any]
+						let date = dict["date"] as! String
+//						print("\(hall) \(types[i]): date: |\(date)| vs |\(self.thirdTodayString)|")
+						if date == self.thirdTodayString {
+							print("\(hall) \(types[i]): Found the right date")
+//							ind = i
+							let array = dict["menu_items"] as! [[String: Any]]
+							let possibles = ["is_section_title", "food", "text", "is_section_header", "station_id"]
+//							print(dict)
+							for item in array {
+								print("\n")
+								for (k, v) in item {
+									if possibles.contains(k) {
+										if k == "is_section_title" {
+											if v as! Bool == true {
+												lastStation = item["text"] as! String
+//												meal[lastStation] = ""
+												if let num = item["station_id"] as? Int {
+													id = num
+												}
+											}
+										}
+//										print("New Version for \(hall) \(types[i]): \(k): \(v)")
+										if k == "food" {
+											if let val = v as? [String: Any] {
+//												print("Food name: \(val["name"])")
+												if val["name"] != nil {
+													if meal[lastStation] != nil {
+														meal[lastStation] = meal[lastStation]! + ", \(val["name"] as! String)"
+													} else if lastStation == "Breakfast" {
+														if meal[lastStation] != nil {
+															meal[lastStation] = meal[lastStation]! + ", \(val["name"] as! String)"
+														} else {
+															meal[lastStation] = "\(val["name"] as! String)"
+														}
+													} else {
+														meal[lastStation] = "\(val["name"] as! String)"
+													}
+												}
+											}
+										} else if k == "text" {
+											if let num = item["station_id"] as? Int {
+												if num == id {
+													if item["text"] as! String != lastStation {
+														if let val = v as? String {
+															if val != "" {
+																if meal[lastStation] != nil {
+																	meal[lastStation] = meal[lastStation]! + ", \(val)"
+																} else {
+																	meal[lastStation] = "\(val)"
+																}
+															}
+														}
+													}
+												}
+											}
+										}
+									}
+								}
+							}
+//							print("\n\n")
+						}
+						
+					}
+					
+					for (k, v) in meal {
+						print("\(hall) \(types[i]): \(k): \(v)")
+					}
+				} catch {
+					print("Error occurred with hall \(hall), meal: \(reqs[i]).")
 				}
-			} catch {
-				print("Error occurred.")
-			}
-		}.resume()
+			}.resume()
+		}
 	}
 }
