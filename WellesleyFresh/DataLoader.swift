@@ -11,6 +11,7 @@ import Foundation
 class DataLoader {
 	var diningHalls: [String]
 	var newDiningHalls = ["bae-pao-lu-chow", "bates", "tower", "stone-davis", "pomeroy"]
+	var newToOld:[String: String] = ["bae-pao-lu-chow": "bplc", "bates": "bates", "tower": "tower", "stone-davis": "stonedavis", "pomeroy": "pomeroy"]
 	var dataArray: [String]
 	var regexHelper: WellesleyFreshRegex
 	var todayString: String
@@ -23,6 +24,8 @@ class DataLoader {
 	var diningHall: String = ""
 	var menuVC: MenuViewController
 	var meal = [String: [String: [String: String]]]()
+	var menu = [String: [String]]()
+	var successes = 0
 //	let hours = DiningHours()
 	
 	init(diningHalls: [String], menuViewController: MenuViewController) {
@@ -57,16 +60,17 @@ class DataLoader {
 		thirdTodayString = MyDateFormatter.string(from: today)
 		
 		print(otherTodayString, thirdTodayString)
-		otherTodayString = "2017/1/27"
-		thirdTodayString = "2017-01-27"
 		
 		menuVC.todayString = todayString
 		
 		
 		// Use the following two lines for debugging purposes, specifically for debugging the regex parsing
-		// and string manipulation.
-				todayString = "1003"
-				storedData.set("1004", forKey: todaysDateKey)
+		// and string manipulation, as well as behavior of json parser.
+//		todayString = "1003"
+		storedData.set("1004", forKey: todaysDateKey)
+		todayString = "0127"
+		otherTodayString = "2017/1/27"
+		thirdTodayString = "2017-01-27"
 		
 		if hasRunAppBefore() && hasAlreadyDownloadedDataToday() {
 //			if hasAlreadyDownloadedDataToday() {
@@ -236,8 +240,10 @@ class DataLoader {
 			self.dataArray = bodyString.components(separatedBy: "\n")
 			self.trimDataArray()
 			
-			self.menuVC.diningHallArrays[hall] = self.dataArray
-			self.menuVC.saveDiningHallArrays(hall)
+			if self.menuVC.diningHallArrays[hall]?.count != self.dataArray.count {
+				self.menuVC.diningHallArrays[hall] = self.dataArray
+				self.menuVC.saveDiningHallArrays(hall)
+			}
 			
 			self.menuVC.loadingHall = false;
 			
@@ -315,25 +321,16 @@ class DataLoader {
 		}
 		
 		var lastStation = "Breakfast"
-		
+		self.meal[hall] = [String: [String: String]]()
 		for i in 0..<types.count {
 			print("")
-			
-//			var meal = [String: [String: String]]()
-			
 			URLSession.shared.dataTask(with: reqs[i]) { (data, response, error) in
 				let mystring: String! = String(data: data!, encoding: .utf8)
 //				print("\n\nNew Version: |\(mystring)|\n\n")
-//				do {
-					//
-					//					if hall == "bae-pao-lu-chow" && types[i] == "breakfast" {
-					//						print("\n|\(mystring)|\n")
-					//					}
-					
-				var id = 0
-				self.meal[hall] = [String: [String: String]]()
-				self.meal[hall]?[types[i]] = [String: String]()
 				
+				var id = 0
+				
+				self.meal[hall]?[types[i]] = [String: String]()
 				let array = self.getDaysArray(data)
 				
 				
@@ -341,8 +338,6 @@ class DataLoader {
 					for item in array! {
 						let isSectionTitle = item["is_section_title"] as? Bool
 						let isStationHeader = item["is_station_header"] as? Bool
-						//								print("\n")
-//						if let isSectionTitle = item["is_section_title"] as? Bool {
 						if isSectionTitle != nil || isStationHeader != nil {
 							if isSectionTitle! || isStationHeader! {
 								lastStation = item["text"] as! String
@@ -351,32 +346,11 @@ class DataLoader {
 								}
 							}
 						}
-//						}
-						
-//						if let isStationHeader = item["is_station_header"] as? Bool {
-//							if isStationHeader {
-//								lastStation = item["text"] as! String
-//								if let num = item["sattion_id"] as? Int {
-//									id = num
-//								}
-//							}
-//						}
 						
 						if let val = item["food"] as? [String: Any] {
 							//												print("Food name: \(val["name"])")
 							if val["name"] != nil {
 								self.recordMeal(hall: hall, mealName: types[i], lastStation: lastStation, newVal: val["name"] as! String)
-//									if self.meal[hall]?[types[i]]?[lastStation] != nil {
-//										self.meal[hall]?[types[i]]?[lastStation] = (self.meal[hall]?[types[i]]?[lastStation]!)! + ", \(val["name"] as! String)"
-//									} else if lastStation == "Breakfast" {
-//										if self.meal[hall]?[types[i]]?[lastStation] != nil {
-//											self.meal[hall]?[types[i]]?[lastStation] = (self.meal[hall]?[types[i]]?[lastStation]!)! + ", \(val["name"] as! String)"
-//										} else {
-//											self.meal[hall]?[types[i]]?[lastStation] = "\(val["name"] as! String)"
-//										}
-//									} else {
-//										self.meal[hall]?[types[i]]?[lastStation] = "\(val["name"] as! String)"
-//									}
 							}
 						}
 						
@@ -387,11 +361,6 @@ class DataLoader {
 										if let val = rawVal as? String {
 											if val != "" {
 												self.recordMeal(hall: hall, mealName: types[i], lastStation: lastStation, newVal: val)
-//												if self.meal[hall]?[types[i]]?[lastStation] != nil {
-//													self.meal[hall]?[types[i]]?[lastStation] = (self.meal[hall]?[types[i]]?[lastStation]!)! + ", \(val)"
-//												} else {
-//													self.meal[hall]?[types[i]]?[lastStation] = "\(val)"
-//												}
 											}
 										}
 									}
@@ -401,15 +370,46 @@ class DataLoader {
 					}
 				}
 				
-				for (key, val) in self.meal[hall]! {
-					for (k, v) in val {
-						print("\(hall) \(key): \(k): \(v)")
-					}
-				}
-//					
-//				} catch {
-//					print("Error occurred with hall \(hall), self.meal: \(reqs[i]).")
+				self.successes += 1
+				
+//				for (key, val) in self.meal[hall]! {
+//					print("\(key), \(val)")
+////					for (k, v) in val {
+////						print("\(hall) \(key): \(k): \(v)")
+////					}
 //				}
+				
+				if self.successes == (5 * 3) {
+					for (h, tmpMenu) in self.meal {
+						self.menu[self.newToOld[h]!] = [String]()
+//						for (key, val) in menu {
+						for m in types {
+							if tmpMenu[m]!.count > 0 {
+								self.menu[self.newToOld[h]!] = self.menu[self.newToOld[h]!]! + [(m as NSString).capitalized]
+//								self.menu[h].append(m)
+								//							print("\(h), \(key), \(val)")
+								for (k, v) in  tmpMenu[m]! {
+									self.menu[self.newToOld[h]!]!.append("\(k) - \(v)")
+									//								print("\(hall) \(key): \(k): \(v)")
+								}
+							}
+						}
+					}
+					
+					for (h, tmpMenu) in self.menu {
+						print("\n\(h)")
+						for item in tmpMenu {
+							print("\(item)")
+						}
+						if tmpMenu.count > 3 {
+							self.menuVC.diningHallArrays[self.newToOld[hall]!] = tmpMenu
+							self.menuVC.saveDiningHallArrays(self.newToOld[hall]!)
+						}
+					}
+				} else {
+					print("Successes: \(self.successes)")
+				}
+				
 			}.resume()
 		}
 	}

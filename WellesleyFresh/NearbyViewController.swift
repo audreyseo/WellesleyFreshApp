@@ -28,7 +28,7 @@ class NearbyViewController: UIViewController, CLLocationManagerDelegate, UIPicke
 	
 	// Leaky beaker: 42.293866, -71.302857,
 	let diningHalls:[String] = ["bplc", "bates", "tower", "stonedavis", "pomeroy"]
-	var names = ["Bao Pao Lu Chow", "Bates", "Tower", "Stone Davis", "Pomeroy"]
+	var names = ["Bae Pao Lu Chow", "Bates", "Tower", "Stone Davis", "Pomeroy"]
 	var menus = [String:[String]]()
 	let diningHallDictionaryKey = "diningHallDictionaryKey"
 	let todaysDateKey = "todaysDateKey"

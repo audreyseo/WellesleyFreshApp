@@ -10,7 +10,7 @@ import UIKit
 
 class MenuViewController: UITableViewController, UIPickerViewDataSource, UIPickerViewDelegate {
 	let diningHalls:[String] = ["bplc", "bates", "tower", "stonedavis", "pomeroy"]
-	let diningHallFull:[String] = ["Bao Pao Lu Chow", "Bates", "Tower", "Stone Davis", "Pomeroy"]
+	let diningHallFull:[String] = ["Bae Pao Lu Chow", "Bates", "Tower", "Stone Davis", "Pomeroy"]
 	var todayString:String = ""
 	var diningHall:String = ""
 	var diningHallName:String = ""
