@@ -338,39 +338,44 @@ class DataLoader {
 					}
 				}
 				
-				self.successes += 1
-				if self.successes == (5 * 3) {
-					for (h, tmpMenu) in self.meal {
-						self.menu[self.newToOld[h]!] = [String]()
-//						for (key, val) in menu {
-						for m in types {
-							if tmpMenu[m]!.count > 0 {
-								self.menu[self.newToOld[h]!] = self.menu[self.newToOld[h]!]! + [(m as NSString).capitalized]
-//								self.menu[h].append(m)
-								//							print("\(h), \(key), \(val)")
-								for (k, v) in  tmpMenu[m]! {
-									self.menu[self.newToOld[h]!]!.append("\(k) - \(v)")
-									//								print("\(hall) \(key): \(k): \(v)")
-								}
-							}
-						}
-					}
-					
-					for (h, tmpMenu) in self.menu {
-						print("\n\(h)")
-						for item in tmpMenu {
-							print("\(item)")
-						}
-						if tmpMenu.count > 3 {
-							self.menuVC.diningHallArrays[self.newToOld[hall]!] = tmpMenu
-							self.menuVC.saveDiningHallArrays(self.newToOld[hall]!)
-						}
-					}
-				} else {
-					print("Successes: \(self.successes)")
-				}
+				self.createMenu()
 				
 			}.resume()
+		}
+	}
+	
+	func createMenu() {
+		let types = ["breakfast", "lunch", "dinner"]
+		self.successes += 1
+		if self.successes == (5 * 3) {
+			for (h, tmpMenu) in self.meal {
+				self.menu[self.newToOld[h]!] = [String]()
+				//						for (key, val) in menu {
+				for m in types {
+					if tmpMenu[m]!.count > 0 {
+						self.menu[self.newToOld[h]!] = self.menu[self.newToOld[h]!]! + [(m as NSString).capitalized]
+						//								self.menu[h].append(m)
+						//							print("\(h), \(key), \(val)")
+						for (k, v) in  tmpMenu[m]! {
+							self.menu[self.newToOld[h]!]!.append("\(k) - \(v)")
+							//								print("\(hall) \(key): \(k): \(v)")
+						}
+					}
+				}
+			}
+			
+			for (h, tmpMenu) in self.menu {
+				print("\n\(h)")
+				for item in tmpMenu {
+					print("\(item)")
+				}
+				if tmpMenu.count > 3 {
+					self.menuVC.diningHallArrays[h] = tmpMenu
+					self.menuVC.saveDiningHallArrays(h)
+				}
+			}
+		} else {
+			print("Successes: \(self.successes)")
 		}
 	}
 }
