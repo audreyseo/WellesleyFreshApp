@@ -28,6 +28,11 @@ class DataLoader {
 	var successes = 0
 //	let hours = DiningHours()
 	
+	var week = WeekRange()
+	
+	var weekRangeKey = "weekRangeKey"
+	var dataKey = "jsonDataKey"
+	
 	init(diningHalls: [String], menuViewController: MenuViewController) {
 		// Init
 		self.diningHalls = diningHalls
@@ -54,7 +59,7 @@ class DataLoader {
 		
 		otherTodayString = MyDateFormatter.string(from: today)
 		
-		MyDateFormatter.dateFormat = "YYYY-MM-d"
+		MyDateFormatter.dateFormat = "YYYY-MM-dd"
 		thirdTodayString = MyDateFormatter.string(from: today)
 		
 		print(otherTodayString, thirdTodayString)
@@ -65,14 +70,20 @@ class DataLoader {
 		// Use the following two lines for debugging purposes, specifically for debugging the regex parsing
 		// and string manipulation, as well as behavior of json parser.
 //		todayString = "1003"
-//		storedData.set("1004", forKey: todaysDateKey)
+		storedData.set("1004", forKey: todaysDateKey)
 //		todayString = "0127"
-//		otherTodayString = "2017/1/27"
-//		thirdTodayString = "2017-01-27"
+//				otherTodayString = "2017/1/27"
+//				thirdTodayString = "2017-01-27"
+		todayString = "0126"
+		otherTodayString = "2017/1/26"
+		thirdTodayString = "2017-01-26"
 		
-		if hasRunAppBefore() && hasAlreadyDownloadedDataToday() {
+		if hasRunAppBefore() && hasAlreadyDownloadedDataToday() && hasDiningHallDictionary() {
 			print("DataLoader Already got data today.")
 			menuVC.diningHallArrays = storedData.dictionary(forKey: diningHallDictionaryKey) as! [String:[String]]
+		} else if sameWeek() {
+			print("Already have data, but need to parse it.")
+			useOldData()
 		} else {
 			if hasRunAppBefore() {
 				print("DataLoader Needed to get data for today.")
@@ -81,10 +92,24 @@ class DataLoader {
 		}
 	}
 	
+	func hasDiningHallDictionary() -> Bool {
+		return storedData.dictionary(forKey: diningHallDictionaryKey) as? [String:[String]] != nil
+	}
+	
 	func setDateAndDownload() {
 		storedData.setValue(todayString, forKey: todaysDateKey)
 		preload()
 		refresh()
+	}
+	
+	func sameWeek() -> Bool {
+		if storedData.string(forKey: weekRangeKey) != nil {
+			let oldrange = storedData.string(forKey: weekRangeKey)
+			if oldrange == week.dateRange {
+				return true
+			}
+		}
+		return false
 	}
 	
 	func hasAlreadyDownloadedDataToday() -> Bool {
@@ -98,7 +123,22 @@ class DataLoader {
 		return storedData.string(forKey: todaysDateKey) != nil
 	}
 	
-	
+	func useOldData() {
+		let types = ["breakfast", "lunch", "dinner"]
+		for i in 0..<diningHalls.count {
+			var lastStation = "Breakfast"
+			for m in types {
+				let data = getDataForHall(hall: diningHalls[i], type: m)
+				if data != nil {
+					let array = getDaysArray(getDataForHall(hall: diningHalls[i], type: m))
+					parseData(hall: diningHalls[i], mealName: m, lastStation: &lastStation, array: array)
+					createMenu()
+				} else {
+					load(diningHalls[i])
+				}
+			}
+		}
+	}
 	
 	func trimDataArray() {
 		for i in 0..<self.dataArray.count {
@@ -127,6 +167,7 @@ class DataLoader {
 			loadNew(newDiningHalls[i])
 		}
 	}
+
 	
 	func refresh() {
 //		if !loadingHall {
@@ -206,6 +247,7 @@ class DataLoader {
 	}
 	
 	
+	
 	// Load the information from a specific dining hall
 	func load(_ hall:String) {
 		menuVC.loadingHall = true
@@ -280,6 +322,34 @@ class DataLoader {
 		}
 	}
 	
+	func getDataForHall(hall: String, type: String) -> Data? {
+		if storedData.dictionary(forKey: dataKey) != nil {
+			if let dict = storedData.dictionary(forKey: dataKey) as? [String: Data] {
+				if let myData = dict["\(hall)-\(type)"] {
+					return myData
+				}
+			}
+		}
+		return nil
+	}
+	
+	func saveDataForHall(hall: String, type: String, data: Data) {
+		if storedData.dictionary(forKey: dataKey) != nil {
+			var dict = storedData.dictionary(forKey: dataKey) as? [String: Data]
+			if dict != nil {
+				dict?["\(hall)-\(type)"] = data
+				storedData.set(dict, forKey: dataKey)
+			} else {
+				dict = [String: Data]()
+				dict?["\(hall)-\(type)"] = data
+				storedData.set(dict, forKey: dataKey)
+			}
+		} else {
+			var dict = [String: Data]()
+			dict["\(hall)-\(type)"] = data
+			storedData.set(dict, forKey: dataKey)
+		}
+	}
 	
 	func loadNew(_ hall: String) {
 		let types = ["breakfast", "lunch", "dinner"]
@@ -292,55 +362,100 @@ class DataLoader {
 		self.meal[hall] = [String: [String: String]]()
 		for i in 0..<types.count {
 			print("")
+			
 			URLSession.shared.dataTask(with: reqs[i]) { (data, response, error) in
 //				let mystring: String! = String(data: data!, encoding: .utf8)
 //				print("\n\nNew Version: |\(mystring)|\n\n")
 				
+				self.saveDataForHall(hall: hall, type: types[i], data: data!)
+				
 				var id = 0
 				
 				self.meal[hall]?[types[i]] = [String: String]()
+				
 				let array = self.getDaysArray(data)
 				
+				self.parseData(hall: hall, mealName: types[i], lastStation: &lastStation, array: array)
 				
-				if array != nil {
-					for item in array! {
-						let isSectionTitle = item["is_section_title"] as? Bool
-						let isStationHeader = item["is_station_header"] as? Bool
-						if isSectionTitle != nil || isStationHeader != nil {
-							if isSectionTitle! || isStationHeader! {
-								lastStation = item["text"] as! String
-								if let num = item["station_id"] as? Int {
-									id = num
-								}
-							}
+//				if array != nil {
+//					for item in array! {
+//						let isSectionTitle = item["is_section_title"] as? Bool
+//						let isStationHeader = item["is_station_header"] as? Bool
+//						if isSectionTitle != nil || isStationHeader != nil {
+//							if isSectionTitle! || isStationHeader! {
+//								lastStation = item["text"] as! String
+//								if let num = item["station_id"] as? Int {
+//									id = num
+//								}
+//							}
+//						}
+//						
+//						if let val = item["food"] as? [String: Any] {
+//							//												print("Food name: \(val["name"])")
+//							if val["name"] != nil {
+//								self.recordMeal(hall: hall, mealName: types[i], lastStation: lastStation, newVal: val["name"] as! String)
+//							}
+//						}
+//						
+//						if let rawVal = item["text"] {
+//							if let num = item["station_id"] as? Int {
+//								if num == id {
+//									if item["text"] as! String != lastStation {
+//										if let val = rawVal as? String {
+//											if val != "" {
+//												self.recordMeal(hall: hall, mealName: types[i], lastStation: lastStation, newVal: val)
+//											}
+//										}
+//									}
+//								}
+//							}
+//						}
+//					}
+//				}
+				
+				self.createMenu()
+				
+			}.resume()
+		}
+	}
+	
+	func parseData(hall: String, mealName: String, lastStation: inout String, array: [[String: Any]]?) {
+		var id = 0
+//		let types = ["breakfast", "lunch", "dinner"]
+		if array != nil {
+			for item in array! {
+				let isSectionTitle = item["is_section_title"] as? Bool
+				let isStationHeader = item["is_station_header"] as? Bool
+				if isSectionTitle != nil || isStationHeader != nil {
+					if isSectionTitle! || isStationHeader! {
+						lastStation = item["text"] as! String
+						if let num = item["station_id"] as? Int {
+							id = num
 						}
-						
-						if let val = item["food"] as? [String: Any] {
-							//												print("Food name: \(val["name"])")
-							if val["name"] != nil {
-								self.recordMeal(hall: hall, mealName: types[i], lastStation: lastStation, newVal: val["name"] as! String)
-							}
-						}
-						
-						if let rawVal = item["text"] {
-							if let num = item["station_id"] as? Int {
-								if num == id {
-									if item["text"] as! String != lastStation {
-										if let val = rawVal as? String {
-											if val != "" {
-												self.recordMeal(hall: hall, mealName: types[i], lastStation: lastStation, newVal: val)
-											}
-										}
+					}
+				}
+				
+				if let val = item["food"] as? [String: Any] {
+					//												print("Food name: \(val["name"])")
+					if val["name"] != nil {
+						self.recordMeal(hall: hall, mealName: mealName, lastStation: lastStation, newVal: val["name"] as! String)
+					}
+				}
+				
+				if let rawVal = item["text"] {
+					if let num = item["station_id"] as? Int {
+						if num == id {
+							if item["text"] as! String != lastStation {
+								if let val = rawVal as? String {
+									if val != "" {
+										self.recordMeal(hall: hall, mealName: mealName, lastStation: lastStation, newVal: val)
 									}
 								}
 							}
 						}
 					}
 				}
-				
-				self.createMenu()
-				
-			}.resume()
+			}
 		}
 	}
 	
@@ -374,6 +489,8 @@ class DataLoader {
 					self.menuVC.saveDiningHallArrays(h)
 				}
 			}
+			
+			storedData.set(week.dateRange, forKey: weekRangeKey)
 		} else {
 			print("Successes: \(self.successes)")
 		}
