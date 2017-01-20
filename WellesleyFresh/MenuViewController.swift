@@ -45,11 +45,12 @@ class MenuViewController: UITableViewController, UIPickerViewDataSource, UIPicke
 	let cellHeight:Int = 60
 	
 	var data: DataLoader!
+	var hasDataLoaded = false
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		
-		data = DataLoader(diningHalls: diningHalls, menuViewController: self)
+		loadData()
 		
 		/*// Get an NSDate object
 		var today:Date
@@ -130,7 +131,9 @@ class MenuViewController: UITableViewController, UIPickerViewDataSource, UIPicke
 	}
 	
 	func loadData() {
-		data = DataLoader(diningHalls: diningHalls, menuViewController: self)
+		if !hasDataLoaded {
+			data = DataLoader(diningHalls: diningHalls, menuViewController: self)
+		}
 	}
 	
 	override func viewWillAppear(_ animated: Bool) {

@@ -130,14 +130,22 @@ class DataLoader {
 		for i in 0..<diningHalls.count {
 			var lastStation = "Breakfast"
 			for m in types {
-				let data = getDataForHall(hall: diningHalls[i], type: m)
+				let data = getDataForHall(hall: newDiningHalls[i], type: m)
 				if data != nil {
 					let array = getDaysArray(data)
-					parseData(hall: diningHalls[i], mealName: m, lastStation: &lastStation, array: array)
-					createMenu()
+//					print("Array: \(array)")
+					if array != nil {
+						parseData(hall: newDiningHalls[i], mealName: m, lastStation: &lastStation, array: array)
+						createMenu()
+					} else {
+						load(diningHalls[i])
+						loadNew(newDiningHalls[i])
+						break;
+					}
 				} else {
 					load(diningHalls[i])
-					loadNew(diningHalls[i])
+					loadNew(newDiningHalls[i])
+					break;
 				}
 			}
 		}
@@ -295,7 +303,18 @@ class DataLoader {
 			temp = "\(newVal)"
 		}
 		
+		if self.meal[hall] == nil {
+			self.meal[hall] = [String: [String: String]]()
+		}
+		
+		if self.meal[hall]?[mealName] == nil {
+			self.meal[hall]?[mealName] = [String: String]()
+		}
+		
+		print("\(hall):\(mealName):\(lastStation):\(temp)")
+		
 		self.meal[hall]?[mealName]?[lastStation] = temp
+		
 	}
 	
 	func getDaysArray(_ data: Data?) -> [[String: Any]]? {
