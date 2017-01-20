@@ -70,13 +70,14 @@ class DataLoader {
 		// Use the following two lines for debugging purposes, specifically for debugging the regex parsing
 		// and string manipulation, as well as behavior of json parser.
 //		todayString = "1003"
-		storedData.set("1004", forKey: todaysDateKey)
-//		todayString = "0127"
-//				otherTodayString = "2017/1/27"
-//				thirdTodayString = "2017-01-27"
-		todayString = "0126"
-		otherTodayString = "2017/1/26"
-		thirdTodayString = "2017-01-26"
+//		storedData.set("1004", forKey: todaysDateKey)
+		todayString = "0127"
+		otherTodayString = "2017/1/27"
+		thirdTodayString = "2017-01-27"
+//		todayString = "0126"
+//		otherTodayString = "2017/1/26"
+//		thirdTodayString = "2017-01-26"
+//		storedData.set("", forKey: weekRangeKey)
 		
 		if hasRunAppBefore() && hasAlreadyDownloadedDataToday() && hasDiningHallDictionary() {
 			print("DataLoader Already got data today.")
@@ -124,17 +125,19 @@ class DataLoader {
 	}
 	
 	func useOldData() {
+		storedData.setValue(todayString, forKey: todaysDateKey)
 		let types = ["breakfast", "lunch", "dinner"]
 		for i in 0..<diningHalls.count {
 			var lastStation = "Breakfast"
 			for m in types {
 				let data = getDataForHall(hall: diningHalls[i], type: m)
 				if data != nil {
-					let array = getDaysArray(getDataForHall(hall: diningHalls[i], type: m))
+					let array = getDaysArray(data)
 					parseData(hall: diningHalls[i], mealName: m, lastStation: &lastStation, array: array)
 					createMenu()
 				} else {
 					load(diningHalls[i])
+					loadNew(diningHalls[i])
 				}
 			}
 		}
@@ -296,6 +299,7 @@ class DataLoader {
 	}
 	
 	func getDaysArray(_ data: Data?) -> [[String: Any]]? {
+//		var error: Error
 		do {
 			let json = try JSONSerialization.jsonObject(with: data!, options: [])
 			print("getDaysArray(): Succeeded.")
@@ -315,9 +319,13 @@ class DataLoader {
 //					break;
 				}
 			}
+			print("Could not find the date \(self.thirdTodayString) in this data.")
 			return nil
-		} catch {
-			print("getDaysArray(): Error occurred in JSON serialization.")
+		} catch let error as Error {
+			print("\n\ngetDaysArray(): Error occurred in JSON serialization.")
+			print("getDaysArray(): \(error)")
+			let mystring: String! = String(data: data!, encoding: .utf8)
+			print("New Version: |\(mystring)|\n\n")
 			return nil
 		}
 	}
@@ -326,9 +334,16 @@ class DataLoader {
 		if storedData.dictionary(forKey: dataKey) != nil {
 			if let dict = storedData.dictionary(forKey: dataKey) as? [String: Data] {
 				if let myData = dict["\(hall)-\(type)"] {
+					print("\(hall)-\(type): Has my data.")
 					return myData
+				} else {
+					print("\(hall)-\(type): Has dictionary but not my data.")
 				}
+			} else {
+				print("\(hall)-\(type): Has something in the dictionary lot but not the dictionary.")
 			}
+		} else {
+			print("\(hall)-\(type): Does not have dictionary.")
 		}
 		return nil
 	}
@@ -337,14 +352,17 @@ class DataLoader {
 		if storedData.dictionary(forKey: dataKey) != nil {
 			var dict = storedData.dictionary(forKey: dataKey) as? [String: Data]
 			if dict != nil {
+				print("\(hall)-\(type): Dictionary not nil and storing data.")
 				dict?["\(hall)-\(type)"] = data
 				storedData.set(dict, forKey: dataKey)
 			} else {
+				print("\(hall)-\(type): Dictionary nil but storing data.")
 				dict = [String: Data]()
 				dict?["\(hall)-\(type)"] = data
 				storedData.set(dict, forKey: dataKey)
 			}
 		} else {
+			print("\(hall)-\(type): Has not stored dictionary before and storing data.")
 			var dict = [String: Data]()
 			dict["\(hall)-\(type)"] = data
 			storedData.set(dict, forKey: dataKey)
@@ -422,6 +440,7 @@ class DataLoader {
 	func parseData(hall: String, mealName: String, lastStation: inout String, array: [[String: Any]]?) {
 		var id = 0
 //		let types = ["breakfast", "lunch", "dinner"]
+		print("Array not nil?: \(array != nil)")
 		if array != nil {
 			for item in array! {
 				let isSectionTitle = item["is_section_title"] as? Bool
@@ -463,17 +482,24 @@ class DataLoader {
 		let types = ["breakfast", "lunch", "dinner"]
 		self.successes += 1
 		if self.successes == (5 * 3) {
+			print("Creating menu.")
+			print("\n\nMeals:\n\(self.meal)\n\n")
+			for (k, v) in self.meal {
+				print("\(k): \(v)")
+			}
 			for (h, tmpMenu) in self.meal {
 				self.menu[self.newToOld[h]!] = [String]()
 				//						for (key, val) in menu {
 				for m in types {
-					if tmpMenu[m]!.count > 0 {
-						self.menu[self.newToOld[h]!] = self.menu[self.newToOld[h]!]! + [(m as NSString).capitalized]
-						//								self.menu[h].append(m)
-						//							print("\(h), \(key), \(val)")
-						for (k, v) in  tmpMenu[m]! {
-							self.menu[self.newToOld[h]!]!.append("\(k) - \(v)")
-							//								print("\(hall) \(key): \(k): \(v)")
+					if tmpMenu[m] != nil {
+						if tmpMenu[m]!.count > 0 {
+							self.menu[self.newToOld[h]!] = self.menu[self.newToOld[h]!]! + [(m as NSString).capitalized]
+							//								self.menu[h].append(m)
+							//							print("\(h), \(key), \(val)")
+							for (k, v) in  tmpMenu[m]! {
+								self.menu[self.newToOld[h]!]!.append("\(k) - \(v)")
+								//								print("\(hall) \(key): \(k): \(v)")
+							}
 						}
 					}
 				}
@@ -485,6 +511,7 @@ class DataLoader {
 					print("\(item)")
 				}
 				if tmpMenu.count > 3 {
+					print("\nSaving menu.")
 					self.menuVC.diningHallArrays[h] = tmpMenu
 					self.menuVC.saveDiningHallArrays(h)
 				}

@@ -53,6 +53,7 @@ class WeekRange {
 	
 	func get(direction: SearchDirection, _ dayName: String, considerToday consider: Bool = false) -> Date {
 		let weekdaysName = getWeekDaysInEnglish()
+		print("Our weekday: \(dayName)")
 		
 		assert(weekdaysName.contains(dayName), "weekday symbol should be in form \(weekdaysName)")
 		

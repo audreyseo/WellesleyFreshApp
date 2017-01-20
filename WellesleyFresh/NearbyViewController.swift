@@ -447,6 +447,7 @@ class NearbyViewController: UIViewController, CLLocationManagerDelegate, UIPicke
 			
 			print("\nscrollToNextMeal()")
 			print("Next meal: \(nextMeal)")
+			print("Chosen short: \(chosenShort)")
 			let array:[String] = menus[chosenShort]!
 			let ind = array.index(of: nextMeal)
 			if ind != nil {
@@ -709,7 +710,10 @@ class NearbyViewController: UIViewController, CLLocationManagerDelegate, UIPicke
 			if indices[i] >= 0 {
 				diningHallNames[i] = names[indices[i]]
 				diningHallNamesShort[i] = diningHalls[indices[i]]
-
+				if i == 0 {
+					chosenShort = diningHallNamesShort[i]
+					chosenDiningHall = diningHallNames[i]
+				}
 			}
 		}
 		hallPicker.reloadAllComponents()
