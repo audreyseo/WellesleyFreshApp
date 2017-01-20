@@ -22,6 +22,7 @@ class DataLoader {
 //	var diningHallArrays: [String: [String]] = [String: [String]]()
 	var diningHall: String = ""
 	var menuVC: MenuViewController
+	var meal = [String: [String: [String: String]]]()
 //	let hours = DiningHours()
 	
 	init(diningHalls: [String], menuViewController: MenuViewController) {
@@ -272,20 +273,28 @@ class DataLoader {
 		
 		for i in 0..<types.count {
 			print("")
+			
+//			var meal = [String: [String: String]]()
+			
 			URLSession.shared.dataTask(with: reqs[i]) { (data, response, error) in
 				let mystring: String! = String(data: data!, encoding: .utf8)
 //				print("\n\nNew Version: |\(mystring)|\n\n")
 				do {
 					let json = try JSONSerialization.jsonObject(with: data!, options: [])
 					print("\(hall) \(types[i]): Succeeded.")
+					
+					if hall == "bae-pao-lu-chow" && types[i] == "breakfast" {
+						print("\n|\(mystring)|\n")
+					}
 					let dictionary = json as! [String: Any]
 					let daysArray = dictionary["days"] as! [[String: Any]]
 					
 					var id = 0
+					self.meal[hall] = [String: [String: String]]()
+					self.meal[hall]?[types[i]] = [String: String]()
 					
 					
-					var meal = [String: String]()
-					var array: [[String: Any]]!
+					var array: [[String: Any]]?
 					for d in 0..<daysArray.count {
 						let dict = daysArray[d] //as! [String: Any]
 						let date = dict["date"] as! String
@@ -293,59 +302,63 @@ class DataLoader {
 						if date == self.thirdTodayString {
 //							print("\(hall) \(types[i]): Found the right date")
 //							ind = i
-							array = dict["menu_items"] as! [[String: Any]]
+							array = dict["menu_items"] as? [[String: Any]]
 							break;
 						}
 					}
-					let possibles = ["is_section_title", "food", "text", "is_station_header", "station_id"]
-//							print(dict)
-					for item in array {
-//								print("\n")
-						if let isSectionTitle = item["is_section_title"] as? Bool {
-							if isSectionTitle {
-								lastStation = item["text"] as! String
-								if let num = item["station_id"] as? Int {
-									id = num
-								}
-							}
-						}
-						
-						if let isStationHeader = item["is_station_header"] as? Bool {
-							if isStationHeader {
-								lastStation = item["text"] as! String
-								if let num = item["sattion_id"] as? Int {
-									id = num
-								}
-							}
-						}
-						
-						if let val = item["food"] as? [String: Any] {
-							//												print("Food name: \(val["name"])")
-							if val["name"] != nil {
-								if meal[lastStation] != nil {
-									meal[lastStation] = meal[lastStation]! + ", \(val["name"] as! String)"
-								} else if lastStation == "Breakfast" {
-									if meal[lastStation] != nil {
-										meal[lastStation] = meal[lastStation]! + ", \(val["name"] as! String)"
-									} else {
-										meal[lastStation] = "\(val["name"] as! String)"
+					
+					if array == nil {
+						// do nothing
+					} else {
+						//							print(dict)
+						for item in array! {
+							//								print("\n")
+							if let isSectionTitle = item["is_section_title"] as? Bool {
+								if isSectionTitle {
+									lastStation = item["text"] as! String
+									if let num = item["station_id"] as? Int {
+										id = num
 									}
-								} else {
-									meal[lastStation] = "\(val["name"] as! String)"
 								}
 							}
-						}
-						
-						if let rawVal = item["text"] {
-							if let num = item["station_id"] as? Int {
-								if num == id {
-									if item["text"] as! String != lastStation {
-										if let val = rawVal as? String {
-											if val != "" {
-												if meal[lastStation] != nil {
-													meal[lastStation] = meal[lastStation]! + ", \(val)"
-												} else {
-													meal[lastStation] = "\(val)"
+							
+							if let isStationHeader = item["is_station_header"] as? Bool {
+								if isStationHeader {
+									lastStation = item["text"] as! String
+									if let num = item["sattion_id"] as? Int {
+										id = num
+									}
+								}
+							}
+							
+							if let val = item["food"] as? [String: Any] {
+								//												print("Food name: \(val["name"])")
+								if val["name"] != nil {
+									if self.meal[hall]?[types[i]]?[lastStation] != nil {
+										self.meal[hall]?[types[i]]?[lastStation] = (self.meal[hall]?[types[i]]?[lastStation]!)! + ", \(val["name"] as! String)"
+									} else if lastStation == "Breakfast" {
+										if self.meal[hall]?[types[i]]?[lastStation] != nil {
+											self.meal[hall]?[types[i]]?[lastStation] = (self.meal[hall]?[types[i]]?[lastStation]!)! + ", \(val["name"] as! String)"
+										} else {
+											self.meal[hall]?[types[i]]?[lastStation] = "\(val["name"] as! String)"
+										}
+									} else {
+										self.meal[hall]?[types[i]]?[lastStation] = "\(val["name"] as! String)"
+									}
+								}
+							}
+							
+							if let rawVal = item["text"] {
+								if let num = item["station_id"] as? Int {
+									if num == id {
+										if item["text"] as! String != lastStation {
+											if let val = rawVal as? String {
+												if val != "" {
+													if self.meal[hall]?[types[i]]?[lastStation] != nil {
+														self.meal[hall]?[types[i]]?[lastStation] = (self.meal[hall]?[types[i]]?[lastStation]!)! + ", \(val)"
+													} else {
+														self.meal[hall]?[types[i]]?[lastStation] = "\(val)"
+													}
 												}
 											}
 										}
@@ -353,63 +366,16 @@ class DataLoader {
 								}
 							}
 						}
-						
-//						for (k, v) in item {
-//							if possibles.contains(k) {
-//								if k == "is_section_title" {
-//									if v as! Bool == true {
-//										lastStation = item["text"] as! String
-////												meal[lastStation] = ""
-//										if let num = item["station_id"] as? Int {
-//											id = num
-//										}
-//									}
-//								}
-////										print("New Version for \(hall) \(types[i]): \(k): \(v)")
-//								if k == "food" {
-//									if let val = v as? [String: Any] {
-////												print("Food name: \(val["name"])")
-//										if val["name"] != nil {
-//											if meal[lastStation] != nil {
-//												meal[lastStation] = meal[lastStation]! + ", \(val["name"] as! String)"
-//											} else if lastStation == "Breakfast" {
-//												if meal[lastStation] != nil {
-//													meal[lastStation] = meal[lastStation]! + ", \(val["name"] as! String)"
-//												} else {
-//													meal[lastStation] = "\(val["name"] as! String)"
-//												}
-//											} else {
-//												meal[lastStation] = "\(val["name"] as! String)"
-//											}
-//										}
-//									}
-//								} else if k == "text" {
-//									if let num = item["station_id"] as? Int {
-//										if num == id {
-//											if item["text"] as! String != lastStation {
-//												if let val = v as? String {
-//													if val != "" {
-//														if meal[lastStation] != nil {
-//															meal[lastStation] = meal[lastStation]! + ", \(val)"
-//														} else {
-//															meal[lastStation] = "\(val)"
-//														}
-//													}
-//												}
-//											}
-//										}
-//									}
-//								}
-//							}
-//						}
 					}
-//							print("\n\n")
 					
-					for (k, v) in meal {
-						print("\(hall) \(types[i]): \(k): \(v)")
+					for (key, val) in self.meal[hall]! {
+						for (k, v) in val {
+							print("\(hall) \(key): \(k): \(v)")
+						}
 					}
+					
 				} catch {
-					print("Error occurred with hall \(hall), meal: \(reqs[i]).")
+					print("Error occurred with hall \(hall), self.meal: \(reqs[i]).")
 				}
 			}.resume()
 		}
