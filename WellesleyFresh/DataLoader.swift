@@ -40,8 +40,6 @@ class DataLoader {
 		var today:Date
 		today = Date.init()
 		
-		
-		
 		// Create a date formatter
 		let MyDateFormatter = DateFormatter()
 		MyDateFormatter.locale = Locale(identifier: "en_US_POSIX")
@@ -67,30 +65,18 @@ class DataLoader {
 		// Use the following two lines for debugging purposes, specifically for debugging the regex parsing
 		// and string manipulation, as well as behavior of json parser.
 //		todayString = "1003"
-		storedData.set("1004", forKey: todaysDateKey)
-		todayString = "0127"
-		otherTodayString = "2017/1/27"
-		thirdTodayString = "2017-01-27"
+//		storedData.set("1004", forKey: todaysDateKey)
+//		todayString = "0127"
+//		otherTodayString = "2017/1/27"
+//		thirdTodayString = "2017-01-27"
 		
 		if hasRunAppBefore() && hasAlreadyDownloadedDataToday() {
-//			if hasAlreadyDownloadedDataToday() {
-				print("DataLoader Already got data today.")
-				menuVC.diningHallArrays = storedData.dictionary(forKey: diningHallDictionaryKey) as! [String:[String]]
-//				menuVC.diningHallArrays = diningHallArrays
-//			} else {
-//				print("DataLoader Needed to get data for today.")
-//				storedData.setValue(todayString, forKey: todaysDateKey)
-//				preload()
-//				refresh()
-//				setDateAndDownload()
-//			}
+			print("DataLoader Already got data today.")
+			menuVC.diningHallArrays = storedData.dictionary(forKey: diningHallDictionaryKey) as! [String:[String]]
 		} else {
 			if hasRunAppBefore() {
 				print("DataLoader Needed to get data for today.")
 			}
-//			storedData.setValue(todayString, forKey: todaysDateKey)
-//			preload()
-//			refresh()
 			setDateAndDownload()
 		}
 	}
@@ -248,24 +234,6 @@ class DataLoader {
 			self.menuVC.loadingHall = false;
 			
 			}.resume()
-		
-		
-//		let rq = makeRestApiDiningHallUrlRequest(hall)
-//		
-//		URLSession.shared.dataTask(with: rq) { (data, response, error) in
-//			let mystring: String! = String(data: data!, encoding: .utf8)
-//			print("\n\nNew Version: |\(mystring)|\n\n")
-//			do {
-//				let json = try JSONSerialization.jsonObject(with: data!, options: [])
-//				let dictionary = json as! [String: Any]
-//				print("Succeeded.")
-//				for (k, v) in dictionary {
-//					print("New Version: \(k): \(v)")
-//				}
-//			} catch {
-//				print("Error occurred.")
-//			}
-//		}.resume()
 	}
 	
 	func recordMeal(hall: String, mealName: String, lastStation: String, newVal: String) {
@@ -293,7 +261,7 @@ class DataLoader {
 			let dictionary = json as! [String: Any]
 			let daysArray = dictionary["days"] as! [[String: Any]]
 			
-			var array: [[String: Any]]?
+//			var array: [[String: Any]]?
 			for d in 0..<daysArray.count {
 				let dict = daysArray[d] //as! [String: Any]
 				let date = dict["date"] as! String
@@ -325,7 +293,7 @@ class DataLoader {
 		for i in 0..<types.count {
 			print("")
 			URLSession.shared.dataTask(with: reqs[i]) { (data, response, error) in
-				let mystring: String! = String(data: data!, encoding: .utf8)
+//				let mystring: String! = String(data: data!, encoding: .utf8)
 //				print("\n\nNew Version: |\(mystring)|\n\n")
 				
 				var id = 0
@@ -371,14 +339,6 @@ class DataLoader {
 				}
 				
 				self.successes += 1
-				
-//				for (key, val) in self.meal[hall]! {
-//					print("\(key), \(val)")
-////					for (k, v) in val {
-////						print("\(hall) \(key): \(k): \(v)")
-////					}
-//				}
-				
 				if self.successes == (5 * 3) {
 					for (h, tmpMenu) in self.meal {
 						self.menu[self.newToOld[h]!] = [String]()
