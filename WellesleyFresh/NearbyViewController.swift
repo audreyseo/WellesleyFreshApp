@@ -431,12 +431,12 @@ class NearbyViewController: UIViewController, CLLocationManagerDelegate, UIPicke
 			let todayString:String = MyDateFormatter.string(from: today)
 			print(storedDateKey, "vs", todayString)
 			
-//			if (storedDateKey == todayString) {
+			if (storedDateKey == todayString) {
 				menus = storedData.dictionary(forKey: diningHallDictionaryKey) as! [String:[String]]
 				newCellsInsertion()
 				retitleHeader()
 				scrollToNextMeal()
-//			}
+			}
 		}
 		
 	}
