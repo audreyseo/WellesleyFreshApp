@@ -19,6 +19,8 @@ class AboutPageViewController:UITableViewController, MFMailComposeViewController
 		"This app is officially associated with neither the Wellesley Fresh team nor Wellesley College, but is however programmed and designed by a Wellesley College student, Audrey Seo, for their fellow students.",
 		"Tap here to contribute to the Wellesley Fresh App open-source project on GitHub.",
 		"Credits",
+		"App Icon Designer",
+		"Abigail Conte '20",
 		"App Testers",
 		"Auriel Haack '20",
 		"Minnie Seo",
@@ -28,8 +30,6 @@ class AboutPageViewController:UITableViewController, MFMailComposeViewController
 		"Consultants",
 		"Graphics",
 		"Claire Seo",
-		"App Icon Designer",
-		"Abigail Conte '20",
 		"Comments? Questions? Bugs? Email me."]
 	let types:[AboutCellStyle] = [
 		.title,
@@ -40,6 +40,8 @@ class AboutPageViewController:UITableViewController, MFMailComposeViewController
 		.firstLevel,
 		.secondLevel,
 		.thirdLevel,
+		.secondLevel,
+		.thirdLevel,
 		.thirdLevel,
 		.secondLevel,
 		.thirdLevel,
@@ -47,8 +49,6 @@ class AboutPageViewController:UITableViewController, MFMailComposeViewController
 		.secondLevel,
 		.thirdLevel,
 		.fourthLevel,
-		.secondLevel,
-		.thirdLevel,
 		.button
 	]
 	
