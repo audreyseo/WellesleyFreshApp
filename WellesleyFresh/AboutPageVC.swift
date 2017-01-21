@@ -28,7 +28,7 @@ class AboutPageViewController:UITableViewController, MFMailComposeViewController
 		"Consultants",
 		"Graphics",
 		"Claire Seo",
-		"App Icon",
+		"App Icon Designer",
 		"Abigail Conte '20",
 		"Comments? Questions? Bugs? Email me."]
 	let types:[AboutCellStyle] = [
