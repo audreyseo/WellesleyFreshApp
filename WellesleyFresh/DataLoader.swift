@@ -82,6 +82,7 @@ class DataLoader {
 		if hasRunAppBefore() && hasAlreadyDownloadedDataToday() && hasDiningHallDictionary() {
 			print("DataLoader Already got data today.")
 			menuVC.diningHallArrays = storedData.dictionary(forKey: diningHallDictionaryKey) as! [String:[String]]
+			menuVC.doneAssigning()
 		} else if sameWeek() {
 			print("Already have data, but need to parse it.")
 			useOldData()

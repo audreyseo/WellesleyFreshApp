@@ -50,6 +50,11 @@ class MenuViewController: UITableViewController, UIPickerViewDataSource, UIPicke
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		
+		if diningHall == "" {
+			diningHall = diningHalls[0]
+			diningHallName = diningHallFull[0]
+		}
+		
 		loadData()
 		
 		/*// Get an NSDate object
@@ -127,11 +132,6 @@ class MenuViewController: UITableViewController, UIPickerViewDataSource, UIPicke
 		hallInputView.addSubview(hallPicker)
 		hallInputView.isHidden = false
 		hallInputView.backgroundColor = UIColor.white
-		
-		if diningHall == "" {
-			diningHall = diningHalls[0]
-			diningHallName = diningHallFull[0]
-		}
 		
 		self.navigationController?.view.addSubview(hallInputView)
 	}
@@ -490,6 +490,18 @@ class MenuViewController: UITableViewController, UIPickerViewDataSource, UIPicke
 		self.storedData.set(self.diningHallArrays, forKey: self.diningHallDictionaryKey)
 		for i in 0...(self.storedData.dictionary(forKey: self.diningHallDictionaryKey) as! [String: [String]])[hall]!.count - 1 {
 			print("The new string: |\((self.storedData.dictionary(forKey: self.diningHallDictionaryKey) as! [String: [String]])[hall]![i])|")
+		}
+	}
+	
+	
+	// Function for DataLoader to call once it's done adding data to MenuViewController
+	func doneAssigning() {
+		print("\nDone assigning.")
+//		print("\(self.diningHallArrays[self.diningHall])\n")
+//		print("\(self.diningHall)")
+		if self.diningHallArrays[self.diningHall] != nil {
+			self.items = self.diningHallArrays[self.diningHall]!
+			self.tableView.reloadData()
 		}
 	}
 	
