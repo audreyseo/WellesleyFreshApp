@@ -127,6 +127,12 @@ class MenuViewController: UITableViewController, UIPickerViewDataSource, UIPicke
 		hallInputView.addSubview(hallPicker)
 		hallInputView.isHidden = false
 		hallInputView.backgroundColor = UIColor.white
+		
+		if diningHall == "" {
+			diningHall = diningHalls[0]
+			diningHallName = diningHallFull[0]
+		}
+		
 		self.navigationController?.view.addSubview(hallInputView)
 	}
 	
@@ -209,13 +215,13 @@ class MenuViewController: UITableViewController, UIPickerViewDataSource, UIPicke
 		return 2
 	}
 	
-	override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-		if section == 0 {
-			return self.diningHall
-		} else {
-			return ""
-		}
-	}
+//	override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+//		if section == 0 {
+//			return self.diningHallName
+//		} else {
+//			return ""
+//		}
+//	}
 	
 	
 	override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -242,7 +248,7 @@ class MenuViewController: UITableViewController, UIPickerViewDataSource, UIPicke
 		myHeader.contentView.backgroundColor = UIColor.groupTableViewBackground
 		if section == 0 {
 			
-			myHeader.nameLabel.text = self.diningHall
+			myHeader.nameLabel.text = self.diningHallName
 			//		myHeader.myTableViewController = self
 		}
 		return myHeader
@@ -279,7 +285,12 @@ class MenuViewController: UITableViewController, UIPickerViewDataSource, UIPicke
 	}
 	
 	func showPickerView() {
-		previousDiningHall = diningHall;
+		print("\nShowing picker view.")
+		previousDiningHall = diningHall
+		if diningHall == "" {
+			diningHall = diningHalls[0]
+			diningHallName = diningHallFull[0]
+		}
 		self.hallInputView.isHidden = false
 		self.view.bringSubview(toFront: hallInputView)
 	}
