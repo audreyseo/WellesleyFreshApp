@@ -46,9 +46,10 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8Pm-wd-l4T">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="8Pm-wd-l4T">
                                 <rect key="frame" x="17" y="267" width="341" height="30"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                 <state key="normal" title="Display a menu from the three closest dining halls"/>
                                 <connections>
                                     <action selector="showSelector" destination="9pv-A4-QxB" eventType="touchUpInside" id="OKP-ug-46h"/>
@@ -59,8 +60,10 @@
                         <constraints>
                             <constraint firstItem="8Pm-wd-l4T" firstAttribute="top" secondItem="Evc-q6-Zn8" secondAttribute="bottom" constant="27" id="32d-5h-Fcc"/>
                             <constraint firstItem="Evc-q6-Zn8" firstAttribute="centerX" secondItem="tsR-hK-woN" secondAttribute="centerX" id="F8G-m6-vfd"/>
+                            <constraint firstItem="8Pm-wd-l4T" firstAttribute="leading" secondItem="tsR-hK-woN" secondAttribute="leadingMargin" constant="1" id="MvH-Jd-TUn"/>
                             <constraint firstItem="Evc-q6-Zn8" firstAttribute="leading" secondItem="tsR-hK-woN" secondAttribute="leadingMargin" constant="-18" id="Rz1-Hy-gWa"/>
                             <constraint firstItem="8Pm-wd-l4T" firstAttribute="centerX" secondItem="tsR-hK-woN" secondAttribute="centerX" id="Svl-80-LeB"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="8Pm-wd-l4T" secondAttribute="trailing" constant="1" id="WXo-Kw-pQX"/>
                             <constraint firstItem="P5a-3Y-f7f" firstAttribute="top" secondItem="Evc-q6-Zn8" secondAttribute="bottom" constant="8" id="Yb0-4x-dav"/>
                             <constraint firstItem="NIk-5E-BBf" firstAttribute="top" secondItem="Evc-q6-Zn8" secondAttribute="bottom" constant="8" id="ZBi-Zt-mRa"/>
                             <constraint firstItem="fn2-UC-Hpv" firstAttribute="leading" secondItem="NIk-5E-BBf" secondAttribute="trailing" constant="4" id="ai1-2p-1Zs"/>
