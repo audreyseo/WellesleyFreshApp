@@ -284,6 +284,7 @@ class MenuViewController: UITableViewController, UIPickerViewDataSource, UIPicke
 	func madeSelection() {
 		self.hallInputView.isHidden = true;
 		print("Made selection: \(diningHall).")
+		self.navigationItem.title = "Menu - \(diningHallName)"
 		choose()
 	}
 	
