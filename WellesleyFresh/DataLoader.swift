@@ -71,9 +71,9 @@ class DataLoader {
 		// and string manipulation, as well as behavior of json parser.
 //		todayString = "1003"
 //		storedData.set("1004", forKey: todaysDateKey)
-		todayString = "0127"
-		otherTodayString = "2017/1/27"
-		thirdTodayString = "2017-01-27"
+//		todayString = "0127"
+//		otherTodayString = "2017/1/27"
+//		thirdTodayString = "2017-01-27"
 //		todayString = "0126"
 //		otherTodayString = "2017/1/26"
 //		thirdTodayString = "2017-01-26"
