@@ -17,7 +17,8 @@ class ProgressCell: MyCell {
 		label.text = ""
 		label.textAlignment = NSTextAlignment.right
 		label.translatesAutoresizingMaskIntoConstraints = false
-		label.font = UIFont.systemFont(ofSize: 10)
+		label.font = UIFont.monospacedDigitSystemFont(ofSize: 10, weight: 0.02)
+//		label.font = UIFont.systemFont(ofSize: 10)
 		label.numberOfLines = 0
 		return label
 	}()
@@ -27,7 +28,8 @@ class ProgressCell: MyCell {
 		label.text = ""
 		label.textAlignment = NSTextAlignment.left
 		label.translatesAutoresizingMaskIntoConstraints = false
-		label.font = UIFont.systemFont(ofSize: 10)
+		label.font = UIFont.monospacedDigitSystemFont(ofSize: 10, weight: 0.02)
+//		label.font = UIFont.systemFont(ofSize: 10)
 		label.numberOfLines = 0
 		return label
 	}()
