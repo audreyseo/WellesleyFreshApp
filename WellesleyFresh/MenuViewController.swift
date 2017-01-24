@@ -16,6 +16,7 @@ class MenuViewController: UITableViewController, UIPickerViewDataSource, UIPicke
 	var diningHallName:String = ""
 	var previousDiningHall:String = ""
 	var items = [String]()
+	var mealItemCounts = [Int]()
 	var normalArray = [String]()
 	
 	var loadingHall:Bool = false
@@ -46,6 +47,8 @@ class MenuViewController: UITableViewController, UIPickerViewDataSource, UIPicke
 	
 	var data: DataLoader!
 	var hasDataLoaded = false
+	
+	var meals: [String] = [String]()
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
@@ -491,6 +494,10 @@ class MenuViewController: UITableViewController, UIPickerViewDataSource, UIPicke
 		for i in 0...(self.storedData.dictionary(forKey: self.diningHallDictionaryKey) as! [String: [String]])[hall]!.count - 1 {
 			print("The new string: |\((self.storedData.dictionary(forKey: self.diningHallDictionaryKey) as! [String: [String]])[hall]![i])|")
 		}
+		
+		countMeals()
+		print("Number of meals: \(self.meals.count)")
+		print("Meal counts: \(self.mealItemCounts)")
 	}
 	
 	
@@ -502,6 +509,32 @@ class MenuViewController: UITableViewController, UIPickerViewDataSource, UIPicke
 		if self.diningHallArrays[self.diningHall] != nil {
 			self.items = self.diningHallArrays[self.diningHall]!
 			self.tableView.reloadData()
+		}
+	}
+	
+	func countMeals() {
+		// Clear meals.
+		meals = [String]()
+		mealItemCounts = Array(repeating: 0, count: 3)
+		
+		for i in 0..<items.count {
+			switch items[i] {
+			case "Breakfast", "Lunch", "Dinner":
+				meals.append(items[i])
+			default:
+				break
+			}
+		}
+		
+		let mealArray = ["Breakfast", "Lunch", "Dinner"]
+		
+		var index = -1
+		for i in 0..<items.count {
+			if !mealArray.contains(items[i]) {
+				mealItemCounts[index] += 1
+			} else {
+				index += 1
+			}
 		}
 	}
 	
