@@ -18,8 +18,8 @@ class GroupHeader: Header {
 	}
 	
 	override func setupViews() {
-		addSubview(nameLabel)
-		addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-16-[v0]|", options: NSLayoutFormatOptions(), metrics: nil, views: ["v0": nameLabel]))
-		addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|->=6-[v0(>=30)]-2-|", options: NSLayoutFormatOptions(), metrics: nil, views: ["v0": nameLabel]))
+		contentView.addSubview(nameLabel)
+		contentView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-16-[v0]->=16-|", options: NSLayoutFormatOptions(), metrics: nil, views: ["v0": nameLabel]))
+		contentView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-16-[v0(26)]-8-|", options: NSLayoutFormatOptions(), metrics: nil, views: ["v0": nameLabel]))
 	}
 }
