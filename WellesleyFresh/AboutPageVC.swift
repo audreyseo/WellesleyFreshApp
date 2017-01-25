@@ -30,6 +30,9 @@ class AboutPageViewController:UITableViewController, MFMailComposeViewController
 		"Consultants",
 		"Graphics",
 		"Claire Seo",
+		"Acknowledgments",
+		"Software Bug Hunters",
+		"Christiane Joseph '20",
 		"Comments? Questions? Bugs? Email me."]
 	let types:[AboutCellStyle] = [
 		.title,
@@ -49,6 +52,9 @@ class AboutPageViewController:UITableViewController, MFMailComposeViewController
 		.secondLevel,
 		.thirdLevel,
 		.fourthLevel,
+		.firstLevel,
+		.secondLevel,
+		.thirdLevel,
 		.button
 	]
 	
