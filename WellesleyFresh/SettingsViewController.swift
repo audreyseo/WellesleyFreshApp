@@ -9,7 +9,7 @@
 import UIKit
 import MessageUI
 
-class SettingsViewController: UIViewController, MFMailComposeViewControllerDelegate, UITableViewDelegate, UITableViewDataSource {
+class SettingsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 	var tableview:UITableView = UITableView(frame: CGRect(x: 0, y: 0, width: 100, height: 100), style: .grouped)
 	var units:String = "Preferred Units"
 	var unitOptions:[String] = ["m", "km", "ft", "yd", "mi"]
@@ -185,10 +185,10 @@ class SettingsViewController: UIViewController, MFMailComposeViewControllerDeleg
 			return 0
 		}
 	}
-	
-	// Mail
-	
-	
+}
+
+// Mail/Messaging delegate methods
+extension SettingsViewController: MFMailComposeViewControllerDelegate {
 	func configuredMailComposeViewController(_ target:String) -> MFMailComposeViewController {
 		let mailComposerVC = MFMailComposeViewController()
 		mailComposerVC.mailComposeDelegate = self
@@ -196,10 +196,10 @@ class SettingsViewController: UIViewController, MFMailComposeViewControllerDeleg
 		mailComposerVC.setToRecipients([target])
 		let nsObject: AnyObject? = Bundle.main.infoDictionary!["CFBundleShortVersionString"] as! String as AnyObject?
 		let version = nsObject as! String
-
+		
 		//if version != nil {
-			mailComposerVC.setSubject("[WellesleyFreshApp - v\(version)]: ")
-			mailComposerVC.setMessageBody("", isHTML: false)
+		mailComposerVC.setSubject("[WellesleyFreshApp - v\(version)]: ")
+		mailComposerVC.setMessageBody("", isHTML: false)
 		//}
 		
 		return mailComposerVC
@@ -216,17 +216,11 @@ class SettingsViewController: UIViewController, MFMailComposeViewControllerDeleg
 	func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
 		controller.dismiss(animated: false, completion: nil)
 	}
-	
-	func wellesleyFreshSite() {
-		let alert = UIAlertController(title: "Open Page in Safari", message: "Are you sure you want to open up the Wellesley Fresh website in Safari?", preferredStyle: .alert)
-		alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { action in
-			UIApplication.shared.openURL(URL(string: "http://www.wellesleyfresh.com")!)
-			return;
-		}))
-		alert.addAction(UIAlertAction(title: "No", style: .cancel, handler: nil))
-		self.present(alert, animated: true, completion: nil)
-	}
-	
+}
+
+
+// Contains various contact/mailing helper functions
+extension SettingsViewController {
 	func contact() {
 		let contactor = configuredMailComposeViewController("aseo@wellesley.edu")
 		if MFMailComposeViewController.canSendMail() {
@@ -234,23 +228,6 @@ class SettingsViewController: UIViewController, MFMailComposeViewControllerDeleg
 			self.present(contactor, animated: true, completion: nil)
 			//self.navigationController?.pushViewController(contactor, animated: true)
 		}
-	}
-	
-	func sourceCode() {
-		let alert = UIAlertController(title: "Open Page in Safari", message: "Are you sure you want to open up the GitHub source code in Safari?", preferredStyle: .alert)
-		alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { action in
-			UIApplication.shared.openURL(URL(string: "https://github.com/audreyseo/WellesleyFreshApp")!)
-			return;
-		}))
-		alert.addAction(UIAlertAction(title: "No", style: .cancel, handler: nil))
-		self.present(alert, animated: true, completion: nil)
-		
-	}
-	
-	func aboutPageSegue() {
-		let next = self.storyboard?.instantiateViewController(withIdentifier: "aboutViewController")
-		next?.navigationItem.title = "About"
-		self.navigationController?.pushViewController(next!, animated: true)
 	}
 	
 	
@@ -279,11 +256,40 @@ class SettingsViewController: UIViewController, MFMailComposeViewControllerDeleg
 		nextViewController?.navigationItem.title = "Review Lulu"
 		self.navigationController?.pushViewController(nextViewController!, animated:true)
 	}
-	
+}
+
+
+// Adding various looaders and helpers.
+extension SettingsViewController {
 	func scrollToNextMeal(_ sender: UISwitch) {
 		print("Scrolling to next meal?: \(sender.isOn)")
 		let userdefs = UserDefaults()
 		userdefs.set(sender.isOn, forKey: "tableScrollsToNextMealKey")
 	}
 	
+	func wellesleyFreshSite() {
+		let alert = UIAlertController(title: "Open Page in Safari", message: "Are you sure you want to open up the Wellesley Fresh website in Safari?", preferredStyle: .alert)
+		alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { action in
+			UIApplication.shared.openURL(URL(string: "http://www.wellesleyfresh.com")!)
+			return;
+		}))
+		alert.addAction(UIAlertAction(title: "No", style: .cancel, handler: nil))
+		self.present(alert, animated: true, completion: nil)
+	}
+	
+	func sourceCode() {
+		let alert = UIAlertController(title: "Open Page in Safari", message: "Are you sure you want to open up the GitHub source code in Safari?", preferredStyle: .alert)
+		alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { action in
+			UIApplication.shared.openURL(URL(string: "https://github.com/audreyseo/WellesleyFreshApp")!)
+			return;
+		}))
+		alert.addAction(UIAlertAction(title: "No", style: .cancel, handler: nil))
+		self.present(alert, animated: true, completion: nil)
+	}
+	
+	func aboutPageSegue() {
+		let next = self.storyboard?.instantiateViewController(withIdentifier: "aboutViewController")
+		next?.navigationItem.title = "About"
+		self.navigationController?.pushViewController(next!, animated: true)
+	}
 }
