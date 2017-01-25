@@ -13,7 +13,7 @@ class SettingsViewController: UIViewController, MFMailComposeViewControllerDeleg
 	var tableview:UITableView = UITableView(frame: CGRect(x: 0, y: 0, width: 100, height: 100), style: .grouped)
 	var units:String = "Preferred Units"
 	var unitOptions:[String] = ["m", "km", "ft", "yd", "mi"]
-	var items: [[String]] = [["Preferred Units", "Table Scrolls to Closest Meal"], ["Contact and Support", "Source Code on GitHub", "Visit the Wellesley Fresh Website", "About"], []] //[["Bates", "Lulu Chow Wang", "Pomeroy", "Stone-Davis", "Tower"], ["Bagged Lunch Form"], ["Preferred Units", "Contact", "About"]]
+	var items: [[String]] = [["Preferred Units", "Table Scrolls to Closest Meal"], ["Contact and Support", "Source Code on GitHub", "Visit the Wellesley Fresh Website", "Version", "About"], []] //[["Bates", "Lulu Chow Wang", "Pomeroy", "Stone-Davis", "Tower"], ["Bagged Lunch Form"], ["Preferred Units", "Contact", "About"]]
 	var titles:[String] = ["", "", ""] //["Feedback", "Order", "Settings"]
 	
 	var disclosureCells:[String] = ["About", "Bagged Lunch Form", "Contact and Support", "Source Code on GitHub", "Visit the Wellesley Fresh Website"]
@@ -75,12 +75,21 @@ class SettingsViewController: UIViewController, MFMailComposeViewControllerDeleg
 		return titles.count
 	}
 	
+	func getAppVersion() -> String {
+		let nsObject: AnyObject? = Bundle.main.infoDictionary!["CFBundleShortVersionString"] as! String as AnyObject?
+		return nsObject as! String
+	}
+	
 	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		if (items[indexPath.section][indexPath.row].hasPrefix(units)) {
 //			print("Making a segmented control cell.")
 			let myCell = tableView.dequeueReusableCell(withIdentifier: "segmentedCellId", for: indexPath) as! SegmentedControlCell
 			if (items[indexPath.section].count > 0) {
-				myCell.nameLabel.text = items[indexPath.section][indexPath.row]
+				if items[indexPath.section][indexPath.row] == "Version" {
+					myCell.nameLabel.text = "Version: \(getAppVersion())"
+				} else {
+					myCell.nameLabel.text = items[indexPath.section][indexPath.row]
+				}
 			} else {
 				myCell.nameLabel.text = ""
 			}
