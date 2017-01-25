@@ -187,6 +187,67 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
 	}
 }
 
+// Table view helper methods
+extension SettingsViewController {
+	func getCell(tableView: UITableView, ip: IndexPath) -> UITableViewCell {
+		if (items[ip.section][ip.row].hasPrefix(units)) {
+			//			print("Making a segmented control cell.")
+			let myCell = tableView.dequeueReusableCell(withIdentifier: "segmentedCellId", for: ip) as! SegmentedControlCell
+			if (items[ip.section].count > 0) {
+				if items[ip.section][ip.row] == "Version" {
+					myCell.nameLabel.text = "Version: \(getAppVersion())"
+				} else {
+					myCell.nameLabel.text = items[ip.section][ip.row]
+				}
+			} else {
+				myCell.nameLabel.text = ""
+			}
+			myCell.setupSegmentedControl(items: unitOptions)
+			return myCell
+		} else if switchCells.contains(items[ip.section][ip.row]) {
+			let myCell = tableView.dequeueReusableCell(withIdentifier: "switchCellId", for: ip) as! SwitchCell
+			myCell.nameLabel.text = items[ip.section][ip.row]
+			let ind = switchCells.index(of: items[ip.section][ip.row])
+			myCell.switchView.addTarget(self, action: switchSelectors[ind!], for: .valueChanged)
+			myCell.switchView.isOn = UserDefaults().bool(forKey: switchKeys[ind!])
+			return myCell
+		} else if titles[ip.section].contains("Feedback") {
+			let myCell = tableView.dequeueReusableCell(withIdentifier: "buttonCellId", for: ip) as! CustomButtonCell
+			
+			myCell.nameButton(newName: items[ip.section][ip.row])
+			switch items[ip.section][ip.row] {
+			case "Bates":
+				myCell.actionButton.addTarget(self, action: #selector(batesFeedback), for: .touchUpInside)
+			case "Lulu Chow Wang":
+				myCell.actionButton.addTarget(self, action: #selector(bplcFeedback), for: .touchUpInside)
+			case "Pomeroy":
+				myCell.actionButton.addTarget(self, action: #selector(pomFeedback), for: .touchUpInside)
+			case "Stone-Davis":
+				myCell.actionButton.addTarget(self, action: #selector(stonedFeedback), for: .touchUpInside)
+			case "Tower":
+				myCell.actionButton.addTarget(self, action: #selector(towerFeedback), for: .touchUpInside)
+			default:
+				break;
+			}
+			myCell.accessoryType = .disclosureIndicator
+			
+			return myCell
+		} else {
+			let myCell = tableView.dequeueReusableCell(withIdentifier: "cellId", for: ip) as! MyCell
+			if (items[ip.section].count > 0) {
+				myCell.nameLabel.text = items[ip.section][ip.row]
+				if disclosureCells.contains(items[ip.section][ip.row]) {
+					myCell.accessoryType = .disclosureIndicator
+				}
+			} else {
+				myCell.nameLabel.text = ""
+			}
+			
+			return myCell
+		}
+	}
+}
+
 // Mail/Messaging delegate methods
 extension SettingsViewController: MFMailComposeViewControllerDelegate {
 	func configuredMailComposeViewController(_ target:String) -> MFMailComposeViewController {
