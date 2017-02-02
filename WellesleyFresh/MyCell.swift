@@ -9,6 +9,11 @@
 import UIKit
 
 class MyCell: UITableViewCell {
+	
+	let regularFont = UIFont.systemFont(ofSize: 14)
+	let boldFont = UIFont.boldSystemFont(ofSize: 14)
+	let regularSepInsets = UIEdgeInsetsMake(0, 0, 0, 500)
+	
 	override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
 		super.init(style: style, reuseIdentifier: reuseIdentifier)
 		setupViews()

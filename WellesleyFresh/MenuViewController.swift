@@ -247,9 +247,19 @@ class MenuViewController: UITableViewController, UIPickerViewDataSource, UIPicke
 		if meals.contains(items[indexPath.row]) {
 			myCell.backgroundView?.backgroundColor = UIColor.groupTableViewBackground
 			myCell.backgroundColor = UIColor.groupTableViewBackground
+			myCell.separatorInset = myCell.regularSepInsets
+			myCell.nameLabel.font = myCell.boldFont
 		} else {
 			myCell.backgroundColor = UIColor.white
+			myCell.nameLabel.font = myCell.regularFont
 		}
+		
+		if indexPath.row + 1 < items.count {
+			if meals.contains(items[indexPath.row + 1]) {
+				myCell.separatorInset = myCell.regularSepInsets
+			}
+		}
+		
 		//		myCell.myTableViewController = self
 		return myCell
 	}
