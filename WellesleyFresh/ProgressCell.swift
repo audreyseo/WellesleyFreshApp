@@ -119,7 +119,7 @@ class ProgressCell: MyCell {
 		addSubview(timeLeft)
 		let hallNameWidth = 70
 		let timeWidth = 50
-		addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-16-[v0(\(hallNameWidth))]-4-[v1(40)]-(>=8,<=60)-[v2(\(timeWidth))]-4-[v3(<=80,>=60)]-4-[v4(\(timeWidth))]-16-|", options: NSLayoutFormatOptions(), metrics: nil, views: ["v0": nameLabel, "v1": mealLabel, "v2": timeLabel, "v3": progress, "v4": timeLeft]))
+		addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-16-[v0(\(hallNameWidth))]-4-[v1(>=40,<=80)]-8-[v2(\(timeWidth))]-4-[v3(<=80,>=60)]-4-[v4(\(timeWidth))]-16-|", options: NSLayoutFormatOptions(), metrics: nil, views: ["v0": nameLabel, "v1": mealLabel, "v2": timeLabel, "v3": progress, "v4": timeLeft]))
 		addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[v0]|", options: NSLayoutFormatOptions(), metrics: nil, views: ["v0": nameLabel]))
 		addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[v0]|", options: NSLayoutFormatOptions(), metrics: nil, views: ["v0": mealLabel]))
 		addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[v0]|", options: NSLayoutFormatOptions(), metrics: nil, views: ["v0": timeLabel]))
