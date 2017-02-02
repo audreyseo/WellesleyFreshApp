@@ -45,6 +45,9 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
 		
 		
 		self.view.addSubview(tableview)
+		
+		// Add a title to the thing
+		self.navigationItem.title = "Settings"
 	}
 	
 	override func viewWillAppear(_ animated: Bool) {
@@ -85,11 +88,7 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
 //			print("Making a segmented control cell.")
 			let myCell = tableView.dequeueReusableCell(withIdentifier: "segmentedCellId", for: indexPath) as! SegmentedControlCell
 			if (items[indexPath.section].count > 0) {
-				if items[indexPath.section][indexPath.row] == "Version" {
-					myCell.nameLabel.text = "Version: \(getAppVersion())"
-				} else {
-					myCell.nameLabel.text = items[indexPath.section][indexPath.row]
-				}
+				myCell.nameLabel.text = items[indexPath.section][indexPath.row]
 			} else {
 				myCell.nameLabel.text = ""
 			}
@@ -126,9 +125,13 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
 		} else {
 			let myCell = tableView.dequeueReusableCell(withIdentifier: "cellId", for: indexPath) as! MyCell
 			if (items[indexPath.section].count > 0) {
-				myCell.nameLabel.text = items[indexPath.section][indexPath.row]
-				if disclosureCells.contains(items[indexPath.section][indexPath.row]) {
-					myCell.accessoryType = .disclosureIndicator
+				if items[indexPath.section][indexPath.row] == "Version" {
+					myCell.nameLabel.text = "Version: \(getAppVersion())"
+				} else {
+					myCell.nameLabel.text = items[indexPath.section][indexPath.row]
+					if disclosureCells.contains(items[indexPath.section][indexPath.row]) {
+						myCell.accessoryType = .disclosureIndicator
+					}
 				}
 			} else {
 				myCell.nameLabel.text = ""
