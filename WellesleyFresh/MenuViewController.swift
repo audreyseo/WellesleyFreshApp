@@ -242,6 +242,14 @@ class MenuViewController: UITableViewController, UIPickerViewDataSource, UIPicke
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		let myCell = tableView.dequeueReusableCell(withIdentifier: "cellId", for: indexPath) as! MyCell
 		myCell.nameLabel.text = items[indexPath.row]
+		let meals = ["Breakfast", "Lunch", "Dinner"]
+//		print(myCell.nameLabel.text)
+		if meals.contains(items[indexPath.row]) {
+			myCell.backgroundView?.backgroundColor = UIColor.groupTableViewBackground
+			myCell.backgroundColor = UIColor.groupTableViewBackground
+		} else {
+			myCell.backgroundColor = UIColor.white
+		}
 		//		myCell.myTableViewController = self
 		return myCell
 	}
