@@ -51,7 +51,7 @@ class NearbyViewController: UIViewController, CLLocationManagerDelegate, UIPicke
 		return UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: nil, action: nil)
 	}
 	var barButtonCancel:UIBarButtonItem {
-		return UIBarButtonItem(title: "Cancel", style: UIBarButtonItemStyle.plain, target: self, action: #selector(madeSelection))
+		return UIBarButtonItem(title: "Cancel", style: UIBarButtonItemStyle.plain, target: self, action: #selector(cancelSelection))
 	}
 	
 	var tableview:UITableView = UITableView()
@@ -438,7 +438,11 @@ class NearbyViewController: UIViewController, CLLocationManagerDelegate, UIPicke
 				scrollToNextMeal()
 			}
 		}
-		
+	}
+	
+	// Tell hallInputView to go away because you canceled
+	func cancelSelection() {
+		hallInputView.isHidden = true
 	}
 	
 	func scrollToNextMeal() {
