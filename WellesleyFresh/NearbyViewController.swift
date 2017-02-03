@@ -257,7 +257,24 @@ class NearbyViewController: UIViewController, CLLocationManagerDelegate, UIPicke
 	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		let myCell = tableView.dequeueReusableCell(withIdentifier: "cellId", for: indexPath) as! MyCell
 		if (self.items.count > 0) {
-			myCell.nameLabel.text = items[indexPath.row]
+			myCell.nameLabel.text = self.items[indexPath.row]
+			let meals = ["Breakfast", "Lunch", "Dinner"]
+			//		print(myCell.nameLabel.text)
+			if meals.contains(items[indexPath.row]) {
+				myCell.backgroundView?.backgroundColor = UIColor.groupTableViewBackground
+				myCell.backgroundColor = UIColor.groupTableViewBackground
+				myCell.separatorInset = myCell.regularSepInsets
+				myCell.nameLabel.font = myCell.boldFont
+			} else {
+				myCell.backgroundColor = UIColor.white
+				myCell.nameLabel.font = myCell.regularFont
+			}
+			
+			if indexPath.row + 1 < items.count {
+				if meals.contains(items[indexPath.row + 1]) {
+					myCell.separatorInset = myCell.regularSepInsets
+				}
+			}
 		} else {
 			myCell.nameLabel.text = ""
 		}

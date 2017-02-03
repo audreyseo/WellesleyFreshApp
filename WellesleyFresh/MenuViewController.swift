@@ -179,6 +179,7 @@ class MenuViewController: UITableViewController, UIPickerViewDataSource, UIPicke
 					let ind = diningHallFull.index(of: defaultDiningHall)
 					diningHall = diningHalls[ind!]
 					diningHallName = diningHallFull[ind!]
+					self.navigationItem.title = "Menu - \(diningHallName)"
 					tableView.reloadData()
 				}
 			}
