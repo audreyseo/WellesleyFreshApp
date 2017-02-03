@@ -50,6 +50,9 @@ class MenuViewController: UITableViewController, UIPickerViewDataSource, UIPicke
 	
 	var meals: [String] = [String]()
 	
+	var defaultDiningHallKey = "defaultDiningHallKey"
+	var defaultDiningHall = ""
+	
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		
@@ -168,6 +171,18 @@ class MenuViewController: UITableViewController, UIPickerViewDataSource, UIPicke
 		self.tableView.tableFooterView?.tintColor = UIColor.groupTableViewBackground
 		
 		tableScrollsToNextMeal = storedData.bool(forKey: tableScrollsToNextMealKey)
+		
+		if storedData.string(forKey: defaultDiningHallKey) != nil {
+			self.defaultDiningHall = storedData.string(forKey: defaultDiningHallKey)!
+			if self.defaultDiningHall != "NONE" {
+				if diningHallFull.contains(defaultDiningHall) {
+					let ind = diningHallFull.index(of: defaultDiningHall)
+					diningHall = diningHalls[ind!]
+					diningHallName = diningHallFull[ind!]
+					tableView.reloadData()
+				}
+			}
+		}
 	}
 	
 	override func viewDidAppear(_ animated: Bool) {
@@ -271,6 +286,8 @@ class MenuViewController: UITableViewController, UIPickerViewDataSource, UIPicke
 			
 			myHeader.nameLabel.text = self.diningHallName
 			//		myHeader.myTableViewController = self
+		} else {
+			myHeader.nameLabel.text = ""
 		}
 		return myHeader
 	}
