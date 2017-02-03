@@ -9,17 +9,28 @@
 import UIKit
 import MessageUI
 
-class SettingsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class SettingsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UIPickerViewDelegate, UIPickerViewDataSource {
 	var tableview:UITableView = UITableView(frame: CGRect(x: 0, y: 0, width: 100, height: 100), style: .grouped)
 	var units:String = "Preferred Units"
 	var unitOptions:[String] = ["m", "km", "ft", "yd", "mi"]
-	var items: [[String]] = [["Preferred Units", "Table Scrolls to Closest Meal"], ["Contact and Support", "Source Code on GitHub", "Visit the Wellesley Fresh Website", "Version", "About"], []] //[["Bates", "Lulu Chow Wang", "Pomeroy", "Stone-Davis", "Tower"], ["Bagged Lunch Form"], ["Preferred Units", "Contact", "About"]]
+	var items: [[String]] = [["Preferred Units", "Table Scrolls to Closest Meal", "Default Dining Hall"], ["Contact and Support", "Source Code on GitHub", "Visit the Wellesley Fresh Website", "Version", "About"], []] //[["Bates", "Lulu Chow Wang", "Pomeroy", "Stone-Davis", "Tower"], ["Bagged Lunch Form"], ["Preferred Units", "Contact", "About"]]
 	var titles:[String] = ["", "", ""] //["Feedback", "Order", "Settings"]
 	
 	var disclosureCells:[String] = ["About", "Bagged Lunch Form", "Contact and Support", "Source Code on GitHub", "Visit the Wellesley Fresh Website"]
 	var switchCells:[String] = ["Table Scrolls to Closest Meal"]
 	var switchSelectors:[Selector]!
 	var switchKeys:[String] = ["tableScrollsToNextMealKey"]
+	
+	var defs = UserDefaults()
+	
+	let defaultDiningHallKey = "defaultDiningHallKey"
+	
+	let hallInputView:UIInputView = UIInputView()
+	let picker = UIPickerView()
+	let toolbar = UIToolbar()
+	
+	let diningHalls = ["Bae Pao Lu Chow", "Bates", "Pomeroy", "Stone Davis", "Tower"]
+	var selectedDiningHall = "NONE"
 	
 	
 	override func viewDidLoad() {
@@ -48,6 +59,35 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
 		
 		// Add a title to the thing
 		self.navigationItem.title = "Settings"
+		
+		
+		let barButtonDone:UIBarButtonItem = UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.done, target: self, action: #selector(self.madeSelection))
+		let barButtonSpace:UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: nil, action: nil)
+		let barButtonCancel:UIBarButtonItem = UIBarButtonItem(title: "Cancel", style: UIBarButtonItemStyle.plain, target: self, action: #selector(self.madeSelection))
+		
+		picker.isHidden = false
+		picker.dataSource = self
+		picker.delegate = self
+		picker.backgroundColor = UIColor.white
+		picker.showsSelectionIndicator = true
+		
+		toolbar.barStyle = UIBarStyle.default
+		toolbar.isTranslucent = true
+		
+		toolbar.setItems([barButtonCancel, barButtonSpace, barButtonDone], animated: false)
+		hallInputView.addSubview(toolbar)
+		hallInputView.addSubview(picker)
+		hallInputView.isHidden = true
+		
+		hallInputView.backgroundColor = UIColor.white
+		
+		self.view.addSubview(hallInputView)
+		
+		if defs.string(forKey: defaultDiningHallKey) != nil {
+			if defs.string(forKey: defaultDiningHallKey) != "NONE" {
+				selectedDiningHall = defs.string(forKey: defaultDiningHallKey)!
+			}
+		}
 	}
 	
 	override func viewWillAppear(_ animated: Bool) {
@@ -68,6 +108,10 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
 		self.view.backgroundColor = UIColor.groupTableViewBackground
 		self.tableview.tableFooterView = footerView
 		self.tableview.tableFooterView?.tintColor = UIColor.groupTableViewBackground //UIColor.init(red: 53, green: 60, blue: 62, alpha: 255)		
+		
+		self.picker.frame = CGRect(x: 0, y: 40, width: self.view.frame.size.width, height: 400)
+		hallInputView.frame = CGRect(x: 0, y: self.view.frame.origin.y + self.view.frame.size.height * 0.4, width: tableview.contentSize.width, height: self.view.frame.size.height * 0.5 + 40)
+		toolbar.frame = CGRect(x: 0, y: 0, width: self.tableview.contentSize.width, height: 40)
 	}
 	
 	// ---------------------DELEGATE METHODS----------------------
@@ -125,20 +169,41 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
 		} else {
 			let myCell = tableView.dequeueReusableCell(withIdentifier: "cellId", for: indexPath) as! MyCell
 			if (items[indexPath.section].count > 0) {
-				if items[indexPath.section][indexPath.row] == "Version" {
+				
+				switch items[indexPath.section][indexPath.row] {
+				case "Version":
 					myCell.nameLabel.text = "Version: \(getAppVersion())"
-				} else {
+				case "Default Dining Hall":
+					myCell.nameLabel.text = "Default Dining Hall: \(selectedDiningHall)"
+					myCell.accessoryType = .detailDisclosureButton
+				default:
 					myCell.nameLabel.text = items[indexPath.section][indexPath.row]
 					if disclosureCells.contains(items[indexPath.section][indexPath.row]) {
 						myCell.accessoryType = .disclosureIndicator
 					}
+					break
 				}
+				
+//				if items[indexPath.section][indexPath.row] == "Version" {
+//					myCell.nameLabel.text = "Version: \(getAppVersion())"
+//				} else {
+//					
+//				}
 			} else {
 				myCell.nameLabel.text = ""
 			}
 			
 			return myCell
 		}
+	}
+	
+	func tableView(_ tableView: UITableView, accessoryButtonTappedForRowWith indexPath: IndexPath) {
+		let ac = UIAlertController(title: "Default Dining Hall", message: "This setting determines which dining hall's menu will be automatically loaded in the Menu tab.", preferredStyle: .alert)
+		
+		let action = UIAlertAction(title: "Okay", style: .default, handler: nil)
+		ac.addAction(action)
+		
+		self.navigationController?.present(ac, animated: true, completion: nil)
 	}
 	
 	func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -152,6 +217,8 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
 			self.sourceCode()
 		case "Visit the Wellesley Fresh Website":
 			self.wellesleyFreshSite()
+		case "Default Dining Hall":
+			self.pickDefaultDiningHall()
 		default:
 			break;
 			
@@ -187,6 +254,35 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
 		} else {
 			return 0
 		}
+	}
+	
+	
+	// UIPickerView
+	
+	
+	func numberOfComponents(in pickerView: UIPickerView) -> Int {
+		return 1
+	}
+	
+	func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+		return diningHalls.count
+	}
+	
+	func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+		return diningHalls[row]
+	}
+	
+	func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+		selectedDiningHall = diningHalls[row]
+		print("Selected: ", selectedDiningHall)
+	}
+	
+	func pickerView(_ pickerView: UIPickerView, widthForComponent component: Int) -> CGFloat {
+		return tableview.contentSize.width * 0.8
+	}
+	
+	func pickerView(_ pickerView: UIPickerView, rowHeightForComponent component: Int) -> CGFloat {
+		return 40
 	}
 }
 
@@ -325,6 +421,27 @@ extension SettingsViewController {
 
 // Adding various looaders and helpers.
 extension SettingsViewController {
+	func madeSelection() {
+		hallInputView.isHidden = true
+		print("Hiding")
+		if selectedDiningHall != "NONE" {
+			defs.set(selectedDiningHall, forKey: defaultDiningHallKey)
+			tableview.reloadData()
+		}
+	}
+	
+	func pickDefaultDiningHall() {
+		print("Showing")
+		hallInputView.isHidden = false
+		if selectedDiningHall != "NONE" {
+			let ind = diningHalls.index(of: selectedDiningHall)
+			if ind != nil {
+				picker.selectRow(ind!, inComponent: 0, animated: true)
+			}
+		}
+		
+	}
+	
 	func scrollToNextMeal(_ sender: UISwitch) {
 		print("Scrolling to next meal?: \(sender.isOn)")
 		let userdefs = UserDefaults()

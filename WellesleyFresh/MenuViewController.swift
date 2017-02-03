@@ -133,7 +133,7 @@ class MenuViewController: UITableViewController, UIPickerViewDataSource, UIPicke
 		hallPicker.tag = 40
 		hallInputView.addSubview(hallToolBar)
 		hallInputView.addSubview(hallPicker)
-		hallInputView.isHidden = false
+		hallInputView.isHidden = true
 		hallInputView.backgroundColor = UIColor.white
 		
 		self.navigationController?.view.addSubview(hallInputView)
