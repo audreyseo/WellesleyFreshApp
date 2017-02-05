@@ -365,6 +365,22 @@ extension SettingsViewController: MFMailComposeViewControllerDelegate {
 		return mailComposerVC
 	}
 	
+	func configuredMailComposeViewController(_ target:String, message: String) -> MFMailComposeViewController {
+		let mailComposerVC = MFMailComposeViewController()
+		mailComposerVC.mailComposeDelegate = self
+		
+		mailComposerVC.setToRecipients([target])
+		let nsObject: AnyObject? = Bundle.main.infoDictionary!["CFBundleShortVersionString"] as! String as AnyObject?
+		let version = nsObject as! String
+		
+		//if version != nil {
+		mailComposerVC.setSubject("[WellesleyFreshApp - v\(version)]: ")
+		mailComposerVC.setMessageBody(message, isHTML: false)
+		//}
+		
+		return mailComposerVC
+	}
+	
 	func showSendMailErrorAlert() {
 		let sendMailErrorAlert = UIAlertController(title: "Could Not Send Email", message: "Your device could not send e-mail.  Please check e-mail configuration and try again.", preferredStyle: UIAlertControllerStyle.alert)
 		let defaultAction = UIAlertAction(title: "OK", style: .default, handler: nil)
@@ -382,7 +398,7 @@ extension SettingsViewController: MFMailComposeViewControllerDelegate {
 // Contains various contact/mailing helper functions
 extension SettingsViewController {
 	func contact() {
-		let contactor = configuredMailComposeViewController("aseo@wellesley.edu")
+		let contactor = configuredMailComposeViewController("aseo@wellesley.edu", message: "Model: \(UIDevice.current.modelName)\niOS version: \(UIDevice.current.systemVersion)\n\nComments:\n\n")
 		if MFMailComposeViewController.canSendMail() {
 			contactor.navigationItem.title = "Contact and Feedback"
 			self.present(contactor, animated: true, completion: nil)
