@@ -10,8 +10,9 @@ This list is a summary of all of the app's current capabilities:
   - Use a drop-down type menu to choose which one
  - List the 3 closest dining halls to your current location
   - Provides easy access to their menus
+ - Select a default dining hall to automatically load every time
  - Provides hours of all the dining halls
-  - Shows a progress bar that shows how much time has elapsed, percentage-wise
+  - Shows how much time has elapsed, percentage-wise
   - In between meals, shows how much time is left until the next meal
   - Gives time also over the weekends if you're Stone-Davis or overnight until the next time the dining hall will be open
  - Provide hours of operation for different establishments, i.e. El Table, the Emporium, the Leaky Beaker
