@@ -72,6 +72,13 @@ class DiningHours {
 		return false
 	}
 	
+	func closedAllDay(_ hall:String) -> Bool {
+		if halls.contains(hall) {
+			return (diningHalls[hall]?.closed())!
+		}
+		return false
+	}
+	
 	func meal(_ section:Int, index:Int) -> String {
 		if (index + (section * 5) < halls.count) {
 			return (diningHalls[halls[(section * 5) + index]]?.currentMeal())!

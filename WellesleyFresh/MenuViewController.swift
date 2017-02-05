@@ -61,44 +61,22 @@ class MenuViewController: UITableViewController, UIPickerViewDataSource, UIPicke
 			diningHallName = diningHallFull[0]
 		}
 		
+		if storedData.string(forKey: defaultDiningHallKey) != nil {
+			self.defaultDiningHall = storedData.string(forKey: defaultDiningHallKey)!
+			if self.defaultDiningHall != "NONE" {
+				if diningHallFull.contains(defaultDiningHall) {
+					let ind = diningHallFull.index(of: defaultDiningHall)
+					diningHall = diningHalls[ind!]
+					diningHallName = diningHallFull[ind!]
+					self.navigationItem.title = "Menu - \(diningHallName)"
+//					print("Relading table view.")
+//					tableView.reloadData()
+				}
+			}
+		}
+		
 		loadData()
 		
-		/*// Get an NSDate object
-		var today:Date
-		today = Date.init()
-		
-		
-		// Create a date formatter
-		let MyDateFormatter = DateFormatter()
-		MyDateFormatter.locale = Locale(identifier: "en_US_POSIX")
-		MyDateFormatter.dateFormat = "MMdd"
-		
-		// Now make a date that represents today - we use this to retrieve the menu for today
-		todayString = MyDateFormatter.string(from: today)
-		
-		print(todayString)*/
-		
-		
-		// Use the following two lines for debugging purposes, specifically for debugging the regex parsing
-		// and string manipulation.
-//		todayString = "1003"
-//		storedData.set("1004", forKey: todaysDateKey)
-		
-		/*if storedData.string(forKey: todaysDateKey) != nil {
-			if (storedData.string(forKey: todaysDateKey) == todayString) {
-				print("Already got data today.")
-				diningHallArrays = storedData.dictionary(forKey: diningHallDictionaryKey) as! [String:[String]]
-			} else {
-				print("Needed to get data for today.")
-				storedData.setValue(todayString, forKey: todaysDateKey)
-				preload()
-				refresh()
-			}
-		} else {
-			storedData.setValue(todayString, forKey: todaysDateKey)
-			preload()
-			refresh()
-		}*/
 		
 		tableScrollsToNextMeal = storedData.bool(forKey: tableScrollsToNextMealKey)
 		
@@ -180,6 +158,7 @@ class MenuViewController: UITableViewController, UIPickerViewDataSource, UIPicke
 					diningHall = diningHalls[ind!]
 					diningHallName = diningHallFull[ind!]
 					self.navigationItem.title = "Menu - \(diningHallName)"
+					print("Relading table view.")
 					tableView.reloadData()
 				}
 			}
@@ -233,14 +212,6 @@ class MenuViewController: UITableViewController, UIPickerViewDataSource, UIPicke
 	override func numberOfSections(in tableView: UITableView) -> Int {
 		return 2
 	}
-	
-//	override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-//		if section == 0 {
-//			return self.diningHallName
-//		} else {
-//			return ""
-//		}
-//	}
 	
 	
 	override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -299,19 +270,6 @@ class MenuViewController: UITableViewController, UIPickerViewDataSource, UIPicke
 			tableView.deleteRows(at: [deletionIndexPath], with: .automatic)
 		}
 	}
-//	override func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-////		adjustHeightOfTableview()
-//	}
-	
-	// TABLE VIEW DELEGATE HELPERS
-	
-//	func adjustHeightOfTableview() {
-//		let height:CGFloat = CGFloat(items.count * cellHeight);
-//		
-//		if tableView.contentSize.height != height {
-//			tableView.contentSize = CGSize(width: tableView.contentSize.width, height: height)
-//		}
-//	}
 	
 	// -------------------------------------------------------------
 	// --------------------------HELPERS----------------------------
@@ -334,13 +292,6 @@ class MenuViewController: UITableViewController, UIPickerViewDataSource, UIPicke
 		self.hallInputView.isHidden = false
 		self.view.bringSubview(toFront: hallInputView)
 	}
-	
-	
-//	func preload() {
-//		for i in 0...diningHalls.count - 1 {
-//			load(diningHalls[i])
-//		}
-//	}
 	
 	func retitleHeader() {
 		if (tableView.headerView(forSection: 0) != nil) {
@@ -398,8 +349,6 @@ class MenuViewController: UITableViewController, UIPickerViewDataSource, UIPicke
 				print("Index: \(ind)")
 				print("\n")
 				let ip = IndexPath(row: ind!, section: 0)
-				//				tableview.scrollToRow(at: ip, at: .middle, animated: true)
-//				tableView.scrollToRow(at: ip, at: .middle, animated: false)
 				tableView.selectRow(at: ip, animated: true, scrollPosition: .middle)
 			}
 		}
@@ -507,27 +456,6 @@ class MenuViewController: UITableViewController, UIPickerViewDataSource, UIPicke
 		return bottomHalfIndexPaths
 	}
 	
-	/*func trimNormalArray() {
-		for i in 0..<self.normalArray.count {
-			self.normalArray[i] = self.normalArray[i].trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
-		}
-		
-		var indexer = 0
-		for _ in 0..<self.normalArray.count {
-			
-			if self.normalArray[indexer] == "" {
-				print("|\(self.normalArray[indexer])|")
-				self.normalArray.remove(at: indexer)
-				indexer -= 1
-			}
-			indexer += 1
-			
-			if indexer == self.normalArray.count {
-				break
-			}
-		}
-	}*/
-	
 	func saveDiningHallArrays(_ hall: String) {
 		self.storedData.set(self.diningHallArrays, forKey: self.diningHallDictionaryKey)
 		for i in 0...(self.storedData.dictionary(forKey: self.diningHallDictionaryKey) as! [String: [String]])[hall]!.count - 1 {
@@ -546,7 +474,16 @@ class MenuViewController: UITableViewController, UIPickerViewDataSource, UIPicke
 //		print("\(self.diningHallArrays[self.diningHall])\n")
 //		print("\(self.diningHall)")
 		if self.diningHallArrays[self.diningHall] != nil {
-			self.items = self.diningHallArrays[self.diningHall]!
+			let dh = DiningHours()
+			print("Dining Hall: \(self.diningHall)")
+			if dh.closedAllDay(diningHall) {
+				self.items = ["Closed"]
+			} else {
+				self.items = self.diningHallArrays[self.diningHall]!
+			}
+			self.tableView.reloadData()
+		} else {
+			self.items = ["Closed"]
 			self.tableView.reloadData()
 		}
 	}
@@ -576,38 +513,4 @@ class MenuViewController: UITableViewController, UIPickerViewDataSource, UIPicke
 			}
 		}
 	}
-	
-	/*func getDiningHallUrlRequest(_ hall: String) -> URLRequest {
-		let urlString = "http://www.wellesleyfresh.com/menus/" + hall + "/menu_" + todayString + ".htm"
-		return URLRequest(url: URL(string: urlString)!)
-	}*/
-
-	
-	// Load the information from a specific dining hall
-	/*func load(_ hall:String) {
-		self.loadingHall = true
-		print("loading hall ", hall)
-		
-		// Get the url for the specific dining hall
-		let request = getDiningHallUrlRequest(hall)
-		
-		// Create the task + the completion handler for the url session
-		URLSession.shared.dataTask(with: request) { (data, response, error) in
-			// Strings are Windows 1252 encoded for some reason
-			let mystring:String! = String(data: data!, encoding: .windowsCP1252)
-//			print("My string: \n\(mystring)")
-			
-			let bodyString:String = self.regexHelper.extractInformationString(mystring as String)
-//			print("\n\n\n\n\nDigest string:\n|", bodyString, "|\nEnd of string", separator: "")
-			
-			self.normalArray = bodyString.components(separatedBy: "\n")
-			self.trimNormalArray()
-			
-			self.diningHallArrays[hall] = self.normalArray
-			self.saveDiningHallArrays(hall)
-			
-			self.loadingHall = false;
-			
-		}.resume()
-	}*/
 }
