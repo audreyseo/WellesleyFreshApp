@@ -469,7 +469,7 @@ class NearbyViewController: UIViewController, CLLocationManagerDelegate, UIPicke
 			print("\nscrollToNextMeal()")
 			print("Next meal: \(nextMeal)")
 			print("Chosen short: \(chosenShort)")
-			let array:[String] = menus[chosenShort]!
+			let array:[String] = menus[chosenShort] ?? ["Closed"]
 			let ind = array.index(of: nextMeal)
 			if ind != nil {
 				print("Index: \(ind)")
@@ -484,13 +484,18 @@ class NearbyViewController: UIViewController, CLLocationManagerDelegate, UIPicke
 	// ------------------Functions for Showing New Data-------------------
 	
 	func newCellsInsertion() {
-		if menus[chosenShort] != nil {
-			performInsertion()
-		}
+		performInsertion()
+//		if menus[chosenShort] != nil {
+//			performInsertion()
+//		} else {
+//			
+//		}
 	}
 	
 	func performInsertion() {
-		var normalArray:[String] = menus[chosenShort]!
+		// If the dining hall isn't in the menus dictionary, use the nil-coalescing
+		// operator to change it into an array with just the word "Closed"
+		var normalArray:[String] = menus[chosenShort] ?? ["Closed"]
 		if (normalArray.count >= 1) {
 			let originalSize:Int = items.count
 			let newSize:Int = normalArray.count

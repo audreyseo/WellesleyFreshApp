@@ -361,10 +361,10 @@ class MenuViewController: UITableViewController, UIPickerViewDataSource, UIPicke
 //		print("Hey there!!!!!!!!")
 		retitleHeader()
 		if previousDiningHall != diningHall {
-			
-			if (diningHallArrays[diningHall] != nil) {
-				normalArray = diningHallArrays[diningHall]!
-			}
+			normalArray = diningHallArrays[diningHall] ?? ["Closed"]
+//			if (diningHallArrays[diningHall] != nil) {
+//				normalArray = diningHallArrays[diningHall]!
+//			}
 			newCellsInsertion()
 			scrollToNextMeal()
 		} else if headerTitle() != "" {
@@ -392,7 +392,7 @@ class MenuViewController: UITableViewController, UIPickerViewDataSource, UIPicke
 			
 			print("\nscrollToNextMeal()")
 			print("Next meal: \(nextMeal)")
-			let array:[String] = diningHallArrays[diningHall]!
+			let array:[String] = diningHallArrays[diningHall] ?? ["Closed"]
 			let ind = array.index(of: nextMeal)
 			if ind != nil {
 				print("Index: \(ind)")
@@ -410,9 +410,10 @@ class MenuViewController: UITableViewController, UIPickerViewDataSource, UIPicke
 			
 			let chosenDiningHall = Int(arc4random_uniform(UInt32(diningHalls.count)))
 			retitleHeader()
-			if (diningHallArrays[diningHall] != nil) {
-				normalArray = diningHallArrays[diningHall]!
-			}
+//			if (diningHallArrays[diningHall] != nil) {
+				// If diningHallArrays[diningHall] is nil, just have it say "Closed"
+			normalArray = diningHallArrays[diningHall] ?? ["Closed"]
+//			}
 			newCellsInsertion()
 			if (previousDiningHall != diningHall) {
 				diningHall = diningHalls[chosenDiningHall]
@@ -423,7 +424,7 @@ class MenuViewController: UITableViewController, UIPickerViewDataSource, UIPicke
 				if (!keyExists) {
 //					load(diningHall)
 				} else {
-					normalArray = diningHallArrays[diningHall]!
+					normalArray = diningHallArrays[diningHall] ?? ["Closed"]
 				}
 			} else {
 //				load(diningHall)
@@ -433,6 +434,7 @@ class MenuViewController: UITableViewController, UIPickerViewDataSource, UIPicke
 	
 	
 	func newCellsInsertion() {
+		print("Inserting new cells.")
 		if (normalArray.count >= 1) {
 			let originalSize:Int = items.count
 			let newSize:Int = normalArray.count
