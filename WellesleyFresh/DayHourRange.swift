@@ -39,7 +39,7 @@ class DayHourRange:HourRange {
 		self.lowYear = getYear(aDate: date1)
 		self.highYear = getYear(aDate: date2)
 		
-//		print(lowDay, lowYear, highDay, highYear)
+		print("A: ", lowDay, lowYear, highDay, highYear)
 	}
 	
 	init( lowHour:Double, highHour:Double, name:String, lowDay:Int, highDay:Int) {
@@ -48,6 +48,8 @@ class DayHourRange:HourRange {
 		
 		self.lowDay = lowDay
 		self.highDay = highDay
+		
+		print("B: ", self.lowDay, self.lowYear, self.highDay, self.highYear, self.lowHour, self.highHour)
 	}
 	
 	init(lowHour:Double, highHour:Double, name:String, dayChange:Int) {
@@ -59,6 +61,8 @@ class DayHourRange:HourRange {
 		self.lowDay = Int(self.dayFormatter.string(from: today))!
 		self.highDay = lowDay + dayChange
 		self.lowYear = getYear(aDate: today)
+		
+		print("C: ", lowDay, lowYear, highDay, highYear)
 		
 	}
 	
@@ -144,17 +148,23 @@ class DayHourRange:HourRange {
 		
 		if todayDate != lowDay {
 			totalHours += 24.0 - lowHour
+			totalHours += todayHour
 		} else {
 			totalHours += todayHour - lowHour
 		}
 		
-		if todayDate == self.getHighDay() {
-			totalHours += todayHour
-		}
+//		if todayDate == self.getHighDay() {
+//			totalHours += todayHour
+//		}
 		
 		if todayDate > lowDay {
-			totalHours += Double(todayDate - lowDay - 1) * 24.0
+			let diff: Int = max(todayDate - lowDay - 1, 0)
+//			print("Diff: \(diff)")
+//			print("\(todayDate) - \(lowDay): \(Double(diff) * 24.0)")
+			totalHours += Double(diff) * 24.0
 		}
+		
+//		print("\(todayDate) vs \(lowDay)")
 		
 		return totalHours
 	}
@@ -167,8 +177,15 @@ class DayHourRange:HourRange {
 		return (currentHour() * 60.0) + Double(minutes())
 	}
 	
+	func diffForHoursLeft() -> Int {
+		if Int(ceil(Double((60 - minutes()) % 60) / 60.0)) > 0 || Int(ceil(Double((60 - seconds()) % 60) / 60.0)) > 0 {
+			return 1
+		}
+		return 0
+	}
+	
 	override func hoursLeft() -> Int {
-		let secondsDiff = Int(ceil(Double((60 - seconds()) % 60) / 60.0))
+		let secondsDiff = diffForHoursLeft()// (Int(ceil(Double((60 - minutes()) % 60) / 60.0)) + Int(ceil(Double((60 - minutes()) % 60) / 60.0)), 1)
 		return Int(floor(((totalChange() * 60 - currentHour() * 60) - Double(secondsDiff)) / 60))
 	}
 	
@@ -184,9 +201,18 @@ class DayHourRange:HourRange {
 		return Int(currentHour())
 	}
 	
+	override func hasARange() -> Bool {
+		return lowDay != getHighDay()
+	}
+	
 	override func totalChange() -> Double {
-		let dayHours:Double = Double((self.getHighDay() - lowDay) - 1) * 24.0
+		let diff = max(self.getHighDay() - lowDay - 1, 0)
+		print("\(self.getHighDay()) - \(lowDay): Diff: \(diff)")
+		let dayHours:Double = Double(diff) * 24.0
+//		let dayHours:Double = Double((self.getHighDay() - lowDay) - 1) * 24.0
+//		let dayHours:Double = Double(max((self.getHighDay() - lowDay) - 1, 0)) * 24.0
 		let hourHours:Double = (24.0 - lowHour) + highHour
+		print("lowHour: \(lowHour), highHour: \(highHour), hourHours: \(hourHours)")
 		
 		return dayHours + hourHours
 	}

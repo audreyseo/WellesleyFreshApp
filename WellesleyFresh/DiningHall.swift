@@ -62,6 +62,23 @@ class DiningHall {
 		return -1
 	}
 	
+	func lastOpenIndex() -> Int {
+		let today = days.todaysWeekDate()
+		var count:Int = 0
+		var yest = yesterday[today]
+		
+		while count < 7 {
+			if days.dayInDayOptions(day: yest!) {
+				return days.getOptionForDay(day: yest!)
+			} else {
+				yest = yesterday[yest!]
+				count += 1
+			}
+		}
+		
+		return -1
+	}
+	
 	func whenNextOpen() -> String {
 		let today = days.todaysWeekDate()
 		var count:Int = 0
@@ -100,7 +117,7 @@ class DiningHall {
 	}
 	
 	func nextOpenInterval() {
-		let lastOpenIndex = days.getOption()
+		let lastOpenIndex = self.lastOpenIndex() //days.getOption()
 		let nextOpenIndex = self.nextOpenIndex()
 		var endHour:Double = -1.0
 		var beginHour:Double = -1.0
@@ -113,11 +130,13 @@ class DiningHall {
 			beginHour = hours[lastOpenIndex][hours[lastOpenIndex].count - 1].highHour
 		}
 		
-		let lastDay:String = whenNextOpen()
-		let firstDay:String = whenLastOpen()
 		
-		if lastDay != "" && firstDay != "" {
-			whenClosed = DayHourRange(lowHour: beginHour, highHour: endHour, name: "Closed", lowWeekDay: firstDay, highWeekDay: lastDay)
+		let firstDay:String = whenLastOpen()
+		let nextDay:String = whenNextOpen()
+		print("lastDay: \(nextDay), firstDay: \(firstDay)")
+		
+		if nextDay != "" && firstDay != "" {
+			whenClosed = DayHourRange(lowHour: beginHour, highHour: endHour, name: "Closed", lowWeekDay: firstDay, highWeekDay: nextDay)
 		}
 	}
 	
