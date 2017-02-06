@@ -2,7 +2,7 @@ Wellesley Fresh iOS App
 =======================
 [![Stories in Ready](https://badge.waffle.io/audreyseo/WellesleyFreshApp.png?label=ready&title=Ready)](http://waffle.io/audreyseo/WellesleyFreshApp)
 ##About
-The Wellesley Fresh iPhone app takes information found on the [WellesleyFresh][1] website and makes it iPhone-friendly. This app was created by Audrey Seo, '20, for the students of Wellesley College.
+The Wellesley Fresh iPhone app takes information found on the [WellesleyFresh][1] website and makes it iPhone-friendly. This app was created by Audrey Seo, '20, for the students of Wellesley College. The app can be found [here][4].
 
 ##Features
 This list is a summary of all of the app's current capabilities:
@@ -60,3 +60,4 @@ Also, if possible, if you are a Wellesley student and would like to help out, it
 [1]: http://www.wellesleyfresh.com
 [2]: https://github.com/audreyseo/WellesleyFreshApp.git
 [3]: https://github.com/audreyseo/WellesleyFreshApp/wiki
+[4]: https://itunes.apple.com/us/app/wellesley-fresh/id1197650611?mt=8
