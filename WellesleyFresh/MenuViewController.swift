@@ -121,7 +121,7 @@ class MenuViewController: UITableViewController, UIPickerViewDataSource, UIPicke
 	}
 	
 	func loadData() {
-		if !hasDataLoaded {
+		if !hasDataLoaded || data.isNewDay() {
 			data = DataLoader(diningHalls: diningHalls, menuViewController: self)
 		}
 	}
