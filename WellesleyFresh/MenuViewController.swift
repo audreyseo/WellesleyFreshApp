@@ -150,19 +150,19 @@ class MenuViewController: UITableViewController, UIPickerViewDataSource, UIPicke
 		
 		tableScrollsToNextMeal = storedData.bool(forKey: tableScrollsToNextMealKey)
 		
-		if storedData.string(forKey: defaultDiningHallKey) != nil {
-			self.defaultDiningHall = storedData.string(forKey: defaultDiningHallKey)!
-			if self.defaultDiningHall != "NONE" {
-				if diningHallFull.contains(defaultDiningHall) {
-					let ind = diningHallFull.index(of: defaultDiningHall)
-					diningHall = diningHalls[ind!]
-					diningHallName = diningHallFull[ind!]
-					self.navigationItem.title = "Menu - \(diningHallName)"
-					print("Relading table view.")
-					tableView.reloadData()
-				}
-			}
-		}
+//		if storedData.string(forKey: defaultDiningHallKey) != nil {
+//			self.defaultDiningHall = storedData.string(forKey: defaultDiningHallKey)!
+//			if self.defaultDiningHall != "NONE" {
+//				if diningHallFull.contains(defaultDiningHall) {
+//					let ind = diningHallFull.index(of: defaultDiningHall)
+//					diningHall = diningHalls[ind!]
+//					diningHallName = diningHallFull[ind!]
+//					self.navigationItem.title = "Menu - \(diningHallName)"
+//					print("Relading table view.")
+//					tableView.reloadData()
+//				}
+//			}
+//		}
 	}
 	
 	override func viewDidAppear(_ animated: Bool) {
