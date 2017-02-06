@@ -12,6 +12,7 @@ import UIKit
 class CompareViewController: UITableViewController, UIPickerViewDataSource, UIPickerViewDelegate {
 	let diningHalls:[String] = ["bplc", "bates", "tower", "stonedavis", "pomeroy"]
 	let diningHallFull:[String] = ["Bae Pao Lu Chow", "Bates", "Tower", "Stone Davis", "Pomeroy"]
+	let mealNames = ["Breakfast", "Lunch", "Dinner"]
 	var todayString:String = ""
 	var diningHall:String = ""
 	var diningHallName:String = ""
@@ -122,9 +123,7 @@ class CompareViewController: UITableViewController, UIPickerViewDataSource, UIPi
 	}
 	
 	func loadData() {
-		if !hasDataLoaded || data.isNewDay() {
-			data = DataLoader(diningHalls: diningHalls, menuViewController: self)
-		}
+		// we don't need to load data because the other navigation controllers hopefully do it for me
 	}
 	
 	override func viewWillAppear(_ animated: Bool) {
