@@ -149,6 +149,7 @@ class MenuViewController: UITableViewController, UIPickerViewDataSource, UIPicke
 		self.tableView.tableFooterView?.tintColor = UIColor.groupTableViewBackground
 		
 		tableScrollsToNextMeal = storedData.bool(forKey: tableScrollsToNextMealKey)
+		loadData()
 		
 //		if storedData.string(forKey: defaultDiningHallKey) != nil {
 //			self.defaultDiningHall = storedData.string(forKey: defaultDiningHallKey)!
@@ -512,7 +513,9 @@ class MenuViewController: UITableViewController, UIPickerViewDataSource, UIPicke
 		
 		var index = -1
 		for i in 0..<items.count {
-			if !mealArray.contains(items[i]) {
+			print("Item \(items[i])")
+			if !mealArray.contains(items[i]) && items[i] != "Closed" {
+				print("Meal \(mealArray[index]): \(items[i])")
 				mealItemCounts[index] += 1
 			} else {
 				index += 1
