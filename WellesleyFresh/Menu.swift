@@ -16,8 +16,27 @@ class Menu {
 	var successes = 0
 	var thirdTodayString: String
 	
+	init(hall: String) {
+		self.name = hall
+	}
 	
-	init(hall: String, meal: String, lastStation: inout String, rawData: Data) {
+	
+//	init(hall: String, meal: String, lastStation: inout String, rawData: Data) {
+//		let today = Date()
+//		
+//		let MyDateFormatter = DateFormatter()
+//		MyDateFormatter.locale = Locale(identifier: "en_US_POSIX")
+//		MyDateFormatter.dateFormat = "YYYY-MM-dd"
+//		thirdTodayString = MyDateFormatter.string(from: today)
+//		
+//		self.meal[hall]?[meal] = [String: String]()
+//		
+//		let array = self.getDaysArray(rawData)
+//		
+//		self.parseData(hall: hall, mealName: meal, lastStation: &lastStation, array: array)
+//	}
+	
+	func addMenu(meal: String, lastStation: inout String, rawData: Data) {
 		let today = Date()
 		
 		let MyDateFormatter = DateFormatter()
