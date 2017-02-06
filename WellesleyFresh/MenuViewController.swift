@@ -255,7 +255,7 @@ class MenuViewController: UITableViewController, UIPickerViewDataSource, UIPicke
 		let myHeader = tableView.dequeueReusableHeaderFooterView(withIdentifier: "headerId") as! Header
 		myHeader.contentView.backgroundColor = UIColor.groupTableViewBackground
 		if section == 0 {
-			myHeader.nameLabel.text = "\(self.diningHallName) - \(self.data.thirdTodayString)"
+			myHeader.nameLabel.text = self.createHeaderTitle() //"\(self.diningHallName) - \(self.data.thirdTodayString)"
 //			myHeader.nameLabel.text = self.diningHallName
 			//		myHeader.myTableViewController = self
 		} else {
@@ -274,6 +274,11 @@ class MenuViewController: UITableViewController, UIPickerViewDataSource, UIPicke
 	// -------------------------------------------------------------
 	// --------------------------HELPERS----------------------------
 	// -------------------------------------------------------------
+	
+	func createHeaderTitle() -> String {
+		return "\(self.diningHallName) - \(self.data.thirdTodayString)"
+	}
+	
 	
 	func madeSelection() {
 		self.hallInputView.isHidden = true;
@@ -295,7 +300,7 @@ class MenuViewController: UITableViewController, UIPickerViewDataSource, UIPicke
 	
 	func retitleHeader() {
 		if (tableView.headerView(forSection: 0) != nil) {
-			(tableView.headerView(forSection: 0) as! Header).nameLabel.text = "\(self.diningHallName) - \(self.data.thirdTodayString)"
+			(tableView.headerView(forSection: 0) as! Header).nameLabel.text = createHeaderTitle() //"\(self.diningHallName) - \(self.data.thirdTodayString)"
 			print("Tried to assign ", diningHallName, " to the header view.")
 		}
 	}
