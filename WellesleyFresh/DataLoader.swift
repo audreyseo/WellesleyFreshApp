@@ -94,6 +94,16 @@ class DataLoader {
 		}
 	}
 	
+	func isNewDay() -> Bool {
+		let MyDateFormatter = DateFormatter()
+		MyDateFormatter.locale = Locale(identifier: "en_US_POSIX")
+		MyDateFormatter.dateFormat = "MMdd"
+		let testToday = todayString
+		let today = Date()
+		todayString = MyDateFormatter.string(from: today)
+		return testToday != todayString
+	}
+	
 	func hasDiningHallDictionary() -> Bool {
 		return storedData.dictionary(forKey: diningHallDictionaryKey) as? [String:[String]] != nil
 	}
