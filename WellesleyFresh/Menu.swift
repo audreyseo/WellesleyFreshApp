@@ -18,6 +18,21 @@ class Menu {
 	
 	init(hall: String) {
 		self.name = hall
+		let today = Date()
+		
+		let MyDateFormatter = DateFormatter()
+		MyDateFormatter.locale = Locale(identifier: "en_US_POSIX")
+		MyDateFormatter.dateFormat = "YYYY-MM-dd"
+		thirdTodayString = MyDateFormatter.string(from: today)
+	}
+	
+	func updateTodayString() {
+		let today = Date()
+		
+		let MyDateFormatter = DateFormatter()
+		MyDateFormatter.locale = Locale(identifier: "en_US_POSIX")
+		MyDateFormatter.dateFormat = "YYYY-MM-dd"
+		thirdTodayString = MyDateFormatter.string(from: today)
 	}
 	
 	
@@ -37,18 +52,19 @@ class Menu {
 //	}
 	
 	func addMenu(meal: String, lastStation: inout String, rawData: Data) {
-		let today = Date()
+		updateTodayString()
+//		let today = Date()
+//		
+//		let MyDateFormatter = DateFormatter()
+//		MyDateFormatter.locale = Locale(identifier: "en_US_POSIX")
+//		MyDateFormatter.dateFormat = "YYYY-MM-dd"
+//		thirdTodayString = MyDateFormatter.string(from: today)
 		
-		let MyDateFormatter = DateFormatter()
-		MyDateFormatter.locale = Locale(identifier: "en_US_POSIX")
-		MyDateFormatter.dateFormat = "YYYY-MM-dd"
-		thirdTodayString = MyDateFormatter.string(from: today)
-		
-		self.meal[hall]?[meal] = [String: String]()
+		self.meal[self.name]?[meal] = [String: String]()
 		
 		let array = self.getDaysArray(rawData)
 		
-		self.parseData(hall: hall, mealName: meal, lastStation: &lastStation, array: array)
+		self.parseData(hall: self.name, mealName: meal, lastStation: &lastStation, array: array)
 	}
 	
 	
@@ -126,7 +142,7 @@ class Menu {
 			}
 			print("Could not find the date \(self.thirdTodayString) in this data.")
 			return nil
-		} catch let error as Error {
+		} catch let error {
 			print("\n\ngetDaysArray(): Error occurred in JSON serialization.")
 			print("getDaysArray(): \(error)")
 			let mystring: String! = String(data: data!, encoding: .utf8)

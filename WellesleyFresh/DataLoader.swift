@@ -351,7 +351,7 @@ class DataLoader {
 			}
 			print("Could not find the date \(self.thirdTodayString) in this data.")
 			return nil
-		} catch let error as Error {
+		} catch let error {
 			print("\n\ngetDaysArray(): Error occurred in JSON serialization.")
 			print("getDaysArray(): \(error)")
 			let mystring: String! = String(data: data!, encoding: .utf8)
@@ -417,7 +417,7 @@ class DataLoader {
 				
 				self.saveDataForHall(hall: hall, type: types[i], data: data!)
 				
-				var id = 0
+//				var id = 0
 				
 				self.meal[hall]?[types[i]] = [String: String]()
 				
